@@ -358,7 +358,20 @@ def build_club_summary(df: pd.DataFrame) -> pd.DataFrame:
             ["overall", "minutes"], ascending=[False, False]
         ).copy()
 
-        top_eleven = group.head(11)
+        players_count = int(len(group))
+        players_used = min(players_count, 11)
+        top_players = group.head(players_used)
+
+        if players_count >= 11:
+            coverage_status = "Officielle"
+            coverage_order = 1
+        elif players_count >= 7:
+            coverage_status = "Provisoire"
+            coverage_order = 2
+        else:
+            coverage_status = "Données insuffisantes"
+            coverage_order = 3
+
         position_scores: dict[str, float | None] = {}
         position_limits = {
             "Attacker": 3,
@@ -383,9 +396,15 @@ def build_club_summary(df: pd.DataFrame) -> pd.DataFrame:
             {
                 "team_id": team_id,
                 "team_name": team_name,
-                "squad_score": float(top_eleven["overall"].mean()),
+                "squad_score": float(top_players["overall"].mean()),
                 "average_score": float(group["overall"].mean()),
-                "players_count": int(len(group)),
+                "players_count": players_count,
+                "players_used": players_used,
+                "coverage_status": coverage_status,
+                "coverage_order": coverage_order,
+                "eligible_for_ranking": players_count >= 7,
+                "official_club_rating": players_count >= 11,
+                "provisional_club_rating": 7 <= players_count <= 10,
                 "attack_score": position_scores["Attacker"],
                 "midfield_score": position_scores["Midfielder"],
                 "defence_score": position_scores["Defender"],
@@ -398,10 +417,40 @@ def build_club_summary(df: pd.DataFrame) -> pd.DataFrame:
 
     summary = pd.DataFrame(records)
     summary = summary.sort_values(
-        ["squad_score", "average_score"], ascending=[False, False]
+        ["coverage_order", "squad_score", "average_score"],
+        ascending=[True, False, False],
     ).reset_index(drop=True)
-    summary["rank"] = range(1, len(summary) + 1)
+
+    ranked_mask = summary["eligible_for_ranking"]
+    summary["rank"] = pd.NA
+    summary.loc[ranked_mask, "rank"] = range(1, int(ranked_mask.sum()) + 1)
     return summary
+
+
+
+def club_status_badge(status: str) -> str:
+    status_classes = {
+        "Officielle": "status-official",
+        "Provisoire": "status-provisional",
+        "Données insuffisantes": "status-insufficient",
+    }
+    css_class = status_classes.get(status, "status-insufficient")
+    return f'<div class="status-pill {css_class}">{status}</div>'
+
+
+def club_score_caption(club_row: pd.Series) -> str:
+    players_used = int(club_row["players_used"])
+    if club_row["coverage_status"] == "Officielle":
+        return f"Moyenne des {players_used} joueurs les mieux notés"
+    if club_row["coverage_status"] == "Provisoire":
+        return (
+            f"Note provisoire calculée sur {players_used} joueurs "
+            "au lieu des 11 requis"
+        )
+    return (
+        f"Indicateur calculé sur seulement {players_used} joueurs ; "
+        "non classé"
+    )
 
 
 def club_score_chart(club_row: pd.Series) -> alt.Chart:
@@ -479,8 +528,15 @@ def render_club_comparison(summary: pd.DataFrame) -> None:
             score_badge(club_a["squad_score"], "Note d'effectif"),
             unsafe_allow_html=True,
         )
+        st.markdown(
+            club_status_badge(club_a["coverage_status"]),
+            unsafe_allow_html=True,
+        )
+        st.caption(club_score_caption(club_a))
+
     with versus:
         st.markdown("<div class='versus'>VS</div>", unsafe_allow_html=True)
+
     with head_b:
         logo_b = team_logo_url(club_b.get("team_id"))
         if logo_b:
@@ -489,6 +545,20 @@ def render_club_comparison(summary: pd.DataFrame) -> None:
         st.markdown(
             score_badge(club_b["squad_score"], "Note d'effectif"),
             unsafe_allow_html=True,
+        )
+        st.markdown(
+            club_status_badge(club_b["coverage_status"]),
+            unsafe_allow_html=True,
+        )
+        st.caption(club_score_caption(club_b))
+
+    if (
+        club_a["coverage_status"] != "Officielle"
+        or club_b["coverage_status"] != "Officielle"
+    ):
+        st.warning(
+            "Au moins l'un des deux clubs ne dispose pas de 11 joueurs notés. "
+            "La comparaison de sa note d'effectif doit être considérée avec prudence."
         )
 
     comparison_rows = []
@@ -559,7 +629,7 @@ def render_clubs(df: pd.DataFrame) -> None:
     st.subheader("Clubs")
     st.caption(
         "La note d'effectif correspond à la moyenne des onze joueurs les mieux "
-        "notés du club dans les données disponibles."
+        "notés du club. Elle est officielle à partir de 11 joueurs évalués."
     )
 
     summary = build_club_summary(df)
@@ -568,12 +638,16 @@ def render_clubs(df: pd.DataFrame) -> None:
     )
 
     with ranking_tab:
-        display = summary[
+        ranked_clubs = summary[summary["eligible_for_ranking"]].copy()
+        insufficient_clubs = summary[~summary["eligible_for_ranking"]].copy()
+
+        display = ranked_clubs[
             [
                 "rank",
                 "team_name",
-                "players_count",
+                "players_used",
                 "squad_score",
+                "coverage_status",
                 "average_score",
                 "best_player",
             ]
@@ -581,12 +655,14 @@ def render_clubs(df: pd.DataFrame) -> None:
             columns={
                 "rank": "Rang",
                 "team_name": "Club",
-                "players_count": "Joueurs notés",
+                "players_used": "Joueurs pris en compte",
                 "squad_score": "Note d'effectif",
+                "coverage_status": "Statut",
                 "average_score": "Moyenne",
                 "best_player": "Meilleur joueur",
             }
         )
+        display["Rang"] = display["Rang"].astype("Int64")
         display["Note d'effectif"] = display["Note d'effectif"].round(1)
         display["Moyenne"] = display["Moyenne"].round(1)
 
@@ -594,24 +670,72 @@ def render_clubs(df: pd.DataFrame) -> None:
             display,
             use_container_width=True,
             hide_index=True,
-            height=610,
+            height=570,
             column_config={
                 "Rang": st.column_config.NumberColumn(width="small"),
                 "Club": st.column_config.TextColumn(width="medium"),
-                "Joueurs notés": st.column_config.NumberColumn(width="small"),
+                "Joueurs pris en compte": st.column_config.NumberColumn(width="small"),
                 "Note d'effectif": st.column_config.ProgressColumn(
                     min_value=0,
                     max_value=100,
                     format="%.1f",
                 ),
+                "Statut": st.column_config.TextColumn(width="small"),
                 "Moyenne": st.column_config.NumberColumn(format="%.1f"),
                 "Meilleur joueur": st.column_config.TextColumn(width="medium"),
             },
         )
+
+        official_count = int((ranked_clubs["coverage_status"] == "Officielle").sum())
+        provisional_count = int((ranked_clubs["coverage_status"] == "Provisoire").sum())
+        metric_1, metric_2, metric_3 = st.columns(3)
+        metric_1.metric("Notes officielles", official_count)
+        metric_2.metric("Notes provisoires", provisional_count)
+        metric_3.metric("Clubs non classés", len(insufficient_clubs))
+
         st.info(
-            "Cette note mesure la qualité statistique de l'effectif évalué. "
-            "Elle ne remplace pas encore le classement sportif réel du championnat."
+            "Officielle : au moins 11 joueurs pris en compte. "
+            "Provisoire : 7 à 10 joueurs. Les clubs sous 7 joueurs ne sont pas classés."
         )
+
+        if not insufficient_clubs.empty:
+            with st.expander("Clubs aux données insuffisantes"):
+                insufficient_display = insufficient_clubs[
+                    [
+                        "team_name",
+                        "players_used",
+                        "squad_score",
+                        "best_player",
+                    ]
+                ].rename(
+                    columns={
+                        "team_name": "Club",
+                        "players_used": "Joueurs pris en compte",
+                        "squad_score": "Indicateur partiel",
+                        "best_player": "Meilleur joueur",
+                    }
+                )
+                insufficient_display["Indicateur partiel"] = (
+                    insufficient_display["Indicateur partiel"].round(1)
+                )
+                st.dataframe(
+                    insufficient_display,
+                    use_container_width=True,
+                    hide_index=True,
+                    column_config={
+                        "Club": st.column_config.TextColumn(width="medium"),
+                        "Joueurs pris en compte": st.column_config.NumberColumn(
+                            width="small"
+                        ),
+                        "Indicateur partiel": st.column_config.NumberColumn(
+                            format="%.1f"
+                        ),
+                        "Meilleur joueur": st.column_config.TextColumn(width="medium"),
+                    },
+                )
+                st.caption(
+                    "Ces indicateurs ne sont pas intégrés au classement des clubs."
+                )
 
     with profile_tab:
         selected_club_name = st.selectbox(
@@ -634,7 +758,10 @@ def render_clubs(df: pd.DataFrame) -> None:
             if logo:
                 st.image(logo, width=145)
             st.markdown(f"## {club_row['team_name']}")
-            st.write(f"**{int(club_row['players_count'])} joueurs notés**")
+            st.write(
+                f"**{int(club_row['players_used'])} joueurs pris en compte "
+                f"sur {int(club_row['players_count'])} évalués**"
+            )
             st.caption(
                 f"Meilleur joueur : {club_row['best_player']} "
                 f"({club_row['best_player_score']:.1f})"
@@ -645,7 +772,11 @@ def render_clubs(df: pd.DataFrame) -> None:
                 score_badge(club_row["squad_score"], "Note d'effectif"),
                 unsafe_allow_html=True,
             )
-            st.caption("Moyenne des 11 joueurs les mieux notés")
+            st.markdown(
+                club_status_badge(club_row["coverage_status"]),
+                unsafe_allow_html=True,
+            )
+            st.caption(club_score_caption(club_row))
 
         with chart_col:
             st.altair_chart(
@@ -653,9 +784,23 @@ def render_clubs(df: pd.DataFrame) -> None:
                 use_container_width=True,
             )
 
+        if club_row["coverage_status"] == "Provisoire":
+            st.warning(
+                "Cette note d'effectif est provisoire : moins de 11 joueurs sont "
+                "disponibles dans les données."
+            )
+        elif club_row["coverage_status"] == "Données insuffisantes":
+            st.error(
+                "Ce club n'est pas intégré au classement : moins de 7 joueurs "
+                "sont disponibles dans les données."
+            )
+
         metric_1, metric_2, metric_3 = st.columns(3)
-        metric_1.metric("Moyenne de l'effectif", f"{club_row['average_score']:.1f}")
-        metric_2.metric("Joueurs évalués", f"{int(club_row['players_count'])}")
+        metric_1.metric("Moyenne des joueurs", f"{club_row['average_score']:.1f}")
+        metric_2.metric(
+            "Joueurs pris en compte",
+            f"{int(club_row['players_used'])}/11",
+        )
         metric_3.metric(
             "Meilleure note individuelle",
             f"{club_row['best_player_score']:.1f}",
@@ -1006,8 +1151,9 @@ def render_methodology() -> None:
         que le classement relatif ne déforme pas excessivement la performance brute.
 
         La **note d'effectif d'un club** correspond à la moyenne des onze joueurs
-        les mieux notés du club dans les données disponibles. Elle mesure la qualité
-        statistique de l'effectif et non ses résultats sportifs réels.
+        les mieux notés du club. Elle est officielle avec au moins 11 joueurs évalués,
+        provisoire avec 7 à 10 joueurs et non classée sous 7 joueurs. Elle mesure la
+        qualité statistique de l'effectif et non ses résultats sportifs réels.
         """
     )
     st.warning(
@@ -1104,6 +1250,11 @@ st.markdown(
             color: #fde68a;
             background: rgba(245, 158, 11, 0.14);
             border: 1px solid rgba(245, 158, 11, 0.34);
+        }
+        .status-insufficient {
+            color: #fecaca;
+            background: rgba(239, 68, 68, 0.14);
+            border: 1px solid rgba(239, 68, 68, 0.34);
         }
         .score-wrapper {
             text-align: center;
