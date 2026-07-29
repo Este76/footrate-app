@@ -1,0 +1,92 @@
+﻿team_id;team_name;fixture_id;date;round;home_away;opponent_id;opponent_name;opponent_logo;goals_for;goals_against;score;result;recency_order
+77;Angers;1214045;2025-05-17T19:00:00+00:00;Regular Season - 34;away;80;Lyon;https://media.api-sports.io/football/teams/80.png;0;2;0-2;D;1
+77;Angers;1214037;2025-05-10T19:00:00+00:00;Regular Season - 33;home;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;2;1;2-1;V;2
+77;Angers;1214031;2025-05-04T13:00:00+00:00;Regular Season - 32;away;83;Nantes;https://media.api-sports.io/football/teams/83.png;1;0;1-0;V;3
+77;Angers;1214022;2025-04-27T13:00:00+00:00;Regular Season - 31;home;79;Lille;https://media.api-sports.io/football/teams/79.png;0;2;0-2;D;4
+77;Angers;1214009;2025-04-20T15:15:00+00:00;Regular Season - 30;away;84;Nice;https://media.api-sports.io/football/teams/84.png;1;2;1-2;D;5
+79;Lille;1214048;2025-05-17T19:00:00+00:00;Regular Season - 34;home;93;Reims;https://media.api-sports.io/football/teams/93.png;2;1;2-1;V;1
+79;Lille;1214042;2025-05-10T19:00:00+00:00;Regular Season - 33;away;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;0;2;0-2;D;2
+79;Lille;1214027;2025-05-04T18:45:00+00:00;Regular Season - 32;home;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;1;1-1;N;3
+79;Lille;1214022;2025-04-27T13:00:00+00:00;Regular Season - 31;away;77;Angers;https://media.api-sports.io/football/teams/77.png;2;0;2-0;V;4
+79;Lille;1214011;2025-04-20T13:00:00+00:00;Regular Season - 30;home;108;Auxerre;https://media.api-sports.io/football/teams/108.png;3;1;3-1;V;5
+80;Lyon;1214045;2025-05-17T19:00:00+00:00;Regular Season - 34;home;77;Angers;https://media.api-sports.io/football/teams/77.png;2;0;2-0;V;1
+80;Lyon;1214043;2025-05-10T19:00:00+00:00;Regular Season - 33;away;91;Monaco;https://media.api-sports.io/football/teams/91.png;0;2;0-2;D;2
+80;Lyon;1214026;2025-05-04T15:15:00+00:00;Regular Season - 32;home;116;Lens;https://media.api-sports.io/football/teams/116.png;1;2;1-2;D;3
+80;Lyon;1214025;2025-04-26T19:05:00+00:00;Regular Season - 31;home;94;Rennes;https://media.api-sports.io/football/teams/94.png;4;1;4-1;V;4
+80;Lyon;1214008;2025-04-20T18:45:00+00:00;Regular Season - 30;away;1063;Saint Etienne;https://media.api-sports.io/football/teams/1063.png;1;2;1-2;D;5
+81;Marseille;1214044;2025-05-17T19:00:00+00:00;Regular Season - 34;home;94;Rennes;https://media.api-sports.io/football/teams/94.png;4;2;4-2;V;1
+81;Marseille;1214038;2025-05-10T19:00:00+00:00;Regular Season - 33;away;111;Le Havre;https://media.api-sports.io/football/teams/111.png;3;1;3-1;V;2
+81;Marseille;1214027;2025-05-04T18:45:00+00:00;Regular Season - 32;away;79;Lille;https://media.api-sports.io/football/teams/79.png;1;1;1-1;N;3
+81;Marseille;1214024;2025-04-27T18:45:00+00:00;Regular Season - 31;home;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;4;1;4-1;V;4
+81;Marseille;1214013;2025-04-19T19:05:00+00:00;Regular Season - 30;home;82;Montpellier;https://media.api-sports.io/football/teams/82.png;5;1;5-1;V;5
+82;Montpellier;1214050;2025-05-17T19:00:00+00:00;Regular Season - 34;away;83;Nantes;https://media.api-sports.io/football/teams/83.png;0;3;0-3;D;1
+82;Montpellier;1214040;2025-05-10T19:00:00+00:00;Regular Season - 33;home;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;4;1-4;D;2
+82;Montpellier;1214029;2025-05-04T15:15:00+00:00;Regular Season - 32;away;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;0;1;0-1;D;3
+82;Montpellier;1214020;2025-04-27T15:15:00+00:00;Regular Season - 31;home;93;Reims;https://media.api-sports.io/football/teams/93.png;0;0;0-0;N;4
+82;Montpellier;1214013;2025-04-19T19:05:00+00:00;Regular Season - 30;away;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;5;1-5;D;5
+83;Nantes;1214050;2025-05-17T19:00:00+00:00;Regular Season - 34;home;82;Montpellier;https://media.api-sports.io/football/teams/82.png;3;0;3-0;V;1
+83;Nantes;1214036;2025-05-10T19:00:00+00:00;Regular Season - 33;away;108;Auxerre;https://media.api-sports.io/football/teams/108.png;1;1;1-1;N;2
+83;Nantes;1214031;2025-05-04T13:00:00+00:00;Regular Season - 32;home;77;Angers;https://media.api-sports.io/football/teams/77.png;0;1;0-1;D;3
+83;Nantes;1214019;2025-04-27T15:15:00+00:00;Regular Season - 31;home;96;Toulouse;https://media.api-sports.io/football/teams/96.png;0;0;0-0;N;4
+83;Nantes;1214002;2025-04-22T18:45:00+00:00;Regular Season - 29;home;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;1;1-1;N;5
+84;Nice;1214046;2025-05-17T19:00:00+00:00;Regular Season - 34;home;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;6;0;6-0;V;1
+84;Nice;1214039;2025-05-10T19:00:00+00:00;Regular Season - 33;away;94;Rennes;https://media.api-sports.io/football/teams/94.png;0;2;0-2;D;2
+84;Nice;1214028;2025-05-02T18:45:00+00:00;Regular Season - 32;home;93;Reims;https://media.api-sports.io/football/teams/93.png;1;0;1-0;V;3
+84;Nice;1214023;2025-04-25T18:45:00+00:00;Regular Season - 31;away;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;3;1;3-1;V;4
+84;Nice;1214009;2025-04-20T15:15:00+00:00;Regular Season - 30;home;77;Angers;https://media.api-sports.io/football/teams/77.png;2;1;2-1;V;5
+85;Paris Saint Germain;1214052;2025-05-17T19:00:00+00:00;Regular Season - 34;home;108;Auxerre;https://media.api-sports.io/football/teams/108.png;3;1;3-1;V;1
+85;Paris Saint Germain;1214040;2025-05-10T19:00:00+00:00;Regular Season - 33;away;82;Montpellier;https://media.api-sports.io/football/teams/82.png;4;1;4-1;V;2
+85;Paris Saint Germain;1214033;2025-05-03T15:00:00+00:00;Regular Season - 32;away;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;1;2;1-2;D;3
+85;Paris Saint Germain;1214023;2025-04-25T18:45:00+00:00;Regular Season - 31;home;84;Nice;https://media.api-sports.io/football/teams/84.png;1;3;1-3;D;4
+85;Paris Saint Germain;1214002;2025-04-22T18:45:00+00:00;Regular Season - 29;away;83;Nantes;https://media.api-sports.io/football/teams/83.png;1;1;1-1;N;5
+91;Monaco;1214051;2025-05-17T19:00:00+00:00;Regular Season - 34;away;116;Lens;https://media.api-sports.io/football/teams/116.png;0;4;0-4;D;1
+91;Monaco;1214043;2025-05-10T19:00:00+00:00;Regular Season - 33;home;80;Lyon;https://media.api-sports.io/football/teams/80.png;2;0;2-0;V;2
+91;Monaco;1214030;2025-05-03T19:05:00+00:00;Regular Season - 32;away;1063;Saint Etienne;https://media.api-sports.io/football/teams/1063.png;3;1;3-1;V;3
+91;Monaco;1214017;2025-04-26T17:00:00+00:00;Regular Season - 31;away;111;Le Havre;https://media.api-sports.io/football/teams/111.png;1;1;1-1;N;4
+91;Monaco;1214015;2025-04-19T17:00:00+00:00;Regular Season - 30;home;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;0;0;0-0;N;5
+93;Reims;1375858;2025-05-21T18:00:00+00:00;Relegation Round;away;112;Metz;https://media.api-sports.io/football/teams/112.png;1;1;1-1;N;1
+93;Reims;1214048;2025-05-17T19:00:00+00:00;Regular Season - 34;away;79;Lille;https://media.api-sports.io/football/teams/79.png;1;2;1-2;D;2
+93;Reims;1214035;2025-05-10T19:00:00+00:00;Regular Season - 33;home;1063;Saint Etienne;https://media.api-sports.io/football/teams/1063.png;0;2;0-2;D;3
+93;Reims;1214028;2025-05-02T18:45:00+00:00;Regular Season - 32;away;84;Nice;https://media.api-sports.io/football/teams/84.png;0;1;0-1;D;4
+93;Reims;1214020;2025-04-27T15:15:00+00:00;Regular Season - 31;away;82;Montpellier;https://media.api-sports.io/football/teams/82.png;0;0;0-0;N;5
+94;Rennes;1214044;2025-05-17T19:00:00+00:00;Regular Season - 34;away;81;Marseille;https://media.api-sports.io/football/teams/81.png;2;4;2-4;D;1
+94;Rennes;1214039;2025-05-10T19:00:00+00:00;Regular Season - 33;home;84;Nice;https://media.api-sports.io/football/teams/84.png;2;0;2-0;V;2
+94;Rennes;1214032;2025-05-03T17:00:00+00:00;Regular Season - 32;away;96;Toulouse;https://media.api-sports.io/football/teams/96.png;1;2;1-2;D;3
+94;Rennes;1214025;2025-04-26T19:05:00+00:00;Regular Season - 31;away;80;Lyon;https://media.api-sports.io/football/teams/80.png;1;4;1-4;D;4
+94;Rennes;1214016;2025-04-18T18:45:00+00:00;Regular Season - 30;home;83;Nantes;https://media.api-sports.io/football/teams/83.png;2;1;2-1;V;5
+95;Strasbourg;1214049;2025-05-17T19:00:00+00:00;Regular Season - 34;home;111;Le Havre;https://media.api-sports.io/football/teams/111.png;2;3;2-3;D;1
+95;Strasbourg;1214037;2025-05-10T19:00:00+00:00;Regular Season - 33;away;77;Angers;https://media.api-sports.io/football/teams/77.png;1;2;1-2;D;2
+95;Strasbourg;1214033;2025-05-03T15:00:00+00:00;Regular Season - 32;home;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;2;1;2-1;V;3
+95;Strasbourg;1214018;2025-04-26T15:00:00+00:00;Regular Season - 31;home;1063;Saint Etienne;https://media.api-sports.io/football/teams/1063.png;3;1;3-1;V;4
+95;Strasbourg;1214015;2025-04-19T17:00:00+00:00;Regular Season - 30;away;91;Monaco;https://media.api-sports.io/football/teams/91.png;0;0;0-0;N;5
+96;Toulouse;1214047;2025-05-17T19:00:00+00:00;Regular Season - 34;away;1063;Saint Etienne;https://media.api-sports.io/football/teams/1063.png;3;2;3-2;V;1
+96;Toulouse;1214041;2025-05-10T19:00:00+00:00;Regular Season - 33;home;116;Lens;https://media.api-sports.io/football/teams/116.png;1;1;1-1;N;2
+96;Toulouse;1214032;2025-05-03T17:00:00+00:00;Regular Season - 32;home;94;Rennes;https://media.api-sports.io/football/teams/94.png;2;1;2-1;V;3
+96;Toulouse;1214019;2025-04-27T15:15:00+00:00;Regular Season - 31;away;83;Nantes;https://media.api-sports.io/football/teams/83.png;0;0;0-0;N;4
+96;Toulouse;1214014;2025-04-20T15:15:00+00:00;Regular Season - 30;away;93;Reims;https://media.api-sports.io/football/teams/93.png;0;1;0-1;D;5
+106;Stade Brestois 29;1214046;2025-05-17T19:00:00+00:00;Regular Season - 34;away;84;Nice;https://media.api-sports.io/football/teams/84.png;0;6;0-6;D;1
+106;Stade Brestois 29;1214042;2025-05-10T19:00:00+00:00;Regular Season - 33;home;79;Lille;https://media.api-sports.io/football/teams/79.png;2;0;2-0;V;2
+106;Stade Brestois 29;1214029;2025-05-04T15:15:00+00:00;Regular Season - 32;home;82;Montpellier;https://media.api-sports.io/football/teams/82.png;1;0;1-0;V;3
+106;Stade Brestois 29;1214024;2025-04-27T18:45:00+00:00;Regular Season - 31;away;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;4;1-4;D;4
+106;Stade Brestois 29;1214010;2025-04-20T15:15:00+00:00;Regular Season - 30;home;116;Lens;https://media.api-sports.io/football/teams/116.png;1;3;1-3;D;5
+108;Auxerre;1214052;2025-05-17T19:00:00+00:00;Regular Season - 34;away;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;3;1-3;D;1
+108;Auxerre;1214036;2025-05-10T19:00:00+00:00;Regular Season - 33;home;83;Nantes;https://media.api-sports.io/football/teams/83.png;1;1;1-1;N;2
+108;Auxerre;1214034;2025-05-04T15:15:00+00:00;Regular Season - 32;home;111;Le Havre;https://media.api-sports.io/football/teams/111.png;1;2;1-2;D;3
+108;Auxerre;1214021;2025-04-27T15:15:00+00:00;Regular Season - 31;away;116;Lens;https://media.api-sports.io/football/teams/116.png;4;0;4-0;V;4
+108;Auxerre;1214011;2025-04-20T13:00:00+00:00;Regular Season - 30;away;79;Lille;https://media.api-sports.io/football/teams/79.png;1;3;1-3;D;5
+111;Le Havre;1214049;2025-05-17T19:00:00+00:00;Regular Season - 34;away;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;3;2;3-2;V;1
+111;Le Havre;1214038;2025-05-10T19:00:00+00:00;Regular Season - 33;home;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;3;1-3;D;2
+111;Le Havre;1214034;2025-05-04T15:15:00+00:00;Regular Season - 32;away;108;Auxerre;https://media.api-sports.io/football/teams/108.png;2;1;2-1;V;3
+111;Le Havre;1214017;2025-04-26T17:00:00+00:00;Regular Season - 31;home;91;Monaco;https://media.api-sports.io/football/teams/91.png;1;1;1-1;N;4
+111;Le Havre;1214012;2025-04-19T15:00:00+00:00;Regular Season - 30;away;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;2;1-2;D;5
+112;Metz;1375858;2025-05-21T18:00:00+00:00;Relegation Round;home;93;Reims;https://media.api-sports.io/football/teams/93.png;1;1;1-1;N;1
+116;Lens;1214051;2025-05-17T19:00:00+00:00;Regular Season - 34;home;91;Monaco;https://media.api-sports.io/football/teams/91.png;4;0;4-0;V;1
+116;Lens;1214041;2025-05-10T19:00:00+00:00;Regular Season - 33;away;96;Toulouse;https://media.api-sports.io/football/teams/96.png;1;1;1-1;N;2
+116;Lens;1214026;2025-05-04T15:15:00+00:00;Regular Season - 32;away;80;Lyon;https://media.api-sports.io/football/teams/80.png;2;1;2-1;V;3
+116;Lens;1214021;2025-04-27T15:15:00+00:00;Regular Season - 31;home;108;Auxerre;https://media.api-sports.io/football/teams/108.png;0;4;0-4;D;4
+116;Lens;1214010;2025-04-20T15:15:00+00:00;Regular Season - 30;away;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;3;1;3-1;V;5
+1063;Saint Etienne;1214047;2025-05-17T19:00:00+00:00;Regular Season - 34;home;96;Toulouse;https://media.api-sports.io/football/teams/96.png;2;3;2-3;D;1
+1063;Saint Etienne;1214035;2025-05-10T19:00:00+00:00;Regular Season - 33;away;93;Reims;https://media.api-sports.io/football/teams/93.png;2;0;2-0;V;2
+1063;Saint Etienne;1214030;2025-05-03T19:05:00+00:00;Regular Season - 32;home;91;Monaco;https://media.api-sports.io/football/teams/91.png;1;3;1-3;D;3
+1063;Saint Etienne;1214018;2025-04-26T15:00:00+00:00;Regular Season - 31;away;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;1;3;1-3;D;4
+1063;Saint Etienne;1214008;2025-04-20T18:45:00+00:00;Regular Season - 30;home;80;Lyon;https://media.api-sports.io/football/teams/80.png;2;1;2-1;V;5

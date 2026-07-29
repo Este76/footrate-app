@@ -1,0 +1,19 @@
+﻿team_id;team_name;team_logo;rank;points;played;wins;draws;losses;goals_for;goals_against;goal_diff;standing_form;description
+85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;84;34;26;6;2;92;35;57;WWLLD;Champions League
+81;Marseille;https://media.api-sports.io/football/teams/81.png;2;65;34;20;5;9;74;47;27;WWDWW;Champions League
+91;Monaco;https://media.api-sports.io/football/teams/91.png;3;61;34;18;7;9;63;41;22;LWWDD;Champions League
+84;Nice;https://media.api-sports.io/football/teams/84.png;4;60;34;17;9;8;66;41;25;WLWWW;Champions League Qualification
+79;Lille;https://media.api-sports.io/football/teams/79.png;5;60;34;17;9;8;52;36;16;WLDWW;UEFA Europa League
+80;Lyon;https://media.api-sports.io/football/teams/80.png;6;57;34;17;6;11;65;46;19;WLLWL;UEFA Europa League
+95;Strasbourg;https://media.api-sports.io/football/teams/95.png;7;57;34;16;9;9;56;44;12;LLWWD;Conference League Qualification
+116;Lens;https://media.api-sports.io/football/teams/116.png;8;52;34;15;7;12;42;39;3;WDWLW;
+106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;9;50;34;15;5;14;52;59;-7;LWWLL;
+96;Toulouse;https://media.api-sports.io/football/teams/96.png;10;42;34;11;9;14;44;43;1;WDWDL;
+108;Auxerre;https://media.api-sports.io/football/teams/108.png;11;42;34;11;9;14;48;51;-3;LDLWL;
+94;Rennes;https://media.api-sports.io/football/teams/94.png;12;41;34;13;2;19;51;50;1;LWLLW;
+83;Nantes;https://media.api-sports.io/football/teams/83.png;13;36;34;8;12;14;39;52;-13;WDLDD;
+77;Angers;https://media.api-sports.io/football/teams/77.png;14;36;34;10;6;18;32;53;-21;LWWLL;
+111;Le Havre;https://media.api-sports.io/football/teams/111.png;15;34;34;10;4;20;40;71;-31;WLWDL;
+93;Reims;https://media.api-sports.io/football/teams/93.png;16;33;34;8;9;17;33;47;-14;LDLLL;Relegation Playoffs
+1063;Saint Etienne;https://media.api-sports.io/football/teams/1063.png;17;30;34;8;6;20;39;77;-38;LWLLW;Relegation
+82;Montpellier;https://media.api-sports.io/football/teams/82.png;18;16;34;4;4;26;23;79;-56;LLLDL;Relegation
