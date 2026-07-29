@@ -1,0 +1,249 @@
+﻿player_id;player_name;team_id;team_name;clubs_in_season;position;minutes;reliability;official_rating;provisional_rating;shooting;passing;creation;technique;defensive_contribution;physical_impact;profile_score;performance_score;overall_precalibrated;calibration_adjustment;overall;form;form_trend;form_label;form_reliability;matches_in_form;club_form;club_form_trend;club_form_label
+343027;D. Doué;85;Paris Saint Germain;Paris Saint Germain / Rennes;Attacker;1734.0;high;True;False;86.3;92.6;92.8;82.1;79.3;81.6;86.2;82.4;84.7;2.4;87.1;72.8;5.5;En hausse;Élevée;5.0;60.9;15.0;En hausse
+153;O. Dembélé;85;Paris Saint Germain;Paris Saint Germain;Attacker;1736.0;high;True;False;92.3;92.9;88.9;71.9;47.6;51.5;80.5;88.7;83.8;2.4;86.2;67.2;-12.0;En baisse;Moyenne;3.0;60.9;15.0;En hausse
+483;K. Kvaratskhelia;85;Paris Saint Germain;Paris Saint Germain;Attacker;920.0;medium;True;False;85.3;89.9;88.1;79.4;61.6;72.9;82.6;84.9;83.5;2.3;85.8;88.0;12.0;En hausse;Moyenne;3.0;60.9;15.0;En hausse
+25008;J. Clauss;84;Nice;Nice / Marseille;Defender;2311.0;high;True;False;71.1;93.6;87.1;63.5;86.1;76.3;82.6;84.0;83.1;2.3;85.4;71.8;0.8;Stable;Élevée;5.0;68.3;-12.0;En baisse
+326068;K. Doumbia;106;Stade Brestois 29;Stade Brestois 29 / Reims;Midfielder;1316.0;medium;True;False;80.8;91.8;90.6;87.3;86.3;81.3;87.2;75.3;82.4;2.4;84.8;76.2;3.6;En hausse;Élevée;5.0;48.8;4.0;En hausse
+137303;E. Guessand;84;Nice;Nice;Attacker;2575.0;high;True;False;88.4;74.9;83.4;82.5;64.1;75.4;83.0;80.3;81.9;2.4;84.3;81.4;12.0;En hausse;Moyenne;4.0;68.3;-12.0;En baisse
+156477;R. Cherki;80;Lyon;Lyon;Midfielder;2054.0;high;True;False;86.8;93.4;91.4;83.8;47.0;62.2;78.1;87.6;81.9;2.3;84.2;84.4;1.5;Stable;Élevée;5.0;51.3;4.0;En hausse
+129695;D. Bakwa;95;Strasbourg;Strasbourg;Attacker;2509.0;high;True;False;81.4;86.4;88.5;74.3;56.6;78.9;81.1;82.6;81.7;2.3;83.9;71.7;-7.7;En baisse;Élevée;5.0;44.5;-15.0;En baisse
+927;Lee Kang-In;85;Paris Saint Germain;Paris Saint Germain;Midfielder;1665.0;high;True;False;78.5;92.3;89.1;85.6;53.4;67.0;78.7;86.0;81.7;2.2;83.8;74.9;-6.9;En baisse;Moyenne;3.0;60.9;15.0;En hausse
+85041;A. Gouiri;81;Marseille;Marseille / Rennes;Attacker;2102.0;high;True;False;93.3;91.1;83.0;67.2;36.9;41.3;77.0;87.5;81.2;2.2;83.4;85.6;-6.1;En baisse;Élevée;5.0;75.6;5.3;En hausse
+325594;F. Lemaréchal;95;Strasbourg;Strasbourg / Monaco;Midfielder;1788.0;high;True;False;82.0;93.1;90.1;82.6;85.1;71.1;84.9;75.6;81.2;2.1;83.3;77.5;-2.4;Stable;Élevée;5.0;44.5;-15.0;En baisse
+335051;João Neves;85;Paris Saint Germain;Paris Saint Germain;Midfielder;1857.0;high;True;False;77.4;67.2;83.7;77.0;81.5;87.2;78.4;85.0;81.0;2.1;83.1;67.0;-3.0;En baisse;Moyenne;4.0;60.9;15.0;En hausse
+161747;G. Doué;95;Strasbourg;Strasbourg / Rennes;Defender;2716.0;high;True;False;62.5;54.9;75.3;81.7;90.2;87.9;83.2;75.9;80.3;2.1;82.4;69.6;4.6;En hausse;Élevée;5.0;44.5;-15.0;En baisse
+20732;G. Perrin;108;Auxerre;Auxerre;Attacker;2704.0;high;True;False;86.6;91.6;88.3;75.4;54.3;53.9;79.1;81.5;80.1;2.1;82.2;75.9;-6.2;En baisse;Élevée;5.0;36.7;-4.0;En baisse
+162466;S. Diomandé;108;Auxerre;Auxerre / Lyon;Defender;1945.0;high;True;False;75.9;54.9;69.4;82.2;92.4;87.8;84.2;73.5;79.9;2.1;82.1;62.3;-5.0;En baisse;Élevée;5.0;36.7;-4.0;En baisse
+109;A. Golovin;91;Monaco;Monaco;Midfielder;1161.0;medium;True;False;77.8;85.7;75.4;86.1;78.0;76.8;80.5;78.8;79.8;2.1;81.9;;;;;;54.2;-1.3;Stable
+22093;R. Cabella;79;Lille;Lille;Midfielder;1012.0;medium;True;False;67.4;88.9;85.0;78.9;74.6;81.3;80.7;78.3;79.7;2.1;81.8;77.7;;Non disponible;Faible;2.0;58.7;-6.7;En baisse
+291649;Vanderson;91;Monaco;Monaco;Defender;2077.0;high;True;False;71.1;73.3;75.2;78.3;84.5;81.5;81.2;77.4;79.7;2.0;81.7;64.8;-6.8;En baisse;Élevée;5.0;54.2;-1.3;Stable
+2781;M. Simon;83;Nantes;Nantes;Attacker;2626.0;high;True;False;84.0;88.5;90.1;77.6;49.3;64.4;80.4;77.8;79.4;2.0;81.4;73.8;7.0;En hausse;Élevée;5.0;53.1;10.7;En hausse
+274300;M. Akliouche;91;Monaco;Monaco;Midfielder;2409.0;high;True;False;72.4;88.1;89.1;80.1;61.0;67.5;77.6;81.8;79.3;2.0;81.3;83.0;-6.3;En baisse;Élevée;5.0;54.2;-1.3;Stable
+22097;A. Nordin;82;Montpellier;Montpellier;Attacker;1171.0;medium;True;False;84.6;74.3;77.0;80.3;64.2;85.4;81.8;74.9;79.0;2.0;81.0;;;;;;25.0;-2.7;Stable
+9;A. Hakimi;85;Paris Saint Germain;Paris Saint Germain;Defender;2067.0;high;True;False;77.1;74.4;86.1;78.7;70.6;70.4;72.3;88.9;78.9;2.0;80.9;71.4;-4.2;En baisse;Faible;2.0;60.9;15.0;En hausse
+283026;M. Biereth;91;Monaco;Monaco;Attacker;1237.0;medium;True;False;91.8;82.7;74.2;50.4;47.1;61.4;75.2;83.7;78.6;2.0;80.6;71.4;-0.5;Stable;Moyenne;4.0;54.2;-1.3;Stable
+67889;H. Haraldsson;79;Lille;Lille;Midfielder;1765.0;high;True;False;80.4;86.2;82.9;82.5;61.3;70.3;77.8;79.7;78.5;2.0;80.5;71.4;1.1;Stable;Élevée;5.0;58.7;-6.7;En baisse
+161904;B. Barcola;85;Paris Saint Germain;Paris Saint Germain;Attacker;2192.0;high;True;False;91.0;89.7;87.4;58.6;56.5;50.5;77.2;80.6;78.5;1.9;80.4;68.6;-12.0;En baisse;Élevée;5.0;60.9;15.0;En hausse
+21497;L. Blas;94;Rennes;Rennes;Midfielder;2302.0;high;True;False;84.4;87.0;88.6;71.0;61.7;69.4;77.2;80.4;78.5;1.9;80.3;70.9;-5.0;En baisse;Moyenne;4.0;42.7;4.0;En hausse
+21592;G. Laborde;84;Nice;Nice;Attacker;1838.0;high;True;False;86.5;79.4;78.2;70.9;55.9;62.9;77.4;80.0;78.4;1.9;80.3;82.8;12.0;En hausse;Élevée;5.0;68.3;-12.0;En baisse
+25287;K. Danso;116;Lens;Lens;Defender;1080.0;medium;True;False;54.4;86.2;56.6;59.8;79.8;75.3;76.9;80.3;78.3;1.9;80.1;;;;;;64.8;0.0;Stable
+22261;A. Thomasson;116;Lens;Lens;Midfielder;2623.0;high;True;False;73.5;88.7;84.8;69.4;72.7;72.7;77.9;78.6;78.2;1.8;80.0;81.2;5.1;En hausse;Élevée;5.0;64.8;0.0;Stable
+361348;M. Fofana;80;Lyon;Lyon;Attacker;1597.0;high;True;False;85.0;81.4;83.5;72.4;55.3;70.3;79.4;76.3;78.2;1.8;80.0;75.0;-4.0;En baisse;Élevée;5.0;51.3;4.0;En hausse
+662;T. Ndombélé;84;Nice;Nice;Midfielder;1139.0;medium;True;False;64.7;80.8;82.6;85.5;74.1;84.3;79.7;75.7;78.1;1.8;79.9;;;;;;68.3;-12.0;En baisse
+8489;J. David;79;Lille;Lille;Attacker;2558.0;high;True;False;91.7;78.9;77.7;71.7;45.8;51.5;77.3;79.1;78.0;1.8;79.8;69.1;-1.2;Stable;Élevée;5.0;58.7;-6.7;En baisse
+84128;Y. Gboho;96;Toulouse;Toulouse;Attacker;2340.0;high;True;False;84.9;75.5;81.4;73.6;52.3;71.1;78.9;76.6;78.0;1.8;79.8;81.3;8.4;En hausse;Élevée;5.0;62.7;5.3;En hausse
+21443;T. Savanier;82;Montpellier;Montpellier;Midfielder;2339.0;high;True;False;69.6;92.1;87.7;73.0;57.8;74.4;77.1;79.0;77.9;1.7;79.6;64.4;-1.6;Stable;Moyenne;3.0;25.0;-2.7;Stable
+11421;G. Suazo;96;Toulouse;Toulouse;Defender;2160.0;high;True;False;57.8;85.3;83.5;84.6;76.3;72.4;77.2;78.7;77.8;1.7;79.5;69.6;-0.3;Stable;Moyenne;3.0;62.7;5.3;En hausse
+2214;R. Del Castillo;106;Stade Brestois 29;Stade Brestois 29;Midfielder;1266.0;medium;True;False;87.1;91.3;86.7;70.0;62.7;69.5;78.1;77.3;77.8;1.7;79.5;76.0;-8.2;En baisse;Élevée;5.0;48.8;4.0;En hausse
+322560;L. Stassin;1063;Saint Etienne;Saint Etienne;Attacker;1875.0;high;True;False;91.3;69.8;75.9;73.2;43.9;55.0;77.1;78.5;77.7;1.7;79.4;75.7;;Non disponible;Faible;2.0;43.0;4.0;En hausse
+39115;A. Dønnum;96;Toulouse;Toulouse;Midfielder;2697.0;high;True;False;62.7;84.0;80.0;79.7;69.8;75.8;76.7;78.9;77.6;1.7;79.3;75.1;-3.6;En baisse;Moyenne;4.0;62.7;5.3;En hausse
+22170;P. Lees-Melou;106;Stade Brestois 29;Stade Brestois 29;Midfielder;1528.0;high;True;False;71.5;75.6;74.5;78.9;72.3;76.9;75.2;80.1;77.2;1.7;78.9;76.6;-2.1;Stable;Moyenne;4.0;48.8;4.0;En hausse
+374058;L. Camara;91;Monaco;Monaco;Midfielder;2064.0;high;True;False;70.8;58.7;83.1;73.6;79.8;80.0;73.8;82.1;77.1;1.7;78.8;68.1;-3.0;En baisse;Moyenne;4.0;54.2;-1.3;Stable
+305834;Andrey Santos;95;Strasbourg;Strasbourg;Midfielder;2857.0;high;True;False;77.8;46.5;71.5;73.0;82.4;90.7;71.6;84.8;76.9;1.7;78.6;80.5;-1.4;Stable;Élevée;5.0;44.5;-15.0;En baisse
+128384;Vitinha;85;Paris Saint Germain;Paris Saint Germain;Midfielder;2035.0;high;True;False;81.5;69.5;72.0;79.0;63.4;62.0;70.7;86.2;76.9;1.7;78.6;83.9;2.1;Stable;Moyenne;3.0;60.9;15.0;En hausse
+263482;Nuno Mendes;85;Paris Saint Germain;Paris Saint Germain;Defender;1676.0;high;True;False;75.0;73.9;82.8;83.3;70.5;74.9;73.6;81.3;76.7;1.7;78.4;86.8;12.0;En hausse;Moyenne;3.0;60.9;15.0;En hausse
+10077;Luis Henrique;81;Marseille;Marseille;Attacker;2621.0;high;True;False;79.4;87.2;82.4;79.3;42.4;49.5;74.7;79.7;76.7;1.7;78.3;70.2;-0.8;Stable;Moyenne;4.0;75.6;5.3;En hausse
+50956;C. Cásseres;96;Toulouse;Toulouse;Midfielder;2705.0;high;True;False;59.0;71.2;72.9;80.9;83.3;84.9;76.1;77.3;76.6;1.6;78.2;73.4;5.6;En hausse;Élevée;5.0;62.7;5.3;En hausse
+22264;L. Ajorque;106;Stade Brestois 29;Stade Brestois 29;Attacker;2504.0;high;True;False;86.7;78.7;68.8;60.3;57.2;70.7;75.4;78.3;76.6;1.6;78.2;70.9;0.2;Stable;Élevée;5.0;48.8;4.0;En hausse
+162465;M. Bard;84;Nice;Nice;Defender;1941.0;high;True;False;68.0;66.3;68.9;69.7;81.1;76.6;76.4;76.6;76.5;1.6;78.1;76.7;-8.4;En baisse;Élevée;5.0;68.3;-12.0;En baisse
+47480;M. Salisu;91;Monaco;Monaco;Defender;1035.0;medium;True;False;73.5;83.0;53.0;64.2;79.9;75.8;77.1;75.4;76.4;1.6;78.0;;;;;;54.2;-1.3;Stable
+191392;P. Joly;108;Auxerre;Auxerre;Defender;1024.0;medium;True;False;62.8;79.2;74.8;59.8;84.7;87.2;82.1;67.9;76.4;1.6;78.0;60.0;-4.2;En baisse;Élevée;5.0;36.7;-4.0;En baisse
+24743;Z. Davitashvili;1063;Saint Etienne;Saint Etienne;Attacker;2761.0;high;True;False;84.7;86.8;86.3;67.6;48.2;52.5;76.0;76.8;76.4;1.5;77.9;74.9;-7.9;En baisse;Élevée;5.0;43.0;4.0;En hausse
+21153;B. Santamaría;84;Nice;Nice / Rennes;Midfielder;1411.0;high;True;False;54.5;74.6;70.0;83.6;85.2;89.4;77.4;74.8;76.4;1.5;77.9;64.6;1.0;Stable;Moyenne;3.0;68.3;-12.0;En baisse
+49583;A. Abdi;84;Nice;Nice;Defender;1417.0;high;True;False;78.0;77.1;74.7;64.4;79.8;73.2;76.2;76.5;76.3;1.4;77.8;70.6;-4.1;En baisse;Élevée;5.0;68.3;-12.0;En baisse
+30531;J. Boga;84;Nice;Nice;Attacker;1065.0;medium;True;False;80.3;87.8;84.6;73.3;52.9;66.8;77.7;74.4;76.3;1.5;77.8;69.7;-0.7;Stable;Faible;2.0;68.3;-12.0;En baisse
+1467;A. Lacazette;80;Lyon;Lyon;Attacker;2061.0;high;True;False;93.1;75.1;72.7;69.3;48.0;50.8;76.3;76.4;76.3;1.4;77.7;80.8;8.4;En hausse;Moyenne;4.0;51.3;4.0;En hausse
+85914;J. Le Cardinal;106;Stade Brestois 29;Stade Brestois 29 / Lens;Defender;1378.0;high;True;False;59.0;78.3;58.9;70.5;78.9;74.2;76.1;76.6;76.3;1.4;77.7;66.5;;Non disponible;Faible;2.0;48.8;4.0;En hausse
+156465;I. Soumaré;111;Le Havre;Le Havre / Auxerre;Attacker;1904.0;high;True;False;78.5;79.5;80.4;61.2;66.7;82.3;76.5;75.7;76.2;1.4;77.6;70.9;-5.8;En baisse;Élevée;5.0;57.1;1.3;Stable
+37236;A. Matusiwa;94;Rennes;Rennes;Midfielder;2078.0;high;True;False;56.7;66.1;71.5;82.0;83.5;85.6;74.9;78.1;76.2;1.3;77.5;67.1;7.2;En hausse;Élevée;5.0;42.7;4.0;En hausse
+23637;Y. Zouaoui;111;Le Havre;Le Havre;Defender;982.0;medium;True;False;60.8;90.3;83.7;83.5;66.3;77.7;74.6;78.5;76.2;1.3;77.5;69.4;0.0;Stable;Faible;2.0;57.1;1.3;Stable
+529;N. Tagliafico;80;Lyon;Lyon;Defender;1911.0;high;True;False;73.7;67.2;54.5;55.2;80.5;74.0;74.0;79.3;76.1;1.3;77.4;72.4;1.6;Stable;Moyenne;4.0;51.3;4.0;En hausse
+24147;M. Camara;94;Rennes;Rennes / Stade Brestois 29;Midfielder;5338.0;high;True;False;75.7;70.8;74.7;78.3;75.5;76.6;75.0;77.6;76.1;1.2;77.3;;;;;;42.7;4.0;En hausse
+135068;E. Agbadou;93;Reims;Reims;Defender;1260.0;medium;True;False;55.2;84.2;59.3;75.8;74.4;66.5;73.1;80.6;76.1;1.3;77.3;;;;;;31.3;1.3;Stable
+1942;J. Ito;93;Reims;Reims;Attacker;2701.0;high;True;False;71.1;93.9;85.9;72.6;60.5;63.5;74.0;78.7;75.9;1.2;77.1;61.6;-2.6;Stable;Moyenne;3.0;31.3;1.3;Stable
+15286;Mousa Tamari;82;Montpellier;Montpellier / Rennes;Attacker;1683.0;high;True;False;80.9;78.1;81.4;70.5;59.7;76.7;78.1;72.5;75.8;1.2;77.1;;;;;;25.0;-2.7;Stable
+4399;H. Boudaoui;84;Nice;Nice;Midfielder;2438.0;high;True;False;75.9;68.1;73.6;68.2;77.8;79.1;73.2;79.7;75.8;1.2;77.0;73.4;2.6;Stable;Élevée;5.0;68.3;-12.0;En baisse
+350856;E. Nuamah;80;Lyon;Lyon;Attacker;1053.0;medium;True;False;81.6;81.1;77.8;78.9;66.5;66.3;77.6;73.2;75.8;1.2;77.0;;;;;;51.3;4.0;En hausse
+99576;O. Sahraoui;79;Lille;Lille;Attacker;1292.0;medium;True;False;80.6;87.4;84.8;72.8;55.5;57.3;76.0;75.4;75.8;1.2;76.9;65.0;-2.0;Stable;Moyenne;4.0;58.7;-6.7;En baisse
+343359;N. Zézé;83;Nantes;Nantes;Defender;1513.0;high;True;False;54.7;75.0;48.2;68.2;77.6;77.0;75.2;76.3;75.7;1.2;76.8;71.8;-4.5;En baisse;Élevée;5.0;53.1;10.7;En hausse
+30504;W. Singo;91;Monaco;Monaco;Defender;2102.0;high;True;False;63.6;63.6;60.0;63.9;76.6;81.6;74.5;77.1;75.5;1.1;76.7;68.6;-4.3;En baisse;Élevée;5.0;54.2;-1.3;Stable
+387120;R. Nzingoula;82;Montpellier;Montpellier / Strasbourg;Midfielder;1697.0;high;True;False;69.9;69.0;70.3;87.2;90.8;85.4;78.8;70.8;75.6;1.2;76.7;67.8;-5.0;En baisse;Moyenne;4.0;25.0;-2.7;Stable
+180496;G. Mikautadze;80;Lyon;Lyon;Attacker;1445.0;high;True;False;90.6;78.4;82.2;59.8;45.0;53.7;76.0;75.0;75.6;1.1;76.7;78.9;-11.8;En baisse;Élevée;5.0;51.3;4.0;En hausse
+193952;J. Lepenant;83;Nantes;Nantes / Lyon;Midfielder;2054.0;high;True;False;68.6;67.4;75.3;84.7;86.8;82.9;77.7;72.3;75.5;1.1;76.6;68.4;0.5;Stable;Moyenne;4.0;53.1;10.7;En hausse
+174915;J. Casimir;111;Le Havre;Le Havre;Attacker;2009.0;high;True;False;73.2;75.4;79.0;78.7;55.8;73.0;75.1;76.0;75.4;1.1;76.5;78.2;3.7;En hausse;Élevée;5.0;57.1;1.3;Stable
+107;S. Diop;84;Nice;Nice;Midfielder;1066.0;medium;True;False;86.2;87.6;84.4;63.5;71.7;63.6;76.2;74.3;75.4;1.1;76.5;62.6;5.2;En hausse;Élevée;5.0;68.3;-12.0;En baisse
+272;A. Rabiot;81;Marseille;Marseille;Midfielder;2483.0;high;True;False;87.1;55.5;76.9;73.8;63.8;68.8;69.2;84.5;75.3;1.1;76.4;89.3;6.9;En hausse;Élevée;5.0;75.6;5.3;En hausse
+129169;A. Zaroury;116;Lens;Lens;Attacker;1407.0;high;True;False;75.8;89.3;82.6;74.2;55.7;66.4;75.7;74.7;75.3;1.1;76.4;78.3;-1.3;Stable;Élevée;5.0;64.8;0.0;Stable
+48392;E. Zhegrova;79;Lille;Lille;Attacker;985.0;medium;True;False;78.9;79.7;78.0;71.4;50.6;55.0;73.0;78.5;75.2;1.1;76.2;;;;;;58.7;-6.7;En baisse
+277003;N. El Aynaoui;116;Lens;Lens;Midfielder;1606.0;high;True;False;82.0;77.0;69.9;57.5;79.9;72.8;72.6;78.6;75.0;1.1;76.0;86.7;12.0;En hausse;Élevée;5.0;64.8;0.0;Stable
+386481;M. Diakhon;93;Reims;Reims;Attacker;922.0;medium;True;False;80.3;77.5;79.8;73.6;62.4;72.4;77.3;71.1;74.8;1.1;75.9;63.1;;Non disponible;Moyenne;3.0;31.3;1.3;Stable
+7578;G. Mensah;108;Auxerre;Auxerre;Defender;2284.0;high;True;False;50.0;70.2;71.0;80.5;80.8;70.6;75.9;73.0;74.7;1.1;75.8;67.9;-0.6;Stable;Élevée;5.0;36.7;-4.0;En baisse
+334879;B. Bouanani;84;Nice;Nice;Attacker;1095.0;medium;True;False;82.8;82.8;82.4;69.3;60.2;54.6;75.1;74.2;74.7;1.0;75.8;77.8;-2.7;Stable;Élevée;5.0;68.3;-12.0;En baisse
+41585;Gonçalo Ramos;85;Paris Saint Germain;Paris Saint Germain;Attacker;1062.0;medium;True;False;89.8;77.9;72.9;48.7;49.9;60.1;73.3;76.9;74.8;1.1;75.8;84.1;12.0;En hausse;Élevée;5.0;60.9;15.0;En hausse
+323625;K. Danois;108;Auxerre;Auxerre;Midfielder;1466.0;high;True;False;53.3;82.2;72.0;77.5;79.0;72.3;74.6;74.9;74.7;1.0;75.7;;;;;;36.7;-4.0;En baisse
+21568;R. Aguilar;116;Lens;Lens;Defender;1129.0;medium;True;False;67.3;70.0;73.0;70.1;74.7;72.9;73.1;77.1;74.7;1.0;75.7;73.7;0.0;Stable;Moyenne;3.0;64.8;0.0;Stable
+21102;V. Rongier;94;Rennes;Rennes / Marseille;Midfielder;3150.0;high;True;False;76.3;72.7;64.8;77.3;84.2;68.1;73.7;75.9;74.6;1.0;75.6;;;;;;42.7;4.0;En hausse
+277191;A. Sima;106;Stade Brestois 29;Stade Brestois 29;Attacker;1238.0;medium;True;False;88.6;71.6;72.4;60.4;56.1;73.7;76.8;71.3;74.6;1.0;75.6;63.2;-1.2;Stable;Élevée;5.0;48.8;4.0;En hausse
+41300;Jubal;108;Auxerre;Auxerre;Defender;2643.0;high;True;False;70.5;44.7;42.1;61.1;75.6;78.7;69.9;81.5;74.5;0.9;75.5;71.4;4.0;En hausse;Moyenne;4.0;36.7;-4.0;En baisse
+71545;J. Okumu;93;Reims;Reims;Defender;1909.0;high;True;False;54.7;48.0;53.6;79.2;76.1;78.3;72.1;78.2;74.6;1.0;75.5;73.0;5.9;En hausse;Élevée;5.0;31.3;1.3;Stable
+41146;F. Hanin;77;Angers;Angers;Defender;2677.0;high;True;False;48.3;68.8;66.4;65.5;77.0;73.3;73.3;76.2;74.5;0.9;75.4;71.0;1.0;Stable;Élevée;5.0;50.3;4.0;En hausse
+147831;A. Kalimuendo;94;Rennes;Rennes;Attacker;2589.0;high;True;False;93.1;63.8;69.8;59.3;43.0;49.3;73.0;76.5;74.4;0.9;75.3;74.9;7.7;En hausse;Élevée;5.0;42.7;4.0;En hausse
+274312;M. Cho;84;Nice;Nice;Attacker;1635.0;high;True;False;77.3;83.8;84.0;64.1;51.5;66.4;74.4;74.3;74.4;0.9;75.3;69.4;-7.5;En baisse;Moyenne;3.0;68.3;-12.0;En baisse
+3333;M. Haïdara;116;Lens;Lens / Stade Brestois 29;Defender;3360.0;high;True;False;37.2;55.7;56.7;86.2;70.9;89.3;74.2;74.3;74.3;0.9;75.2;;;;;;64.8;0.0;Stable
+2810;D. Zakaria;91;Monaco;Monaco;Midfielder;2149.0;high;True;False;74.9;63.7;71.6;77.6;71.6;66.5;70.5;79.8;74.2;0.9;75.1;81.0;4.7;En hausse;Élevée;5.0;54.2;-1.3;Stable
+20780;Mathias Pereira Lage;106;Stade Brestois 29;Stade Brestois 29;Midfielder;1596.0;high;True;False;75.7;78.6;80.2;62.5;73.2;73.0;73.9;74.6;74.2;0.9;75.1;66.6;-4.3;En baisse;Élevée;5.0;48.8;4.0;En hausse
+519;C. Tolisso;80;Lyon;Lyon;Midfielder;2334.0;high;True;False;80.6;48.3;75.5;67.1;76.2;80.3;69.4;81.2;74.1;0.9;75.0;72.2;-5.0;En baisse;Moyenne;4.0;51.3;4.0;En hausse
+10316;Caio Henrique;91;Monaco;Monaco;Defender;1932.0;high;True;False;50.5;84.3;80.6;78.7;67.2;66.7;70.6;79.0;73.9;0.9;74.8;76.3;-7.5;En baisse;Élevée;5.0;54.2;-1.3;Stable
+371916;C. Mawissa Elebi;91;Monaco;Monaco / Toulouse;Defender;1521.0;high;True;False;59.8;44.2;55.5;64.9;91.3;78.5;77.8;68.2;73.9;0.8;74.8;63.1;1.6;Stable;Moyenne;4.0;54.2;-1.3;Stable
+32940;A. Onaiwu;108;Auxerre;Auxerre;Attacker;990.0;medium;True;False;88.0;70.9;71.9;69.5;58.3;71.9;77.7;68.3;74.0;0.9;74.8;74.1;0.2;Stable;Moyenne;4.0;36.7;-4.0;En baisse
+326176;S. Magassa;91;Monaco;Monaco;Midfielder;1024.0;medium;True;False;63.0;63.7;71.4;85.5;85.8;80.1;75.2;71.6;73.7;0.8;74.6;64.5;-4.4;En baisse;Moyenne;4.0;54.2;-1.3;Stable
+6067;T. Almada;80;Lyon;Lyon;Midfielder;953.0;medium;True;False;66.5;88.3;82.7;73.5;55.4;53.3;71.6;77.0;73.8;0.8;74.6;81.2;-1.9;Stable;Élevée;5.0;51.3;4.0;En hausse
+22087;M. Nadé;1063;Saint Etienne;Saint Etienne;Defender;2305.0;high;True;False;60.7;66.1;55.9;58.3;77.8;76.6;73.5;74.1;73.7;0.8;74.5;74.2;8.1;En hausse;Élevée;5.0;43.0;4.0;En hausse
+161622;M. Abline;83;Nantes;Nantes / Rennes;Attacker;2789.0;high;True;False;82.2;70.4;73.4;69.6;45.2;63.9;74.1;73.0;73.6;0.8;74.4;71.6;2.9;Stable;Élevée;5.0;53.1;10.7;En hausse
+84082;R. Faivre;106;Stade Brestois 29;Stade Brestois 29;Midfielder;900.0;medium;True;False;84.3;72.4;79.3;74.3;60.6;79.3;74.2;72.7;73.6;0.8;74.4;66.9;;Non disponible;Faible;1.0;48.8;4.0;En hausse
+31057;H. Traorè;108;Auxerre;Auxerre;Midfielder;2106.0;high;True;False;86.2;76.7;77.4;66.7;57.4;64.1;70.8;77.5;73.5;0.8;74.3;65.8;;Non disponible;Faible;2.0;36.7;-4.0;En baisse
+264;T. Meunier;79;Lille;Lille;Defender;1951.0;high;True;False;73.0;62.5;56.1;65.4;78.4;65.5;71.0;77.1;73.4;0.8;74.2;76.3;0.9;Stable;Élevée;5.0;58.7;-6.7;En baisse
+10036;Douglas Augusto;83;Nantes;Nantes;Midfielder;2315.0;high;True;False;76.0;60.3;64.9;76.0;78.9;76.3;71.1;76.8;73.4;0.8;74.1;75.0;-1.6;Stable;Moyenne;4.0;53.1;10.7;En hausse
+421;B. Embolo;91;Monaco;Monaco;Attacker;1842.0;high;True;False;80.6;83.2;80.9;62.7;50.3;68.0;75.2;70.5;73.4;0.7;74.1;73.7;11.1;En hausse;Moyenne;4.0;54.2;-1.3;Stable
+679;Ismaily;79;Lille;Lille;Defender;905.0;medium;True;False;67.6;61.4;66.5;64.0;77.4;69.4;71.5;76.1;73.4;0.7;74.1;70.3;3.5;En hausse;Moyenne;4.0;58.7;-6.7;En baisse
+90617;L. Sinayoko;108;Auxerre;Auxerre;Attacker;2306.0;high;True;False;73.4;81.9;83.6;67.1;57.4;57.8;71.7;75.7;73.3;0.7;74.0;81.7;-2.1;Stable;Élevée;5.0;36.7;-4.0;En baisse
+3080;M. Munetsi;93;Reims;Reims;Midfielder;1694.0;high;True;False;72.0;73.5;70.6;65.9;71.0;79.2;71.9;75.4;73.3;0.7;74.0;;;;;;31.3;1.3;Stable
+41323;Mama Baldé;106;Stade Brestois 29;Stade Brestois 29 / Lyon;Attacker;1185.0;medium;True;False;72.2;90.1;91.0;69.6;69.8;74.1;76.5;68.4;73.3;0.7;73.9;60.3;-0.9;Stable;Moyenne;4.0;48.8;4.0;En hausse
+437482;A. Koné;93;Reims;Reims;Midfielder;1430.0;high;True;False;56.0;61.9;65.0;84.6;82.3;91.7;73.9;71.9;73.1;0.7;73.8;69.5;-3.0;En baisse;Élevée;5.0;31.3;1.3;Stable
+21103;A. Touré;111;Le Havre;Le Havre;Midfielder;2329.0;high;True;False;77.0;49.0;61.4;79.9;81.5;82.5;70.2;77.3;73.0;0.7;73.7;72.9;7.9;En hausse;Élevée;5.0;57.1;1.3;Stable
+282549;J. Mwanga;111;Le Havre;Le Havre / Strasbourg;Midfielder;1245.0;medium;True;False;65.2;74.4;77.9;66.9;82.4;69.9;73.5;72.4;73.0;0.7;73.7;69.8;-12.0;En baisse;Moyenne;4.0;57.1;1.3;Stable
+18967;L. Østigård;94;Rennes;Rennes;Defender;1227.0;medium;True;False;62.6;81.0;48.4;59.9;72.4;72.5;71.8;74.7;73.0;0.6;73.6;;;;;;42.7;4.0;En hausse
+1456;A. Maitland-Niles;80;Lyon;Lyon;Midfielder;2013.0;high;True;False;63.7;76.8;74.3;62.3;76.2;67.7;71.0;75.7;72.8;0.6;73.5;79.6;4.8;En hausse;Élevée;5.0;51.3;4.0;En hausse
+328074;J. James;94;Rennes;Rennes;Midfielder;1193.0;medium;True;False;55.0;86.0;75.9;67.8;69.5;66.8;72.1;73.9;72.8;0.6;73.5;68.3;-1.0;Stable;Moyenne;3.0;42.7;4.0;En hausse
+328;Fabián Ruiz;85;Paris Saint Germain;Paris Saint Germain;Midfielder;1929.0;high;True;False;74.6;63.9;78.5;72.7;59.8;55.2;67.2;81.1;72.8;0.6;73.4;78.1;-2.3;Stable;Moyenne;4.0;60.9;15.0;En hausse
+257;Marquinhos;85;Paris Saint Germain;Paris Saint Germain;Defender;1725.0;high;True;False;64.0;80.3;51.3;63.6;64.6;64.6;66.3;82.6;72.8;0.6;73.4;81.8;9.6;En hausse;Moyenne;3.0;60.9;15.0;En hausse
+162267;A. Truffert;94;Rennes;Rennes;Defender;2763.0;high;True;False;72.9;79.8;72.0;61.2;68.1;71.1;70.2;76.6;72.8;0.6;73.3;71.3;-7.1;En baisse;Élevée;5.0;42.7;4.0;En hausse
+16367;W. Pacho;85;Paris Saint Germain;Paris Saint Germain;Defender;2130.0;high;True;False;46.8;68.2;47.2;50.2;79.5;64.7;70.3;76.4;72.7;0.6;73.3;68.2;1.8;Stable;Moyenne;3.0;60.9;15.0;En hausse
+102;D. Sidibé;96;Toulouse;Toulouse;Defender;2116.0;high;True;False;45.8;67.1;68.4;68.9;71.1;75.3;71.2;74.8;72.6;0.5;73.2;72.2;-0.8;Stable;Élevée;5.0;62.7;5.3;En hausse
+343792;D. Cissé;94;Rennes;Rennes;Midfielder;1129.0;medium;True;False;73.3;59.5;62.3;82.2;75.1;69.7;69.7;77.1;72.6;0.5;73.2;64.2;-1.7;Stable;Élevée;5.0;42.7;4.0;En hausse
+21635;J. Gradit;116;Lens;Lens;Defender;2115.0;high;True;False;49.3;65.6;51.0;54.8;74.3;74.3;70.6;75.6;72.6;0.5;73.1;70.4;4.1;En hausse;Élevée;5.0;64.8;0.0;Stable
+289555;L. Mouton;1063;Saint Etienne;Saint Etienne / Angers;Midfielder;2087.0;high;True;False;49.5;82.1;75.5;71.5;79.0;70.5;73.5;71.3;72.6;0.5;73.1;68.3;1.8;Stable;Moyenne;4.0;43.0;4.0;En hausse
+68;Clinton Mata;80;Lyon;Lyon;Defender;2370.0;high;True;False;42.0;59.9;66.8;67.8;74.8;73.1;71.1;74.6;72.5;0.5;73.0;69.9;-4.6;En baisse;Moyenne;3.0;51.3;4.0;En hausse
+20836;C. Operi;111;Le Havre;Le Havre;Defender;1170.0;medium;True;False;55.5;85.5;80.9;74.9;65.2;69.8;70.4;75.3;72.4;0.5;72.9;;;;;;57.1;1.3;Stable
+360114;A. Khusanov;116;Lens;Lens;Defender;975.0;medium;True;False;68.5;52.7;51.7;58.8;76.0;66.1;67.9;79.2;72.4;0.5;72.9;;;;;;64.8;0.0;Stable
+20761;F. Sotoca;116;Lens;Lens;Attacker;1797.0;high;True;False;71.3;71.0;69.7;67.7;60.1;70.3;70.1;75.7;72.3;0.4;72.8;62.6;3.5;En hausse;Moyenne;4.0;64.8;0.0;Stable
+21146;A. Fulgini;116;Lens;Lens;Midfielder;1059.0;medium;True;False;73.2;89.5;80.6;63.5;56.4;66.6;72.5;72.2;72.4;0.4;72.8;66.9;;Non disponible;Faible;1.0;64.8;0.0;Stable
+191189;C. Akpa;108;Auxerre;Auxerre;Defender;2495.0;high;True;False;43.4;49.5;56.9;58.5;77.7;79.9;71.8;73.1;72.3;0.4;72.7;67.3;0.4;Stable;Élevée;5.0;36.7;-4.0;En baisse
+142691;Alexsandro Ribeiro;79;Lille;Lille;Defender;2700.0;high;True;False;53.5;62.1;55.2;66.2;64.0;76.1;66.8;80.3;72.2;0.4;72.6;77.4;4.9;En hausse;Élevée;5.0;58.7;-6.7;En baisse
+203762;E. Emegha;95;Strasbourg;Strasbourg;Attacker;2302.0;high;True;False;92.3;65.1;66.8;48.9;42.7;48.6;70.3;75.0;72.2;0.4;72.6;65.2;;Non disponible;Moyenne;3.0;44.5;-15.0;En baisse
+261;T. Kehrer;91;Monaco;Monaco;Defender;2385.0;high;True;False;76.1;65.9;42.5;55.9;69.7;71.0;67.7;78.7;72.1;0.4;72.5;72.8;2.1;Stable;Faible;2.0;54.2;-1.3;Stable
+8683;I. Cardona;1063;Saint Etienne;Saint Etienne;Attacker;1072.0;medium;True;False;86.0;75.9;73.2;56.6;50.6;47.1;70.8;74.3;72.2;0.4;72.5;68.8;12.0;En hausse;Élevée;5.0;43.0;4.0;En hausse
+19546;C. Kipré;93;Reims;Reims;Defender;2409.0;high;True;False;54.5;51.9;57.0;68.3;75.4;70.2;69.4;75.8;71.9;0.4;72.3;78.6;2.5;Stable;Élevée;5.0;31.3;1.3;Stable
+47969;G. Gudmundsson;79;Lille;Lille;Defender;1806.0;high;True;False;66.1;67.6;65.6;71.3;70.2;78.4;72.0;71.7;71.9;0.4;72.2;73.8;4.6;En hausse;Moyenne;4.0;58.7;-6.7;En baisse
+57446;A. Adams;82;Montpellier;Montpellier;Attacker;1079.0;medium;True;False;80.1;72.7;69.3;68.1;48.0;56.4;71.1;72.9;71.8;0.3;72.2;;;;;;25.0;-2.7;Stable
+20537;I. Niane;77;Angers;Angers;Attacker;934.0;medium;True;False;80.7;69.7;72.1;65.5;58.4;76.2;74.8;67.0;71.7;0.4;72.1;67.5;;Non disponible;Faible;1.0;50.3;4.0;En hausse
+2204;B. André;79;Lille;Lille;Midfielder;2693.0;high;True;False;45.0;50.8;66.8;60.2;85.1;84.0;65.6;80.8;71.7;0.3;72.0;78.1;-6.9;En baisse;Moyenne;4.0;58.7;-6.7;En baisse
+157146;L. Pétrot;1063;Saint Etienne;Saint Etienne;Defender;2637.0;high;True;False;51.3;59.7;61.7;60.3;78.6;70.2;71.4;72.1;71.7;0.3;72.0;76.3;2.5;Stable;Élevée;5.0;43.0;4.0;En hausse
+8624;F. Tardieu;1063;Saint Etienne;Saint Etienne;Midfielder;1253.0;medium;True;False;67.0;81.3;75.8;52.7;67.3;65.8;69.0;75.7;71.7;0.3;72.0;80.9;11.0;En hausse;Élevée;5.0;43.0;4.0;En hausse
+307835;Beraldo;85;Paris Saint Germain;Paris Saint Germain;Defender;2011.0;high;True;False;59.9;76.5;47.5;59.2;67.4;68.3;67.6;77.8;71.7;0.3;71.9;71.2;3.5;En hausse;Élevée;5.0;60.9;15.0;En hausse
+2483;D. Machado;116;Lens;Lens;Defender;1805.0;high;True;False;59.7;73.2;78.6;77.3;67.9;73.1;71.1;72.5;71.6;0.3;71.9;67.6;1.6;Stable;Moyenne;3.0;64.8;0.0;Stable
+226803;S. Nanasi;95;Strasbourg;Strasbourg;Midfielder;2121.0;high;True;False;78.0;84.1;78.6;69.7;47.0;49.8;68.4;76.2;71.5;0.2;71.8;80.6;2.5;Stable;Moyenne;4.0;44.5;-15.0;En baisse
+20916;C. Wooh;94;Rennes;Rennes;Defender;1458.0;high;True;False;60.5;45.2;50.7;68.9;79.3;75.0;71.5;71.7;71.6;0.2;71.8;65.7;;Non disponible;Faible;1.0;42.7;4.0;En hausse
+22247;K. Lala;106;Stade Brestois 29;Stade Brestois 29;Defender;2685.0;high;True;False;73.4;80.9;69.9;72.0;66.2;61.9;67.7;77.1;71.5;0.2;71.7;65.8;-3.8;En baisse;Moyenne;4.0;48.8;4.0;En hausse
+3099;Y. Ndayishimiye;84;Nice;Nice;Midfielder;1934.0;high;True;False;67.7;72.6;48.7;69.7;72.7;70.5;67.0;78.3;71.5;0.2;71.7;70.2;;Non disponible;Faible;2.0;68.3;-12.0;En baisse
+264383;W. Kamanzi;96;Toulouse;Toulouse;Defender;1058.0;medium;True;False;69.7;73.0;73.9;78.4;71.5;72.5;72.6;69.7;71.4;0.2;71.6;67.6;-1.2;Stable;Moyenne;3.0;62.7;5.3;En hausse
+22163;Dante;84;Nice;Nice;Defender;1966.0;high;True;False;52.3;70.6;47.8;60.6;73.4;68.8;69.8;73.6;71.3;0.2;71.5;74.1;5.7;En hausse;Moyenne;3.0;68.3;-12.0;En baisse
+203483;"A. N&apos;Diaye";106;Stade Brestois 29;Stade Brestois 29;Defender;1712.0;high;True;False;58.8;38.1;45.4;52.0;76.6;80.9;69.3;74.2;71.3;0.2;71.4;69.4;-3.3;En baisse;Moyenne;4.0;48.8;4.0;En hausse
+20546;B. Chardonnet;106;Stade Brestois 29;Stade Brestois 29;Defender;2417.0;high;True;False;50.2;50.8;47.5;58.7;73.3;71.5;67.5;76.7;71.2;0.2;71.3;72.0;;Non disponible;Moyenne;3.0;48.8;4.0;En hausse
+174927;A. Sangante;111;Le Havre;Le Havre;Defender;1251.0;medium;True;False;75.8;80.1;55.1;74.5;76.0;77.0;76.1;63.6;71.1;0.2;71.3;62.9;-12.0;En baisse;Moyenne;3.0;57.1;1.3;Stable
+336657;W. Zaïre-Emery;85;Paris Saint Germain;Paris Saint Germain;Midfielder;2052.0;high;True;False;72.0;64.2;69.8;72.9;70.6;61.2;68.2;75.3;71.1;0.1;71.2;74.6;12.0;En hausse;Élevée;5.0;60.9;15.0;En hausse
+2973;A. Murillo;81;Marseille;Marseille;Defender;2436.0;high;True;False;59.5;56.3;70.6;67.1;66.2;76.7;67.8;75.3;70.8;0.2;71.0;69.5;-6.8;En baisse;Élevée;5.0;75.6;5.3;En hausse
+270509;A. Diouf;116;Lens;Lens;Midfielder;2240.0;high;True;False;56.3;80.6;77.2;80.2;59.9;58.4;70.7;70.6;70.6;0.2;70.8;63.7;0.8;Stable;Élevée;5.0;64.8;0.0;Stable
+48491;V. Sierro;96;Toulouse;Toulouse;Midfielder;2409.0;high;True;False;72.1;74.8;68.4;60.9;64.2;62.8;67.3;75.5;70.6;0.2;70.7;69.6;5.7;En hausse;Élevée;5.0;62.7;5.3;En hausse
+20661;M. Sagnan;82;Montpellier;Montpellier;Defender;2117.0;high;True;False;64.9;51.8;51.5;73.8;78.6;68.0;70.7;70.4;70.5;0.2;70.7;67.5;;Non disponible;Faible;1.0;25.0;-2.7;Stable
+926;G. Kondogbia;81;Marseille;Marseille;Midfielder;2021.0;high;True;False;45.8;74.5;49.9;73.6;74.4;77.3;67.4;75.2;70.5;0.1;70.7;74.2;;Non disponible;Moyenne;3.0;75.6;5.3;En hausse
+243;Z. Aboukhlal;96;Toulouse;Toulouse;Attacker;1907.0;high;True;False;85.8;61.6;68.0;56.8;50.1;52.9;69.9;71.1;70.4;0.1;70.5;64.2;-0.5;Stable;Moyenne;3.0;62.7;5.3;En hausse
+375598;N. Mukau;79;Lille;Lille;Midfielder;1218.0;medium;True;False;57.3;70.5;69.5;70.9;69.4;72.6;69.2;72.1;70.4;0.1;70.5;64.4;-0.5;Stable;Moyenne;4.0;58.7;-6.7;En baisse
+278232;P. Ekwah;1063;Saint Etienne;Saint Etienne;Midfielder;2579.0;high;True;False;57.1;59.9;56.8;75.8;76.7;76.0;67.2;74.9;70.3;0.1;70.4;72.5;2.5;Stable;Élevée;5.0;43.0;4.0;En hausse
+274355;B. Bouchouari;1063;Saint Etienne;Saint Etienne;Midfielder;1783.0;high;True;False;56.8;68.0;67.5;82.3;65.6;74.1;69.9;71.0;70.3;0.1;70.4;71.8;;Non disponible;Faible;1.0;43.0;4.0;En hausse
+51293;T. Bair;108;Auxerre;Auxerre;Attacker;958.0;medium;True;False;83.3;71.4;66.0;53.4;58.4;66.6;71.2;68.8;70.3;0.1;70.3;65.9;;Non disponible;Moyenne;3.0;36.7;-4.0;En baisse
+278392;C. Cresswell;96;Toulouse;Toulouse;Defender;2592.0;high;True;False;73.0;45.0;48.6;46.3;70.8;74.7;65.6;76.8;70.1;0.1;70.2;68.6;2.1;Stable;Moyenne;4.0;62.7;5.3;En hausse
+364810;A. Sylla;95;Strasbourg;Strasbourg;Defender;951.0;medium;True;False;67.8;47.5;52.9;62.1;77.6;73.0;70.1;70.2;70.1;0.1;70.2;68.2;;Non disponible;Faible;1.0;44.5;-15.0;En baisse
+326088;K. Fayad;82;Montpellier;Montpellier;Midfielder;1026.0;medium;True;False;59.0;63.6;67.6;75.6;74.3;82.8;70.7;69.2;70.1;0.0;70.1;64.3;-5.1;En baisse;Moyenne;4.0;25.0;-2.7;Stable
+129681;A. Rouault;94;Rennes;Rennes;Defender;973.0;medium;True;False;61.2;89.1;49.6;66.5;64.6;63.6;67.4;74.0;70.1;0.0;70.1;65.3;-0.9;Stable;Élevée;5.0;42.7;4.0;En hausse
+1101;T. Minamino;91;Monaco;Monaco;Midfielder;2244.0;high;True;False;78.5;84.5;75.7;54.3;51.5;50.0;66.1;75.3;69.8;0.1;69.8;66.7;-1.5;Stable;Élevée;5.0;54.2;-1.3;Stable
+163004;E. Lepaul;77;Angers;Angers;Attacker;1638.0;high;True;False;87.8;56.3;55.1;54.3;48.6;53.8;67.8;72.6;69.7;0.0;69.8;73.2;6.1;En hausse;Élevée;5.0;50.3;4.0;En hausse
+64255;G. Lloris;111;Le Havre;Le Havre;Defender;2769.0;high;True;False;56.3;47.4;47.1;54.8;75.9;69.7;67.5;72.9;69.6;0.0;69.7;64.8;-6.1;En baisse;Moyenne;3.0;57.1;1.3;Stable
+156992;M. Gbane;93;Reims;Reims;Midfielder;1126.0;medium;True;False;62.2;62.3;63.7;74.0;74.5;60.6;66.5;74.4;69.6;0.0;69.7;66.3;-6.5;En baisse;Élevée;5.0;31.3;1.3;Stable
+103;J. Aholou;77;Angers;Angers / Strasbourg;Midfielder;1978.0;high;True;False;64.9;57.5;56.7;68.4;83.4;74.4;67.0;73.5;69.6;0.0;69.6;;;;;;50.3;4.0;En hausse
+1902;D. Ćaleta-Car;80;Lyon;Lyon;Defender;1590.0;high;True;False;54.8;76.8;46.1;59.4;66.9;64.4;66.3;74.5;69.6;-0.0;69.6;69.2;-0.9;Stable;Moyenne;3.0;51.3;4.0;En hausse
+20850;C. Arcus;77;Angers;Angers;Defender;2055.0;high;True;False;44.7;66.5;63.9;61.9;72.7;67.6;69.1;70.2;69.5;-0.0;69.5;68.4;-0.2;Stable;Élevée;5.0;50.3;4.0;En hausse
+162067;T. Pembélé;111;Le Havre;Le Havre;Defender;1109.0;medium;True;False;69.2;53.2;60.2;77.1;73.4;71.7;69.9;68.8;69.5;-0.0;69.5;65.0;-0.5;Stable;Moyenne;4.0;57.1;1.3;Stable
+33321;Keito Nakamura;93;Reims;Reims;Attacker;2870.0;high;True;False;84.6;68.4;66.9;55.4;45.3;35.7;66.3;74.3;69.5;-0.1;69.4;62.0;-9.4;En baisse;Moyenne;4.0;31.3;1.3;Stable
+21434;T. Sainte-Luce;82;Montpellier;Montpellier;Defender;1024.0;medium;True;False;69.1;65.8;64.4;76.7;73.0;71.3;71.6;66.4;69.5;-0.1;69.4;66.3;;Non disponible;Moyenne;3.0;25.0;-2.7;Stable
+327631;H. Diarra;95;Strasbourg;Strasbourg;Midfielder;2356.0;high;True;False;76.6;74.0;76.0;54.3;54.4;62.2;66.0;74.6;69.4;-0.1;69.3;72.7;-0.1;Stable;Élevée;5.0;44.5;-15.0;En baisse
+1407;D. Appiah;1063;Saint Etienne;Saint Etienne;Defender;2124.0;high;True;False;52.5;61.1;63.0;64.8;79.2;62.3;70.2;68.3;69.4;-0.1;69.3;70.3;8.3;En hausse;Élevée;5.0;43.0;4.0;En hausse
+31318;"M&apos;Bala Nzola";116;Lens;Lens;Attacker;1464.0;high;True;False;81.6;76.3;71.7;61.5;49.0;52.6;70.6;67.6;69.4;-0.1;69.3;;;;;;64.8;0.0;Stable
+18599;S. Thomas;83;Nantes;Nantes;Midfielder;1331.0;medium;True;False;57.9;90.8;81.7;62.3;55.1;51.3;68.8;70.3;69.4;-0.1;69.2;75.2;;Non disponible;Faible;2.0;53.1;10.7;En hausse
+179399;E. Tchato;82;Montpellier;Montpellier;Defender;1902.0;high;True;False;56.4;64.2;56.2;59.7;72.8;69.7;69.0;69.6;69.2;-0.1;69.1;62.5;-3.1;En baisse;Moyenne;3.0;25.0;-2.7;Stable
+174660;L. Rao-Lisoa;77;Angers;Angers;Defender;1326.0;medium;True;False;49.2;72.1;76.4;68.4;75.3;69.2;72.4;64.5;69.2;-0.2;69.1;63.2;-3.7;En baisse;Élevée;5.0;50.3;4.0;En hausse
+407017;M. Lumpungu;84;Nice;Nice;Defender;2195.0;high;True;False;43.9;62.5;44.4;72.7;68.0;65.2;65.9;73.6;69.0;-0.1;68.8;70.0;-6.9;En baisse;Moyenne;3.0;68.3;-12.0;En baisse
+21715;W. Saïd;116;Lens;Lens;Attacker;919.0;medium;True;False;77.4;69.9;64.7;66.2;55.0;53.0;68.2;70.0;68.9;-0.2;68.8;62.7;-1.9;Stable;Moyenne;3.0;64.8;0.0;Stable
+274328;S. Sow;95;Strasbourg;Strasbourg / Nantes;Defender;1818.0;high;True;False;62.3;46.2;49.2;68.9;72.9;62.1;65.1;74.5;68.9;-0.2;68.7;;;;;;44.5;-15.0;En baisse
+438688;A. Bouaddi;79;Lille;Lille;Midfielder;1154.0;medium;True;False;59.4;57.3;65.3;71.2;77.1;76.4;67.7;70.6;68.9;-0.2;68.7;65.4;;Non disponible;Faible;2.0;58.7;-6.7;En baisse
+22166;M. Sarr;116;Lens;Lens;Defender;1389.0;high;True;False;53.7;76.0;52.5;61.2;68.4;62.9;66.8;71.7;68.8;-0.2;68.6;68.5;;Non disponible;Faible;2.0;64.8;0.0;Stable
+2336;L. Négo;111;Le Havre;Le Havre;Defender;2461.0;high;True;False;43.2;57.8;55.1;75.7;68.5;73.5;68.3;69.3;68.7;-0.3;68.4;62.6;-5.7;En baisse;Élevée;5.0;57.1;1.3;Stable
+21088;N. Pallois;83;Nantes;Nantes;Defender;2020.0;high;True;False;49.8;41.6;52.0;53.6;77.8;65.7;66.5;72.0;68.7;-0.2;68.4;68.0;-8.3;En baisse;Moyenne;4.0;53.1;10.7;En hausse
+240;P. Rosario;84;Nice;Nice;Midfielder;1794.0;high;True;False;72.0;67.7;64.2;65.0;71.2;57.8;66.2;71.9;68.5;-0.3;68.2;69.8;-5.1;En baisse;Moyenne;4.0;68.3;-12.0;En baisse
+530;M. Bakker;79;Lille;Lille;Defender;1229.0;medium;True;False;78.7;84.9;77.6;71.5;61.3;54.4;64.2;75.0;68.5;-0.3;68.2;63.9;-4.8;En baisse;Moyenne;3.0;58.7;-6.7;En baisse
+22102;W. Khazri;82;Montpellier;Montpellier;Attacker;1097.0;medium;True;False;64.4;80.3;75.2;60.9;65.1;69.1;67.6;69.5;68.4;-0.3;68.0;66.7;;Non disponible;Faible;2.0;25.0;-2.7;Stable
+22136;B. Diakité;79;Lille;Lille;Defender;2767.0;high;True;False;68.4;58.0;49.0;68.8;62.3;65.9;62.9;76.4;68.3;-0.3;67.9;64.9;-0.0;Stable;Moyenne;3.0;58.7;-6.7;En baisse
+8445;D. Batubinsika;1063;Saint Etienne;Saint Etienne;Defender;2017.0;high;True;False;58.2;67.9;46.9;68.6;71.4;69.0;69.2;66.8;68.2;-0.4;67.9;72.5;;Non disponible;Faible;1.0;43.0;4.0;En hausse
+943;U. Garcia;81;Marseille;Marseille;Defender;937.0;medium;True;False;69.5;69.3;72.2;62.5;62.6;65.3;64.6;73.6;68.2;-0.4;67.8;65.4;-5.9;En baisse;Moyenne;4.0;75.6;5.3;En hausse
+20554;H. Belkebla;77;Angers;Angers;Midfielder;1795.0;high;True;False;48.0;50.0;60.1;66.5;82.8;78.1;64.4;73.8;68.1;-0.5;67.7;;;;;;50.3;4.0;En hausse
+334914;S. Kumbedi;80;Lyon;Lyon;Defender;965.0;medium;True;False;64.4;60.0;61.9;66.2;70.3;65.0;66.8;70.2;68.2;-0.4;67.7;62.5;;Non disponible;Faible;2.0;51.3;4.0;En hausse
+174724;F. Magri;96;Toulouse;Toulouse;Attacker;1534.0;high;True;False;84.0;60.8;62.5;52.8;50.7;58.2;68.4;67.6;68.1;-0.5;67.6;67.8;-1.1;Stable;Élevée;5.0;62.7;5.3;En hausse
+22134;K. Amian;83;Nantes;Nantes;Defender;2169.0;high;True;False;66.5;60.1;54.1;71.1;67.9;66.6;66.3;70.7;68.0;-0.5;67.5;74.4;1.6;Stable;Élevée;5.0;53.1;10.7;En hausse
+80752;T. Tessmann;80;Lyon;Lyon;Midfielder;1261.0;medium;True;False;76.5;60.5;60.7;71.0;71.0;57.5;65.4;72.1;68.0;-0.6;67.5;76.3;-0.3;Stable;Élevée;5.0;51.3;4.0;En hausse
+6231;F. Medina;116;Lens;Lens;Defender;2547.0;high;True;False;42.3;59.4;64.0;55.1;67.0;60.2;62.8;75.5;67.9;-0.6;67.3;69.8;0.6;Stable;Moyenne;4.0;64.8;0.0;Stable
+1567;A. Mandi;79;Lille;Lille;Defender;1736.0;high;True;False;52.0;69.8;48.8;63.6;63.6;59.1;62.7;75.3;67.7;-0.6;67.2;68.3;-2.3;Stable;Moyenne;3.0;58.7;-6.7;En baisse
+30423;H. Hateboer;94;Rennes;Rennes;Midfielder;1680.0;high;True;False;43.7;67.9;58.2;67.6;73.2;69.3;64.8;71.7;67.5;-0.6;67.0;;;;;;42.7;4.0;En hausse
+9700;Abner;80;Lyon;Lyon;Defender;1099.0;medium;True;False;69.3;70.7;66.4;62.7;63.2;55.4;62.3;74.7;67.2;-0.5;66.7;68.5;;Non disponible;Faible;2.0;51.3;4.0;En hausse
+128342;R. Ndiaye;111;Le Havre;Le Havre;Midfielder;1085.0;medium;True;False;66.5;68.5;60.7;53.6;75.0;67.1;65.1;70.3;67.2;-0.6;66.6;74.2;-0.6;Stable;Moyenne;3.0;57.1;1.3;Stable
+276184;M. Sarr;95;Strasbourg;Strasbourg / Lyon;Defender;2368.0;high;True;False;39.9;64.5;54.8;63.3;68.5;54.4;63.0;73.3;67.1;-0.6;66.5;63.7;-12.0;En baisse;Élevée;5.0;44.5;-15.0;En baisse
+22141;I. Sylla;82;Montpellier;Montpellier;Defender;1143.0;medium;True;False;60.5;62.0;60.0;71.6;69.3;65.9;67.2;67.1;67.1;-0.6;66.5;65.2;;Non disponible;Faible;1.0;25.0;-2.7;Stable
+8451;Aurélio Buta;93;Reims;Reims;Defender;1978.0;high;True;False;45.4;57.5;61.8;63.1;67.2;64.3;64.4;71.2;67.1;-0.7;66.4;65.1;-0.3;Stable;Moyenne;3.0;31.3;1.3;Stable
+25916;M. Niakhaté;80;Lyon;Lyon;Defender;2725.0;high;True;False;45.9;53.3;41.3;60.0;65.1;65.2;62.1;74.3;67.0;-0.7;66.3;72.5;3.5;En hausse;Élevée;5.0;51.3;4.0;En hausse
+18765;André Gomes;79;Lille;Lille;Midfielder;1283.0;medium;True;False;56.6;76.7;62.0;65.2;60.2;56.8;64.2;71.3;67.0;-0.7;66.3;66.8;;Non disponible;Faible;2.0;58.7;-6.7;En baisse
+21570;N. Cozza;83;Nantes;Nantes;Defender;2051.0;high;True;False;62.7;52.4;49.1;46.5;73.7;65.7;65.5;69.0;66.9;-0.7;66.2;69.1;;Non disponible;Moyenne;3.0;53.1;10.7;En hausse
+20692;H. Abdelli;77;Angers;Angers;Midfielder;2848.0;high;True;False;70.1;41.2;75.1;70.7;60.1;58.3;61.3;75.2;66.9;-0.8;66.1;68.6;9.1;En hausse;Élevée;5.0;50.3;4.0;En hausse
+334429;O. Diakité;93;Reims;Reims;Attacker;1763.0;high;True;False;74.4;62.9;68.3;62.4;53.3;57.4;67.3;65.9;66.7;-0.8;65.9;62.9;1.4;Stable;Moyenne;3.0;31.3;1.3;Stable
+343351;V. Atangana Edoa;93;Reims;Reims;Midfielder;2965.0;high;True;False;53.1;55.8;53.1;55.0;78.5;80.7;62.5;72.8;66.6;-0.8;65.8;67.4;-3.4;En baisse;Élevée;5.0;31.3;1.3;Stable
+285;K. Hoever;108;Auxerre;Auxerre;Defender;2141.0;high;True;False;68.9;73.6;67.0;46.4;66.0;57.5;63.3;71.5;66.6;-0.8;65.8;67.6;-4.0;En baisse;Moyenne;4.0;36.7;-4.0;En baisse
+174937;Y. Kechta;111;Le Havre;Le Havre;Midfielder;2113.0;high;True;False;66.2;63.3;59.3;63.4;71.8;63.2;64.3;69.8;66.5;-0.8;65.6;66.2;6.0;En hausse;Élevée;5.0;57.1;1.3;Stable
+21439;J. Ferri;82;Montpellier;Montpellier;Midfielder;1780.0;high;True;False;56.3;67.9;67.8;61.5;64.5;64.4;64.5;68.4;66.1;-0.8;65.3;62.9;-2.9;Stable;Élevée;5.0;25.0;-2.7;Stable
+21381;J. Lefort;77;Angers;Angers;Defender;3060.0;high;True;False;38.5;37.0;52.0;56.2;67.1;63.3;60.2;74.8;66.1;-0.8;65.2;61.5;-6.6;En baisse;Élevée;5.0;50.3;4.0;En hausse
+21010;E. Owusu;108;Auxerre;Auxerre;Midfielder;2354.0;high;True;False;61.7;59.3;63.4;56.4;79.8;62.2;63.7;69.5;66.0;-0.9;65.1;66.0;;Non disponible;Faible;2.0;36.7;-4.0;En baisse
+174801;A. Moueffek;1063;Saint Etienne;Saint Etienne;Midfielder;1042.0;medium;True;False;55.5;69.5;69.7;66.9;65.5;54.6;64.8;67.6;65.9;-0.9;65.0;68.1;2.7;Stable;Élevée;5.0;43.0;4.0;En hausse
+412759;J. Canvot;96;Toulouse;Toulouse;Defender;1116.0;medium;True;False;56.0;58.1;56.6;69.9;66.3;58.9;63.0;69.9;65.8;-0.9;64.9;72.0;1.6;Stable;Moyenne;4.0;62.7;5.3;En hausse
+284071;O. Targhalline;111;Le Havre;Le Havre;Midfielder;994.0;medium;True;False;54.3;64.4;61.3;62.5;73.9;58.2;63.2;69.6;65.7;-0.9;64.8;;;;;;57.1;1.3;Stable
+2704;Y. Abdelhamid;1063;Saint Etienne;Saint Etienne / Reims;Defender;1015.0;medium;True;False;59.0;52.0;53.8;59.0;72.0;63.2;65.1;66.5;65.6;-1.0;64.7;65.7;;Non disponible;Faible;1.0;43.0;4.0;En hausse
+30409;J. Veretout;80;Lyon;Lyon;Midfielder;1556.0;high;True;False;74.1;66.9;58.1;65.6;56.6;52.5;61.9;71.1;65.6;-1.0;64.5;71.8;5.9;En hausse;Moyenne;4.0;51.3;4.0;En hausse
+50735;M. McKenzie;96;Toulouse;Toulouse;Defender;2497.0;high;True;False;61.5;39.3;48.2;53.0;68.5;63.6;61.2;72.0;65.5;-1.1;64.4;73.7;12.0;En hausse;Moyenne;3.0;62.7;5.3;En hausse
+350388;Y. Mouanga;82;Montpellier;Montpellier;Defender;946.0;medium;True;False;55.0;52.8;56.0;72.8;66.6;62.6;63.6;68.0;65.4;-1.1;64.2;63.8;-6.8;En baisse;Élevée;5.0;25.0;-2.7;Stable
+902;N. Matić;80;Lyon;Lyon;Midfielder;2025.0;high;True;False;53.8;59.9;61.7;64.6;64.1;52.2;60.0;73.3;65.3;-1.2;64.1;69.2;-4.4;En baisse;Moyenne;4.0;51.3;4.0;En hausse
+21498;M. Coco;83;Nantes;Nantes;Attacker;966.0;medium;True;False;53.3;72.8;69.8;59.3;76.3;72.5;62.2;69.9;65.3;-1.3;64.0;;;;;;53.1;10.7;En hausse
+110;H. Massengo;108;Auxerre;Auxerre;Midfielder;1046.0;medium;True;False;61.2;53.8;60.7;67.2;71.2;68.6;63.4;67.5;65.0;-1.3;63.7;65.3;5.7;En hausse;Élevée;5.0;36.7;-4.0;En baisse
+272460;Q. Merlin;94;Rennes;Rennes / Marseille;Defender;3202.0;high;True;False;73.5;81.7;73.3;45.0;56.8;52.9;59.0;74.0;65.0;-1.4;63.6;;;;;;42.7;4.0;En hausse
+271542;I. Doukouré;95;Strasbourg;Strasbourg;Defender;2645.0;high;True;False;57.4;50.8;58.2;71.2;62.1;60.3;60.6;71.2;64.9;-1.4;63.4;63.3;-1.6;Stable;Élevée;5.0;44.5;-15.0;En baisse
+999;B. Omeragić;82;Montpellier;Montpellier;Defender;1803.0;high;True;False;54.5;44.4;50.2;74.9;65.7;61.5;61.8;69.5;64.9;-1.5;63.3;61.7;-8.3;En baisse;Élevée;5.0;25.0;-2.7;Stable
+30405;E. Fernandes;106;Stade Brestois 29;Stade Brestois 29;Midfielder;1102.0;medium;True;False;58.1;64.7;62.8;64.8;64.6;53.9;62.1;68.9;64.8;-1.6;63.2;63.9;0.2;Stable;Moyenne;3.0;48.8;4.0;En hausse
+20206;G. Osho;108;Auxerre;Auxerre;Defender;1657.0;high;True;False;65.0;38.7;45.5;63.8;62.3;63.7;59.0;73.4;64.8;-1.7;63.1;67.5;;Non disponible;Faible;1.0;36.7;-4.0;En baisse
+20545;J. Castelletto;83;Nantes;Nantes;Defender;2622.0;high;True;False;48.8;51.2;37.7;60.6;62.5;62.7;59.9;71.7;64.6;-1.7;62.9;75.9;0.5;Stable;Élevée;5.0;53.1;10.7;En hausse
+420292;H. Sekine;93;Reims;Reims;Defender;1016.0;medium;True;False;51.3;61.7;59.9;69.1;60.7;53.8;59.6;71.7;64.4;-1.8;62.6;69.9;0.8;Stable;Élevée;5.0;31.3;1.3;Stable
+385569;E. Biumla;77;Angers;Angers;Midfielder;1334.0;medium;True;False;64.9;42.7;51.1;70.7;61.0;65.1;57.9;71.9;63.5;-1.7;61.8;68.2;;Non disponible;Faible;1.0;50.3;4.0;En hausse
+47530;Sergio Akieme;93;Reims;Reims;Defender;2721.0;high;True;False;61.6;68.6;68.4;58.3;56.0;49.7;56.7;73.4;63.4;-1.8;61.5;71.5;8.9;En hausse;Élevée;5.0;31.3;1.3;Stable
+3234;A. Bamba;77;Angers;Angers;Defender;1520.0;high;True;False;49.7;55.5;51.2;61.6;63.4;54.3;59.2;69.4;63.3;-2.0;61.3;66.8;;Non disponible;Faible;2.0;50.3;4.0;En hausse
+128287;J. Chotard;82;Montpellier;Montpellier;Midfielder;1871.0;high;True;False;58.0;53.5;51.8;59.6;68.9;56.7;57.8;69.7;62.6;-1.9;60.6;63.5;-3.4;En baisse;Élevée;5.0;25.0;-2.7;Stable
+174708;Y. Belkhdim;77;Angers;Angers;Midfielder;1525.0;high;True;False;69.9;53.0;56.8;45.4;77.1;59.7;59.1;66.8;62.2;-2.0;60.2;65.8;-0.2;Stable;Moyenne;4.0;50.3;4.0;En hausse
+93671;Pedro Chirivella;83;Nantes;Nantes;Midfielder;2363.0;high;True;False;48.7;52.8;60.7;53.1;58.8;52.7;54.9;72.3;61.9;-2.1;59.8;77.8;1.7;Stable;Élevée;5.0;53.1;10.7;En hausse
+389322;N. Sangui;93;Reims;Reims;Defender;1174.0;medium;True;False;51.2;59.2;67.3;70.9;58.5;53.2;58.3;65.7;61.3;-2.1;59.2;67.6;-3.4;En baisse;Moyenne;3.0;31.3;1.3;Stable
+126757;L. Brassier;94;Rennes;Rennes / Marseille / Stade Brestois 29;Defender;2015.0;high;True;False;56.4;88.1;40.1;47.0;54.5;52.3;57.6;63.5;60.0;-1.9;58.0;66.5;-6.1;En baisse;Élevée;5.0;42.7;4.0;En hausse
+162443;É. Youté;111;Le Havre;Le Havre;Defender;2327.0;high;True;False;46.0;37.6;38.2;57.3;61.3;52.5;54.4;67.9;59.8;-2.0;57.8;61.1;-7.7;En baisse;Élevée;5.0;57.1;1.3;Stable
+20558;H. Magnetti;106;Stade Brestois 29;Stade Brestois 29;Midfielder;2335.0;high;True;False;62.4;46.0;47.7;55.5;61.7;55.6;53.8;68.6;59.7;-2.1;57.6;64.1;5.0;En hausse;Élevée;5.0;48.8;4.0;En hausse
+3336;F. Sacko;82;Montpellier;Montpellier;Defender;1235.0;medium;True;False;54.7;60.9;59.5;49.6;60.1;47.5;55.9;63.1;58.8;-2.1;56.7;68.2;;Non disponible;Faible;1.0;25.0;-2.7;Stable
