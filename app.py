@@ -355,6 +355,7 @@ def player_tile(player: pd.Series, rank_label: str = "") -> str:
 
 
 def player_form_tile(player: pd.Series) -> str:
+    """Construit une carte HTML compacte, sans ligne vide Markdown."""
     photo = image_url(player.get("player_id")) or ""
     logo = team_logo_url(player.get("team_id")) or ""
 
@@ -374,48 +375,42 @@ def player_form_tile(player: pd.Series) -> str:
     form_colour = score_color(form_value)
     trend_html = trend_badge(player.get("form_trend"))
 
-    return f"""
-    <div class="form-player-card">
-        <div class="form-card-label">🔥 Forme récente</div>
-
-        <div class="form-card-main">
-            <img class="form-card-photo" src="{photo}" alt="{player['player_name']}">
-
-            <div class="form-score-block">
-                <div
-                    class="form-score-circle"
-                    style="border-color:{form_colour}; box-shadow:0 0 22px {form_colour}44;"
-                >
-                    <span>{form_shown}</span>
-                </div>
-                <div class="form-score-caption">Forme sur 5 matchs</div>
-            </div>
-        </div>
-
-        <div class="form-card-name">{player['player_name']}</div>
-
-        <div class="form-card-club">
-            <img src="{logo}" alt="{player['team_name']}">
-            <span>{player['team_name']}</span>
-        </div>
-
-        <div class="form-card-details">
-            <div class="form-detail-box">
-                <span>Note générale</span>
-                <strong>{overall_shown}</strong>
-            </div>
-            <div class="form-detail-box">
-                <span>Fiabilité</span>
-                <strong>{reliability}</strong>
-            </div>
-        </div>
-
-        <div class="form-card-footer">
-            <span>{matches_shown}</span>
-            {trend_html}
-        </div>
-    </div>
-    """
+    return (
+        f'<div class="form-player-card">'
+        f'<div class="form-card-label">🔥 Forme récente</div>'
+        f'<div class="form-card-main">'
+        f'<img class="form-card-photo" src="{photo}" '
+        f'alt="{player["player_name"]}">'
+        f'<div class="form-score-block">'
+        f'<div class="form-score-circle" '
+        f'style="border-color:{form_colour}; '
+        f'box-shadow:0 0 22px {form_colour}44;">'
+        f'<span>{form_shown}</span>'
+        f'</div>'
+        f'<div class="form-score-caption">Forme sur 5 matchs</div>'
+        f'</div>'
+        f'</div>'
+        f'<div class="form-card-name">{player["player_name"]}</div>'
+        f'<div class="form-card-club">'
+        f'<img src="{logo}" alt="{player["team_name"]}">'
+        f'<span>{player["team_name"]}</span>'
+        f'</div>'
+        f'<div class="form-card-details">'
+        f'<div class="form-detail-box">'
+        f'<span>Note générale</span>'
+        f'<strong>{overall_shown}</strong>'
+        f'</div>'
+        f'<div class="form-detail-box">'
+        f'<span>Fiabilité</span>'
+        f'<strong>{reliability}</strong>'
+        f'</div>'
+        f'</div>'
+        f'<div class="form-card-footer">'
+        f'<span>{matches_shown}</span>'
+        f'{trend_html}'
+        f'</div>'
+        f'</div>'
+    )
 
 
 def render_home(df: pd.DataFrame) -> None:
