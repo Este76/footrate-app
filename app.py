@@ -37,6 +37,7 @@ def version_key(path: Path) -> tuple[int, ...]:
 
 def find_data_file() -> Path:
     preferred = [
+        Path("output/footrate_official_v0_8.csv"),
         Path("output/footrate_official_v0_7.csv"),
         Path("output/footrate_official_v0_6.csv"),
         Path("output/footrate_official_v0_5.csv"),
@@ -138,6 +139,22 @@ def load_data(path_as_text: str) -> pd.DataFrame:
         df["form_label"] = "Non disponible"
     else:
         df["form_label"] = df["form_label"].fillna("Non disponible").astype(str)
+
+    if "form_reliability" not in df.columns:
+        df["form_reliability"] = df["matches_in_form"].apply(
+            lambda value: (
+                "Élevée" if pd.notna(value) and value >= 5
+                else "Moyenne" if pd.notna(value) and value >= 3
+                else "Faible" if pd.notna(value) and value >= 1
+                else "Non disponible"
+            )
+        )
+    else:
+        df["form_reliability"] = (
+            df["form_reliability"]
+            .fillna("Non disponible")
+            .astype(str)
+        )
 
     if "club_form_label" not in df.columns:
         df["club_form_label"] = "Non disponible"
@@ -362,7 +379,7 @@ def render_home(df: pd.DataFrame) -> None:
     if form_available:
         st.markdown("### Joueurs en forme")
         in_form = (
-            df[df["form"].notna() & df["matches_in_form"].ge(2)]
+            df[df["form"].notna() & df["matches_in_form"].ge(3)]
             .sort_values(["form", "overall"], ascending=[False, False])
             .head(3)
         )
@@ -371,7 +388,11 @@ def render_home(df: pd.DataFrame) -> None:
             for column, (_, player) in zip(form_columns, in_form.iterrows()):
                 with column:
                     st.markdown(
-                        player_tile(player, f"🔥 Forme {player['form']:.1f}"),
+                        player_tile(
+                            player,
+                            f"🔥 Forme {player['form']:.1f} · "
+                            f"{int(player['matches_in_form'])}/5",
+                        ),
                         unsafe_allow_html=True,
                     )
                     st.markdown(
@@ -1186,9 +1207,13 @@ def render_player_card(player: pd.Series) -> None:
         ),
     )
     metric6.metric(
-        "Matchs analysés",
-        "—" if pd.isna(player.get("matches_in_form"))
-        else f"{int(player['matches_in_form'])}/5",
+        "Fiabilité de la forme",
+        player.get("form_reliability", "Non disponible"),
+        delta=(
+            "—" if pd.isna(player.get("matches_in_form"))
+            else f"{int(player['matches_in_form'])}/5 matchs"
+        ),
+        delta_color="off",
     )
 
     with st.expander("Comment lire cette fiche ?"):
@@ -1360,10 +1385,14 @@ def render_methodology() -> None:
         La **forme récente d'un joueur** est calculée à partir de ses notes
         API-Football lors des cinq derniers matchs de son club, avec davantage de
         poids pour les rencontres les plus récentes et le temps réellement joué.
+        Lorsque moins de cinq matchs individuels sont disponibles, la note est
+        progressivement rapprochée de 70 afin de limiter les conclusions sur un
+        échantillon trop faible.
 
         La **forme d'un club** combine les résultats de ses cinq derniers matchs et
-        leur différence de buts. La tendance compare les deux matchs les plus récents
-        aux trois précédents.
+        leur différence de buts sur une échelle volontairement modérée. La tendance
+        compare les deux matchs les plus récents aux trois précédents et reste limitée
+        à ±15 points.
 
         La **note d'effectif d'un club** correspond à la moyenne des onze joueurs
         les mieux notés du club. Elle est officielle avec au moins 11 joueurs évalués,
