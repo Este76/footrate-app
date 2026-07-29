@@ -346,6 +346,378 @@ def render_home(df: pd.DataFrame) -> None:
     )
 
 
+
+@st.cache_data(show_spinner=False)
+def build_club_summary(df: pd.DataFrame) -> pd.DataFrame:
+    records: list[dict] = []
+
+    for (team_id, team_name), group in df.groupby(
+        ["team_id", "team_name"], dropna=False
+    ):
+        group = group.sort_values(
+            ["overall", "minutes"], ascending=[False, False]
+        ).copy()
+
+        top_eleven = group.head(11)
+        position_scores: dict[str, float | None] = {}
+        position_limits = {
+            "Attacker": 3,
+            "Midfielder": 4,
+            "Defender": 4,
+        }
+
+        for position, limit in position_limits.items():
+            position_group = (
+                group[group["position"] == position]
+                .sort_values(["overall", "minutes"], ascending=[False, False])
+                .head(limit)
+            )
+            position_scores[position] = (
+                float(position_group["overall"].mean())
+                if not position_group.empty
+                else None
+            )
+
+        best_player = group.iloc[0]
+        records.append(
+            {
+                "team_id": team_id,
+                "team_name": team_name,
+                "squad_score": float(top_eleven["overall"].mean()),
+                "average_score": float(group["overall"].mean()),
+                "players_count": int(len(group)),
+                "attack_score": position_scores["Attacker"],
+                "midfield_score": position_scores["Midfielder"],
+                "defence_score": position_scores["Defender"],
+                "best_player": best_player["player_name"],
+                "best_player_score": float(best_player["overall"]),
+                "best_player_id": best_player["player_id"],
+                "minutes_total": float(group["minutes"].sum()),
+            }
+        )
+
+    summary = pd.DataFrame(records)
+    summary = summary.sort_values(
+        ["squad_score", "average_score"], ascending=[False, False]
+    ).reset_index(drop=True)
+    summary["rank"] = range(1, len(summary) + 1)
+    return summary
+
+
+def club_score_chart(club_row: pd.Series) -> alt.Chart:
+    chart_data = pd.DataFrame(
+        {
+            "Secteur": ["Attaque", "Milieu", "Défense"],
+            "Note": [
+                club_row.get("attack_score"),
+                club_row.get("midfield_score"),
+                club_row.get("defence_score"),
+            ],
+        }
+    ).dropna()
+
+    bars = (
+        alt.Chart(chart_data)
+        .mark_bar(cornerRadiusEnd=7, color="#22D3A7")
+        .encode(
+            x=alt.X(
+                "Note:Q",
+                scale=alt.Scale(domain=[0, 100]),
+                title="Note sur 100",
+            ),
+            y=alt.Y("Secteur:N", sort=["Attaque", "Milieu", "Défense"], title=None),
+            tooltip=[
+                alt.Tooltip("Secteur:N"),
+                alt.Tooltip("Note:Q", format=".1f"),
+            ],
+        )
+        .properties(height=190)
+    )
+
+    labels = (
+        alt.Chart(chart_data)
+        .mark_text(align="left", dx=6, color="#F8FAFC", fontWeight="bold")
+        .encode(
+            x=alt.X("Note:Q", scale=alt.Scale(domain=[0, 100])),
+            y=alt.Y("Secteur:N", sort=["Attaque", "Milieu", "Défense"]),
+            text=alt.Text("Note:Q", format=".1f"),
+        )
+    )
+    return bars + labels
+
+
+def render_club_comparison(summary: pd.DataFrame) -> None:
+    st.markdown("### Comparer deux clubs")
+    options = summary["team_name"].tolist()
+
+    left_selector, right_selector = st.columns(2)
+    with left_selector:
+        club_a_name = st.selectbox(
+            "Club 1",
+            options,
+            index=0,
+            key="club_compare_a",
+        )
+    with right_selector:
+        club_b_name = st.selectbox(
+            "Club 2",
+            options,
+            index=1 if len(options) > 1 else 0,
+            key="club_compare_b",
+        )
+
+    club_a = summary.loc[summary["team_name"] == club_a_name].iloc[0]
+    club_b = summary.loc[summary["team_name"] == club_b_name].iloc[0]
+
+    head_a, versus, head_b = st.columns([1, 0.25, 1])
+    with head_a:
+        logo_a = team_logo_url(club_a.get("team_id"))
+        if logo_a:
+            st.image(logo_a, width=90)
+        st.markdown(f"### {club_a['team_name']}")
+        st.markdown(
+            score_badge(club_a["squad_score"], "Note d'effectif"),
+            unsafe_allow_html=True,
+        )
+    with versus:
+        st.markdown("<div class='versus'>VS</div>", unsafe_allow_html=True)
+    with head_b:
+        logo_b = team_logo_url(club_b.get("team_id"))
+        if logo_b:
+            st.image(logo_b, width=90)
+        st.markdown(f"### {club_b['team_name']}")
+        st.markdown(
+            score_badge(club_b["squad_score"], "Note d'effectif"),
+            unsafe_allow_html=True,
+        )
+
+    comparison_rows = []
+    criteria = [
+        ("Note d'effectif", "squad_score"),
+        ("Moyenne des joueurs", "average_score"),
+        ("Attaque", "attack_score"),
+        ("Milieu", "midfield_score"),
+        ("Défense", "defence_score"),
+    ]
+    for label, column in criteria:
+        comparison_rows.extend(
+            [
+                {
+                    "Critère": label,
+                    "Club": club_a["team_name"],
+                    "Note": club_a[column],
+                },
+                {
+                    "Critère": label,
+                    "Club": club_b["team_name"],
+                    "Note": club_b[column],
+                },
+            ]
+        )
+
+    comparison_df = pd.DataFrame(comparison_rows).dropna()
+    club_domain = [club_a["team_name"], club_b["team_name"]]
+
+    bars = (
+        alt.Chart(comparison_df)
+        .mark_bar(cornerRadiusEnd=5)
+        .encode(
+            x=alt.X("Note:Q", scale=alt.Scale(domain=[0, 100]), title="Note sur 100"),
+            y=alt.Y("Critère:N", sort=[label for label, _ in criteria], title=None),
+            yOffset=alt.YOffset("Club:N"),
+            color=alt.Color(
+                "Club:N",
+                scale=alt.Scale(
+                    domain=club_domain,
+                    range=["#7DD3FC", "#22D3A7"],
+                ),
+                legend=alt.Legend(title=None, orient="bottom"),
+            ),
+            tooltip=[
+                alt.Tooltip("Club:N"),
+                alt.Tooltip("Critère:N"),
+                alt.Tooltip("Note:Q", format=".1f"),
+            ],
+        )
+        .properties(height=350)
+    )
+
+    labels = (
+        alt.Chart(comparison_df)
+        .mark_text(align="left", dx=5, color="#F8FAFC", fontWeight="bold")
+        .encode(
+            x=alt.X("Note:Q", scale=alt.Scale(domain=[0, 100])),
+            y=alt.Y("Critère:N", sort=[label for label, _ in criteria]),
+            yOffset=alt.YOffset("Club:N"),
+            text=alt.Text("Note:Q", format=".1f"),
+        )
+    )
+    st.altair_chart(bars + labels, use_container_width=True)
+
+
+def render_clubs(df: pd.DataFrame) -> None:
+    st.subheader("Clubs")
+    st.caption(
+        "La note d'effectif correspond à la moyenne des onze joueurs les mieux "
+        "notés du club dans les données disponibles."
+    )
+
+    summary = build_club_summary(df)
+    ranking_tab, profile_tab, comparison_tab = st.tabs(
+        ["Classement des clubs", "Fiche club", "Comparateur"]
+    )
+
+    with ranking_tab:
+        display = summary[
+            [
+                "rank",
+                "team_name",
+                "players_count",
+                "squad_score",
+                "average_score",
+                "best_player",
+            ]
+        ].rename(
+            columns={
+                "rank": "Rang",
+                "team_name": "Club",
+                "players_count": "Joueurs notés",
+                "squad_score": "Note d'effectif",
+                "average_score": "Moyenne",
+                "best_player": "Meilleur joueur",
+            }
+        )
+        display["Note d'effectif"] = display["Note d'effectif"].round(1)
+        display["Moyenne"] = display["Moyenne"].round(1)
+
+        st.dataframe(
+            display,
+            use_container_width=True,
+            hide_index=True,
+            height=610,
+            column_config={
+                "Rang": st.column_config.NumberColumn(width="small"),
+                "Club": st.column_config.TextColumn(width="medium"),
+                "Joueurs notés": st.column_config.NumberColumn(width="small"),
+                "Note d'effectif": st.column_config.ProgressColumn(
+                    min_value=0,
+                    max_value=100,
+                    format="%.1f",
+                ),
+                "Moyenne": st.column_config.NumberColumn(format="%.1f"),
+                "Meilleur joueur": st.column_config.TextColumn(width="medium"),
+            },
+        )
+        st.info(
+            "Cette note mesure la qualité statistique de l'effectif évalué. "
+            "Elle ne remplace pas encore le classement sportif réel du championnat."
+        )
+
+    with profile_tab:
+        selected_club_name = st.selectbox(
+            "Choisir un club",
+            summary["team_name"].tolist(),
+            key="club_profile_selector",
+        )
+        club_row = summary.loc[
+            summary["team_name"] == selected_club_name
+        ].iloc[0]
+        club_players = (
+            df[df["team_name"] == selected_club_name]
+            .sort_values(["overall", "minutes"], ascending=[False, False])
+            .copy()
+        )
+
+        identity_col, note_col, chart_col = st.columns([1, 1, 1.8])
+        with identity_col:
+            logo = team_logo_url(club_row.get("team_id"))
+            if logo:
+                st.image(logo, width=145)
+            st.markdown(f"## {club_row['team_name']}")
+            st.write(f"**{int(club_row['players_count'])} joueurs notés**")
+            st.caption(
+                f"Meilleur joueur : {club_row['best_player']} "
+                f"({club_row['best_player_score']:.1f})"
+            )
+
+        with note_col:
+            st.markdown(
+                score_badge(club_row["squad_score"], "Note d'effectif"),
+                unsafe_allow_html=True,
+            )
+            st.caption("Moyenne des 11 joueurs les mieux notés")
+
+        with chart_col:
+            st.altair_chart(
+                club_score_chart(club_row),
+                use_container_width=True,
+            )
+
+        metric_1, metric_2, metric_3 = st.columns(3)
+        metric_1.metric("Moyenne de l'effectif", f"{club_row['average_score']:.1f}")
+        metric_2.metric("Joueurs évalués", f"{int(club_row['players_count'])}")
+        metric_3.metric(
+            "Meilleure note individuelle",
+            f"{club_row['best_player_score']:.1f}",
+        )
+
+        st.markdown("### Meilleurs joueurs du club")
+        top_players = club_players.head(3)
+        top_columns = st.columns(3)
+        for column, (_, player), rank_label in zip(
+            top_columns,
+            top_players.iterrows(),
+            ["🥇 1er", "🥈 2e", "🥉 3e"],
+        ):
+            with column:
+                st.markdown(
+                    player_tile(player, rank_label),
+                    unsafe_allow_html=True,
+                )
+
+        st.markdown("### Effectif évalué")
+        roster = club_players[
+            [
+                "player_name",
+                "position_fr",
+                "minutes",
+                "overall",
+                "reliability",
+            ]
+        ].rename(
+            columns={
+                "player_name": "Joueur",
+                "position_fr": "Poste",
+                "minutes": "Minutes",
+                "overall": "Note",
+                "reliability": "Fiabilité",
+            }
+        )
+        roster["Minutes"] = roster["Minutes"].round(0).astype("Int64")
+        roster["Note"] = roster["Note"].round(1)
+
+        st.dataframe(
+            roster,
+            use_container_width=True,
+            hide_index=True,
+            height=440,
+            column_config={
+                "Joueur": st.column_config.TextColumn(width="medium"),
+                "Poste": st.column_config.TextColumn(width="small"),
+                "Minutes": st.column_config.NumberColumn(format="%d"),
+                "Note": st.column_config.ProgressColumn(
+                    min_value=0,
+                    max_value=100,
+                    format="%.1f",
+                ),
+                "Fiabilité": st.column_config.TextColumn(width="small"),
+            },
+        )
+
+    with comparison_tab:
+        render_club_comparison(summary)
+
+
 def render_ranking(df: pd.DataFrame) -> None:
     st.subheader("Classement des joueurs")
 
@@ -632,6 +1004,10 @@ def render_methodology() -> None:
         Une note est **officielle à partir de 900 minutes**. Entre 450 et 899 minutes,
         elle est considérée comme provisoire. La calibration finale est limitée afin
         que le classement relatif ne déforme pas excessivement la performance brute.
+
+        La **note d'effectif d'un club** correspond à la moyenne des onze joueurs
+        les mieux notés du club dans les données disponibles. Elle mesure la qualité
+        statistique de l'effectif et non ses résultats sportifs réels.
         """
     )
     st.warning(
@@ -950,8 +1326,15 @@ except Exception as exc:
 
 render_header(data_file)
 
-tab_home, tab_ranking, tab_profile, tab_compare, tab_method = st.tabs(
-    ["🏠 Accueil", "🏆 Classement", "👤 Fiche joueur", "⇄ Comparateur", "ℹ️ Méthodologie"]
+tab_home, tab_ranking, tab_clubs, tab_profile, tab_compare, tab_method = st.tabs(
+    [
+        "🏠 Accueil",
+        "🏆 Joueurs",
+        "⚽ Clubs",
+        "👤 Fiche joueur",
+        "⇄ Comparateur",
+        "ℹ️ Méthodologie",
+    ]
 )
 
 with tab_home:
@@ -959,6 +1342,9 @@ with tab_home:
 
 with tab_ranking:
     render_ranking(data)
+
+with tab_clubs:
+    render_clubs(data)
 
 with tab_profile:
     render_player_profile(data)
