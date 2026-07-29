@@ -1,0 +1,283 @@
+﻿competition_id;competition_name;season;season_label;fixture_id;date;round;team_id;team_name;home_away;opponent_id;opponent_name;opponent_logo;goals_for;goals_against;score;result;recency_order
+61;Ligue 1;2022;2022-2023;871844;2023-06-03T19:00:00+00:00;Regular Season - 38;77;Angers;away;83;Nantes;https://media.api-sports.io/football/teams/83.png;0;1;0-1;D;1
+61;Ligue 1;2022;2022-2023;871830;2023-05-27T19:00:00+00:00;Regular Season - 37;77;Angers;home;110;Estac Troyes;https://media.api-sports.io/football/teams/110.png;2;1;2-1;V;2
+61;Ligue 1;2022;2022-2023;871828;2023-05-21T13:00:00+00:00;Regular Season - 36;77;Angers;away;93;Reims;https://media.api-sports.io/football/teams/93.png;2;2;2-2;N;3
+61;Ligue 1;2022;2022-2023;871813;2023-05-14T18:45:00+00:00;Regular Season - 35;77;Angers;away;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;3;1-3;D;4
+61;Ligue 1;2022;2022-2023;871802;2023-05-07T11:00:00+00:00;Regular Season - 34;77;Angers;home;91;Monaco;https://media.api-sports.io/football/teams/91.png;1;2;1-2;D;5
+61;Ligue 1;2022;2022-2023;871849;2023-06-03T19:00:00+00:00;Regular Season - 38;79;Lille;away;110;Estac Troyes;https://media.api-sports.io/football/teams/110.png;1;1;1-1;N;1
+61;Ligue 1;2022;2022-2023;871832;2023-05-27T19:00:00+00:00;Regular Season - 37;79;Lille;home;83;Nantes;https://media.api-sports.io/football/teams/83.png;2;1;2-1;V;2
+61;Ligue 1;2022;2022-2023;871824;2023-05-20T19:00:00+00:00;Regular Season - 36;79;Lille;home;81;Marseille;https://media.api-sports.io/football/teams/81.png;2;1;2-1;V;3
+61;Ligue 1;2022;2022-2023;871810;2023-05-14T15:05:00+00:00;Regular Season - 35;79;Lille;away;91;Monaco;https://media.api-sports.io/football/teams/91.png;0;0;0-0;N;4
+61;Ligue 1;2022;2022-2023;871808;2023-05-06T17:00:00+00:00;Regular Season - 34;79;Lille;away;93;Reims;https://media.api-sports.io/football/teams/93.png;0;1;0-1;D;5
+61;Ligue 1;2022;2022-2023;871845;2023-06-03T19:00:00+00:00;Regular Season - 38;80;Lyon;away;84;Nice;https://media.api-sports.io/football/teams/84.png;1;3;1-3;D;1
+61;Ligue 1;2022;2022-2023;871834;2023-05-27T19:00:00+00:00;Regular Season - 37;80;Lyon;home;93;Reims;https://media.api-sports.io/football/teams/93.png;3;0;3-0;V;2
+61;Ligue 1;2022;2022-2023;871826;2023-05-19T19:00:00+00:00;Regular Season - 36;80;Lyon;home;91;Monaco;https://media.api-sports.io/football/teams/91.png;3;1;3-1;V;3
+61;Ligue 1;2022;2022-2023;871811;2023-05-14T11:00:00+00:00;Regular Season - 35;80;Lyon;away;99;Clermont Foot;https://media.api-sports.io/football/teams/99.png;1;2;1-2;D;4
+61;Ligue 1;2022;2022-2023;871806;2023-05-07T15:05:00+00:00;Regular Season - 34;80;Lyon;home;82;Montpellier;https://media.api-sports.io/football/teams/82.png;5;4;5-4;V;5
+61;Ligue 1;2022;2022-2023;871840;2023-06-03T19:00:00+00:00;Regular Season - 38;81;Marseille;away;98;Ajaccio;https://media.api-sports.io/football/teams/98.png;0;1;0-1;D;1
+61;Ligue 1;2022;2022-2023;871835;2023-05-27T19:00:00+00:00;Regular Season - 37;81;Marseille;home;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;1;2;1-2;D;2
+61;Ligue 1;2022;2022-2023;871824;2023-05-20T19:00:00+00:00;Regular Season - 36;81;Marseille;away;79;Lille;https://media.api-sports.io/football/teams/79.png;1;2;1-2;D;3
+61;Ligue 1;2022;2022-2023;871813;2023-05-14T18:45:00+00:00;Regular Season - 35;81;Marseille;home;77;Angers;https://media.api-sports.io/football/teams/77.png;3;1;3-1;V;4
+61;Ligue 1;2022;2022-2023;871807;2023-05-06T19:00:00+00:00;Regular Season - 34;81;Marseille;away;116;Lens;https://media.api-sports.io/football/teams/116.png;1;2;1-2;D;5
+61;Ligue 1;2022;2022-2023;871848;2023-06-03T19:00:00+00:00;Regular Season - 38;82;Montpellier;away;93;Reims;https://media.api-sports.io/football/teams/93.png;3;1;3-1;V;1
+61;Ligue 1;2022;2022-2023;871833;2023-05-27T19:00:00+00:00;Regular Season - 37;82;Montpellier;home;84;Nice;https://media.api-sports.io/football/teams/84.png;2;3;2-3;D;2
+61;Ligue 1;2022;2022-2023;871823;2023-05-20T15:00:00+00:00;Regular Season - 36;82;Montpellier;away;83;Nantes;https://media.api-sports.io/football/teams/83.png;3;0;3-0;V;3
+61;Ligue 1;2022;2022-2023;871812;2023-05-14T13:00:00+00:00;Regular Season - 35;82;Montpellier;home;97;Lorient;https://media.api-sports.io/football/teams/97.png;1;1;1-1;N;4
+61;Ligue 1;2022;2022-2023;871806;2023-05-07T15:05:00+00:00;Regular Season - 34;82;Montpellier;away;80;Lyon;https://media.api-sports.io/football/teams/80.png;4;5;4-5;D;5
+61;Ligue 1;2022;2022-2023;871844;2023-06-03T19:00:00+00:00;Regular Season - 38;83;Nantes;home;77;Angers;https://media.api-sports.io/football/teams/77.png;1;0;1-0;V;1
+61;Ligue 1;2022;2022-2023;871832;2023-05-27T19:00:00+00:00;Regular Season - 37;83;Nantes;away;79;Lille;https://media.api-sports.io/football/teams/79.png;1;2;1-2;D;2
+61;Ligue 1;2022;2022-2023;871823;2023-05-20T15:00:00+00:00;Regular Season - 36;83;Nantes;home;82;Montpellier;https://media.api-sports.io/football/teams/82.png;0;3;0-3;D;3
+61;Ligue 1;2022;2022-2023;871819;2023-05-14T14:30:00+00:00;Regular Season - 35;83;Nantes;away;96;Toulouse;https://media.api-sports.io/football/teams/96.png;0;0;0-0;N;4
+61;Ligue 1;2022;2022-2023;871804;2023-05-07T13:00:00+00:00;Regular Season - 34;83;Nantes;home;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;0;2;0-2;D;5
+61;Ligue 1;2022;2022-2023;871845;2023-06-03T19:00:00+00:00;Regular Season - 38;84;Nice;home;80;Lyon;https://media.api-sports.io/football/teams/80.png;3;1;3-1;V;1
+61;Ligue 1;2022;2022-2023;871833;2023-05-27T19:00:00+00:00;Regular Season - 37;84;Nice;away;82;Montpellier;https://media.api-sports.io/football/teams/82.png;3;2;3-2;V;2
+61;Ligue 1;2022;2022-2023;871825;2023-05-21T13:00:00+00:00;Regular Season - 36;84;Nice;home;96;Toulouse;https://media.api-sports.io/football/teams/96.png;0;0;0-0;N;3
+61;Ligue 1;2022;2022-2023;871816;2023-05-13T15:00:00+00:00;Regular Season - 35;84;Nice;away;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;0;2;0-2;D;4
+61;Ligue 1;2022;2022-2023;871805;2023-05-06T15:00:00+00:00;Regular Season - 34;84;Nice;home;94;Rennes;https://media.api-sports.io/football/teams/94.png;2;1;2-1;V;5
+61;Ligue 1;2022;2022-2023;871846;2023-06-03T19:00:00+00:00;Regular Season - 38;85;Paris Saint Germain;home;99;Clermont Foot;https://media.api-sports.io/football/teams/99.png;2;3;2-3;D;1
+61;Ligue 1;2022;2022-2023;871837;2023-05-27T19:00:00+00:00;Regular Season - 37;85;Paris Saint Germain;away;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;1;1;1-1;N;2
+61;Ligue 1;2022;2022-2023;871821;2023-05-21T18:45:00+00:00;Regular Season - 36;85;Paris Saint Germain;away;108;Auxerre;https://media.api-sports.io/football/teams/108.png;2;1;2-1;V;3
+61;Ligue 1;2022;2022-2023;871814;2023-05-13T19:00:00+00:00;Regular Season - 35;85;Paris Saint Germain;home;98;Ajaccio;https://media.api-sports.io/football/teams/98.png;5;0;5-0;V;4
+61;Ligue 1;2022;2022-2023;871809;2023-05-07T18:45:00+00:00;Regular Season - 34;85;Paris Saint Germain;away;110;Estac Troyes;https://media.api-sports.io/football/teams/110.png;3;1;3-1;V;5
+61;Ligue 1;2022;2022-2023;871842;2023-06-03T19:00:00+00:00;Regular Season - 38;91;Monaco;home;96;Toulouse;https://media.api-sports.io/football/teams/96.png;1;2;1-2;D;1
+61;Ligue 1;2022;2022-2023;871838;2023-05-27T19:00:00+00:00;Regular Season - 37;91;Monaco;away;94;Rennes;https://media.api-sports.io/football/teams/94.png;0;2;0-2;D;2
+61;Ligue 1;2022;2022-2023;871826;2023-05-19T19:00:00+00:00;Regular Season - 36;91;Monaco;away;80;Lyon;https://media.api-sports.io/football/teams/80.png;1;3;1-3;D;3
+61;Ligue 1;2022;2022-2023;871810;2023-05-14T15:05:00+00:00;Regular Season - 35;91;Monaco;home;79;Lille;https://media.api-sports.io/football/teams/79.png;0;0;0-0;N;4
+61;Ligue 1;2022;2022-2023;871802;2023-05-07T11:00:00+00:00;Regular Season - 34;91;Monaco;away;77;Angers;https://media.api-sports.io/football/teams/77.png;2;1;2-1;V;5
+61;Ligue 1;2022;2022-2023;871848;2023-06-03T19:00:00+00:00;Regular Season - 38;93;Reims;home;82;Montpellier;https://media.api-sports.io/football/teams/82.png;1;3;1-3;D;1
+61;Ligue 1;2022;2022-2023;871834;2023-05-27T19:00:00+00:00;Regular Season - 37;93;Reims;away;80;Lyon;https://media.api-sports.io/football/teams/80.png;0;3;0-3;D;2
+61;Ligue 1;2022;2022-2023;871828;2023-05-21T13:00:00+00:00;Regular Season - 36;93;Reims;home;77;Angers;https://media.api-sports.io/football/teams/77.png;2;2;2-2;N;3
+61;Ligue 1;2022;2022-2023;871815;2023-05-12T19:00:00+00:00;Regular Season - 35;93;Reims;away;116;Lens;https://media.api-sports.io/football/teams/116.png;1;2;1-2;D;4
+61;Ligue 1;2022;2022-2023;871808;2023-05-06T17:00:00+00:00;Regular Season - 34;93;Reims;home;79;Lille;https://media.api-sports.io/football/teams/79.png;1;0;1-0;V;5
+61;Ligue 1;2022;2022-2023;871847;2023-06-03T19:00:00+00:00;Regular Season - 38;94;Rennes;away;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;2;1;2-1;V;1
+61;Ligue 1;2022;2022-2023;871838;2023-05-27T19:00:00+00:00;Regular Season - 37;94;Rennes;home;91;Monaco;https://media.api-sports.io/football/teams/91.png;2;0;2-0;V;2
+61;Ligue 1;2022;2022-2023;871820;2023-05-21T11:00:00+00:00;Regular Season - 36;94;Rennes;away;98;Ajaccio;https://media.api-sports.io/football/teams/98.png;5;0;5-0;V;3
+61;Ligue 1;2022;2022-2023;871818;2023-05-14T13:00:00+00:00;Regular Season - 35;94;Rennes;home;110;Estac Troyes;https://media.api-sports.io/football/teams/110.png;4;0;4-0;V;4
+61;Ligue 1;2022;2022-2023;871805;2023-05-06T15:00:00+00:00;Regular Season - 34;94;Rennes;away;84;Nice;https://media.api-sports.io/football/teams/84.png;1;2;1-2;D;5
+61;Ligue 1;2022;2022-2023;871843;2023-06-03T19:00:00+00:00;Regular Season - 38;95;Strasbourg;away;97;Lorient;https://media.api-sports.io/football/teams/97.png;1;2;1-2;D;1
+61;Ligue 1;2022;2022-2023;871837;2023-05-27T19:00:00+00:00;Regular Season - 37;95;Strasbourg;home;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;1;1-1;N;2
+61;Ligue 1;2022;2022-2023;871829;2023-05-21T13:00:00+00:00;Regular Season - 36;95;Strasbourg;away;110;Estac Troyes;https://media.api-sports.io/football/teams/110.png;1;1;1-1;N;3
+61;Ligue 1;2022;2022-2023;871816;2023-05-13T15:00:00+00:00;Regular Season - 35;95;Strasbourg;home;84;Nice;https://media.api-sports.io/football/teams/84.png;2;0;2-0;V;4
+61;Ligue 1;2022;2022-2023;871804;2023-05-07T13:00:00+00:00;Regular Season - 34;95;Strasbourg;away;83;Nantes;https://media.api-sports.io/football/teams/83.png;2;0;2-0;V;5
+61;Ligue 1;2022;2022-2023;871842;2023-06-03T19:00:00+00:00;Regular Season - 38;96;Toulouse;away;91;Monaco;https://media.api-sports.io/football/teams/91.png;2;1;2-1;V;1
+61;Ligue 1;2022;2022-2023;871839;2023-05-27T19:00:00+00:00;Regular Season - 37;96;Toulouse;home;108;Auxerre;https://media.api-sports.io/football/teams/108.png;1;1;1-1;N;2
+61;Ligue 1;2022;2022-2023;871825;2023-05-21T13:00:00+00:00;Regular Season - 36;96;Toulouse;away;84;Nice;https://media.api-sports.io/football/teams/84.png;0;0;0-0;N;3
+61;Ligue 1;2022;2022-2023;871819;2023-05-14T14:30:00+00:00;Regular Season - 35;96;Toulouse;home;83;Nantes;https://media.api-sports.io/football/teams/83.png;0;0;0-0;N;4
+61;Ligue 1;2022;2022-2023;871800;2023-05-07T13:00:00+00:00;Regular Season - 34;96;Toulouse;away;98;Ajaccio;https://media.api-sports.io/football/teams/98.png;0;0;0-0;N;5
+61;Ligue 1;2022;2022-2023;871843;2023-06-03T19:00:00+00:00;Regular Season - 38;97;Lorient;home;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;2;1;2-1;V;1
+61;Ligue 1;2022;2022-2023;871831;2023-05-27T19:00:00+00:00;Regular Season - 37;97;Lorient;away;99;Clermont Foot;https://media.api-sports.io/football/teams/99.png;0;2;0-2;D;2
+61;Ligue 1;2022;2022-2023;871822;2023-05-21T15:05:00+00:00;Regular Season - 36;97;Lorient;home;116;Lens;https://media.api-sports.io/football/teams/116.png;1;3;1-3;D;3
+61;Ligue 1;2022;2022-2023;871812;2023-05-14T13:00:00+00:00;Regular Season - 35;97;Lorient;away;82;Montpellier;https://media.api-sports.io/football/teams/82.png;1;1;1-1;N;4
+61;Ligue 1;2022;2022-2023;871803;2023-05-07T13:00:00+00:00;Regular Season - 34;97;Lorient;home;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;2;1;2-1;V;5
+61;Ligue 1;2022;2022-2023;871840;2023-06-03T19:00:00+00:00;Regular Season - 38;98;Ajaccio;home;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;0;1-0;V;1
+61;Ligue 1;2022;2022-2023;871836;2023-05-27T19:00:00+00:00;Regular Season - 37;98;Ajaccio;away;116;Lens;https://media.api-sports.io/football/teams/116.png;0;3;0-3;D;2
+61;Ligue 1;2022;2022-2023;871820;2023-05-21T11:00:00+00:00;Regular Season - 36;98;Ajaccio;home;94;Rennes;https://media.api-sports.io/football/teams/94.png;0;5;0-5;D;3
+61;Ligue 1;2022;2022-2023;871814;2023-05-13T19:00:00+00:00;Regular Season - 35;98;Ajaccio;away;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;0;5;0-5;D;4
+61;Ligue 1;2022;2022-2023;871800;2023-05-07T13:00:00+00:00;Regular Season - 34;98;Ajaccio;home;96;Toulouse;https://media.api-sports.io/football/teams/96.png;0;0;0-0;N;5
+61;Ligue 1;2022;2022-2023;871846;2023-06-03T19:00:00+00:00;Regular Season - 38;99;Clermont Foot;away;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;3;2;3-2;V;1
+61;Ligue 1;2022;2022-2023;871831;2023-05-27T19:00:00+00:00;Regular Season - 37;99;Clermont Foot;home;97;Lorient;https://media.api-sports.io/football/teams/97.png;2;0;2-0;V;2
+61;Ligue 1;2022;2022-2023;871827;2023-05-21T13:00:00+00:00;Regular Season - 36;99;Clermont Foot;away;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;1;2;1-2;D;3
+61;Ligue 1;2022;2022-2023;871811;2023-05-14T11:00:00+00:00;Regular Season - 35;99;Clermont Foot;home;80;Lyon;https://media.api-sports.io/football/teams/80.png;2;1;2-1;V;4
+61;Ligue 1;2022;2022-2023;871801;2023-05-07T13:00:00+00:00;Regular Season - 34;99;Clermont Foot;away;108;Auxerre;https://media.api-sports.io/football/teams/108.png;1;1;1-1;N;5
+61;Ligue 1;2022;2022-2023;871847;2023-06-03T19:00:00+00:00;Regular Season - 38;106;Stade Brestois 29;home;94;Rennes;https://media.api-sports.io/football/teams/94.png;1;2;1-2;D;1
+61;Ligue 1;2022;2022-2023;871835;2023-05-27T19:00:00+00:00;Regular Season - 37;106;Stade Brestois 29;away;81;Marseille;https://media.api-sports.io/football/teams/81.png;2;1;2-1;V;2
+61;Ligue 1;2022;2022-2023;871827;2023-05-21T13:00:00+00:00;Regular Season - 36;106;Stade Brestois 29;home;99;Clermont Foot;https://media.api-sports.io/football/teams/99.png;2;1;2-1;V;3
+61;Ligue 1;2022;2022-2023;871817;2023-05-14T13:00:00+00:00;Regular Season - 35;106;Stade Brestois 29;home;108;Auxerre;https://media.api-sports.io/football/teams/108.png;1;0;1-0;V;4
+61;Ligue 1;2022;2022-2023;871803;2023-05-07T13:00:00+00:00;Regular Season - 34;106;Stade Brestois 29;away;97;Lorient;https://media.api-sports.io/football/teams/97.png;1;2;1-2;D;5
+61;Ligue 1;2022;2022-2023;871841;2023-06-03T19:00:00+00:00;Regular Season - 38;108;Auxerre;home;116;Lens;https://media.api-sports.io/football/teams/116.png;1;3;1-3;D;1
+61;Ligue 1;2022;2022-2023;871839;2023-05-27T19:00:00+00:00;Regular Season - 37;108;Auxerre;away;96;Toulouse;https://media.api-sports.io/football/teams/96.png;1;1;1-1;N;2
+61;Ligue 1;2022;2022-2023;871821;2023-05-21T18:45:00+00:00;Regular Season - 36;108;Auxerre;home;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;2;1-2;D;3
+61;Ligue 1;2022;2022-2023;871817;2023-05-14T13:00:00+00:00;Regular Season - 35;108;Auxerre;away;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;0;1;0-1;D;4
+61;Ligue 1;2022;2022-2023;871801;2023-05-07T13:00:00+00:00;Regular Season - 34;108;Auxerre;home;99;Clermont Foot;https://media.api-sports.io/football/teams/99.png;1;1;1-1;N;5
+61;Ligue 1;2022;2022-2023;871849;2023-06-03T19:00:00+00:00;Regular Season - 38;110;Estac Troyes;home;79;Lille;https://media.api-sports.io/football/teams/79.png;1;1;1-1;N;1
+61;Ligue 1;2022;2022-2023;871830;2023-05-27T19:00:00+00:00;Regular Season - 37;110;Estac Troyes;away;77;Angers;https://media.api-sports.io/football/teams/77.png;1;2;1-2;D;2
+61;Ligue 1;2022;2022-2023;871829;2023-05-21T13:00:00+00:00;Regular Season - 36;110;Estac Troyes;home;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;1;1;1-1;N;3
+61;Ligue 1;2022;2022-2023;871818;2023-05-14T13:00:00+00:00;Regular Season - 35;110;Estac Troyes;away;94;Rennes;https://media.api-sports.io/football/teams/94.png;0;4;0-4;D;4
+61;Ligue 1;2022;2022-2023;871809;2023-05-07T18:45:00+00:00;Regular Season - 34;110;Estac Troyes;home;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;3;1-3;D;5
+61;Ligue 1;2022;2022-2023;871841;2023-06-03T19:00:00+00:00;Regular Season - 38;116;Lens;away;108;Auxerre;https://media.api-sports.io/football/teams/108.png;3;1;3-1;V;1
+61;Ligue 1;2022;2022-2023;871836;2023-05-27T19:00:00+00:00;Regular Season - 37;116;Lens;home;98;Ajaccio;https://media.api-sports.io/football/teams/98.png;3;0;3-0;V;2
+61;Ligue 1;2022;2022-2023;871822;2023-05-21T15:05:00+00:00;Regular Season - 36;116;Lens;away;97;Lorient;https://media.api-sports.io/football/teams/97.png;3;1;3-1;V;3
+61;Ligue 1;2022;2022-2023;871815;2023-05-12T19:00:00+00:00;Regular Season - 35;116;Lens;home;93;Reims;https://media.api-sports.io/football/teams/93.png;2;1;2-1;V;4
+61;Ligue 1;2022;2022-2023;871807;2023-05-06T19:00:00+00:00;Regular Season - 34;116;Lens;home;81;Marseille;https://media.api-sports.io/football/teams/81.png;2;1;2-1;V;5
+61;Ligue 1;2023;2023-2024;1045181;2024-05-19T19:00:00+00:00;Regular Season - 34;79;Lille;home;84;Nice;https://media.api-sports.io/football/teams/84.png;2;2;2-2;N;1
+61;Ligue 1;2023;2023-2024;1045175;2024-05-12T19:00:00+00:00;Regular Season - 33;79;Lille;away;83;Nantes;https://media.api-sports.io/football/teams/83.png;2;1;2-1;V;2
+61;Ligue 1;2023;2023-2024;1045162;2024-05-06T19:00:00+00:00;Regular Season - 32;79;Lille;home;80;Lyon;https://media.api-sports.io/football/teams/80.png;3;4;3-4;D;3
+61;Ligue 1;2023;2023-2024;1045158;2024-04-28T11:00:00+00:00;Regular Season - 31;79;Lille;away;112;Metz;https://media.api-sports.io/football/teams/112.png;2;1;2-1;V;4
+61;Ligue 1;2023;2023-2024;1045137;2024-04-24T19:00:00+00:00;Regular Season - 29;79;Lille;away;91;Monaco;https://media.api-sports.io/football/teams/91.png;0;1;0-1;D;5
+61;Ligue 1;2023;2023-2024;1045182;2024-05-19T19:00:00+00:00;Regular Season - 34;80;Lyon;home;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;2;1;2-1;V;1
+61;Ligue 1;2023;2023-2024;1045174;2024-05-12T19:00:00+00:00;Regular Season - 33;80;Lyon;away;99;Clermont Foot;https://media.api-sports.io/football/teams/99.png;1;0;1-0;V;2
+61;Ligue 1;2023;2023-2024;1045162;2024-05-06T19:00:00+00:00;Regular Season - 32;80;Lyon;away;79;Lille;https://media.api-sports.io/football/teams/79.png;4;3;4-3;V;3
+61;Ligue 1;2023;2023-2024;1045156;2024-04-28T17:00:00+00:00;Regular Season - 31;80;Lyon;home;91;Monaco;https://media.api-sports.io/football/teams/91.png;3;2;3-2;V;4
+61;Ligue 1;2023;2023-2024;1045142;2024-04-21T19:00:00+00:00;Regular Season - 30;80;Lyon;away;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;4;1-4;D;5
+61;Ligue 1;2023;2023-2024;1045185;2024-05-19T19:00:00+00:00;Regular Season - 34;81;Marseille;away;111;Le Havre;https://media.api-sports.io/football/teams/111.png;2;1;2-1;V;1
+61;Ligue 1;2023;2023-2024;1045164;2024-05-15T19:00:00+00:00;Regular Season - 32;81;Marseille;away;93;Reims;https://media.api-sports.io/football/teams/93.png;0;1;0-1;D;2
+61;Ligue 1;2023;2023-2024;1045172;2024-05-12T19:00:00+00:00;Regular Season - 33;81;Marseille;home;97;Lorient;https://media.api-sports.io/football/teams/97.png;3;1;3-1;V;3
+61;Ligue 1;2023;2023-2024;1045154;2024-04-28T19:00:00+00:00;Regular Season - 31;81;Marseille;home;116;Lens;https://media.api-sports.io/football/teams/116.png;2;1;2-1;V;4
+61;Ligue 1;2023;2023-2024;1045135;2024-04-24T19:00:00+00:00;Regular Season - 29;81;Marseille;home;84;Nice;https://media.api-sports.io/football/teams/84.png;2;2;2-2;N;5
+61;Ligue 1;2023;2023-2024;1045184;2024-05-19T19:00:00+00:00;Regular Season - 34;82;Montpellier;away;116;Lens;https://media.api-sports.io/football/teams/116.png;2;2;2-2;N;1
+61;Ligue 1;2023;2023-2024;1045176;2024-05-12T19:00:00+00:00;Regular Season - 33;82;Montpellier;home;91;Monaco;https://media.api-sports.io/football/teams/91.png;0;2;0-2;D;2
+61;Ligue 1;2023;2023-2024;1045160;2024-05-03T17:00:00+00:00;Regular Season - 32;82;Montpellier;away;96;Toulouse;https://media.api-sports.io/football/teams/96.png;2;1;2-1;V;3
+61;Ligue 1;2023;2023-2024;1045159;2024-04-26T19:00:00+00:00;Regular Season - 31;82;Montpellier;home;83;Nantes;https://media.api-sports.io/football/teams/83.png;1;1;1-1;N;4
+61;Ligue 1;2023;2023-2024;1045146;2024-04-21T13:00:00+00:00;Regular Season - 30;82;Montpellier;away;93;Reims;https://media.api-sports.io/football/teams/93.png;2;1;2-1;V;5
+61;Ligue 1;2023;2023-2024;1045180;2024-05-19T19:00:00+00:00;Regular Season - 34;83;Nantes;away;91;Monaco;https://media.api-sports.io/football/teams/91.png;0;4;0-4;D;1
+61;Ligue 1;2023;2023-2024;1045175;2024-05-12T19:00:00+00:00;Regular Season - 33;83;Nantes;home;79;Lille;https://media.api-sports.io/football/teams/79.png;1;2;1-2;D;2
+61;Ligue 1;2023;2023-2024;1045168;2024-05-04T19:00:00+00:00;Regular Season - 32;83;Nantes;away;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;0;0;0-0;N;3
+61;Ligue 1;2023;2023-2024;1045159;2024-04-26T19:00:00+00:00;Regular Season - 31;83;Nantes;away;82;Montpellier;https://media.api-sports.io/football/teams/82.png;1;1;1-1;N;4
+61;Ligue 1;2023;2023-2024;1045148;2024-04-20T15:00:00+00:00;Regular Season - 30;83;Nantes;home;94;Rennes;https://media.api-sports.io/football/teams/94.png;0;3;0-3;D;5
+61;Ligue 1;2023;2023-2024;1045181;2024-05-19T19:00:00+00:00;Regular Season - 34;84;Nice;away;79;Lille;https://media.api-sports.io/football/teams/79.png;2;2;2-2;N;1
+61;Ligue 1;2023;2023-2024;1045163;2024-05-15T19:00:00+00:00;Regular Season - 32;84;Nice;home;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;2;1-2;D;2
+61;Ligue 1;2023;2023-2024;1045173;2024-05-10T19:00:00+00:00;Regular Season - 33;84;Nice;home;111;Le Havre;https://media.api-sports.io/football/teams/111.png;1;0;1-0;V;3
+61;Ligue 1;2023;2023-2024;1045152;2024-04-28T13:00:00+00:00;Regular Season - 31;84;Nice;away;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;3;1;3-1;V;4
+61;Ligue 1;2023;2023-2024;1045135;2024-04-24T19:00:00+00:00;Regular Season - 29;84;Nice;away;81;Marseille;https://media.api-sports.io/football/teams/81.png;2;2;2-2;N;5
+61;Ligue 1;2023;2023-2024;1045186;2024-05-19T19:00:00+00:00;Regular Season - 34;85;Paris Saint Germain;away;112;Metz;https://media.api-sports.io/football/teams/112.png;2;0;2-0;V;1
+61;Ligue 1;2023;2023-2024;1045163;2024-05-15T19:00:00+00:00;Regular Season - 32;85;Paris Saint Germain;away;84;Nice;https://media.api-sports.io/football/teams/84.png;2;1;2-1;V;2
+61;Ligue 1;2023;2023-2024;1045169;2024-05-12T19:00:00+00:00;Regular Season - 33;85;Paris Saint Germain;home;96;Toulouse;https://media.api-sports.io/football/teams/96.png;1;3;1-3;D;3
+61;Ligue 1;2023;2023-2024;1045151;2024-04-27T19:00:00+00:00;Regular Season - 31;85;Paris Saint Germain;home;111;Le Havre;https://media.api-sports.io/football/teams/111.png;3;3;3-3;N;4
+61;Ligue 1;2023;2023-2024;1045136;2024-04-24T17:00:00+00:00;Regular Season - 29;85;Paris Saint Germain;away;97;Lorient;https://media.api-sports.io/football/teams/97.png;4;1;4-1;V;5
+61;Ligue 1;2023;2023-2024;1045180;2024-05-19T19:00:00+00:00;Regular Season - 34;91;Monaco;home;83;Nantes;https://media.api-sports.io/football/teams/83.png;4;0;4-0;V;1
+61;Ligue 1;2023;2023-2024;1045176;2024-05-12T19:00:00+00:00;Regular Season - 33;91;Monaco;away;82;Montpellier;https://media.api-sports.io/football/teams/82.png;2;0;2-0;V;2
+61;Ligue 1;2023;2023-2024;1045161;2024-05-04T15:00:00+00:00;Regular Season - 32;91;Monaco;home;99;Clermont Foot;https://media.api-sports.io/football/teams/99.png;4;1;4-1;V;3
+61;Ligue 1;2023;2023-2024;1045156;2024-04-28T17:00:00+00:00;Regular Season - 31;91;Monaco;away;80;Lyon;https://media.api-sports.io/football/teams/80.png;2;3;2-3;D;4
+61;Ligue 1;2023;2023-2024;1045137;2024-04-24T19:00:00+00:00;Regular Season - 29;91;Monaco;home;79;Lille;https://media.api-sports.io/football/teams/79.png;1;0;1-0;V;5
+61;Ligue 1;2023;2023-2024;1045183;2024-05-19T19:00:00+00:00;Regular Season - 34;93;Reims;home;94;Rennes;https://media.api-sports.io/football/teams/94.png;2;1;2-1;V;1
+61;Ligue 1;2023;2023-2024;1045164;2024-05-15T19:00:00+00:00;Regular Season - 32;93;Reims;home;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;0;1-0;V;2
+61;Ligue 1;2023;2023-2024;1045177;2024-05-10T19:00:00+00:00;Regular Season - 33;93;Reims;away;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;1;1;1-1;N;3
+61;Ligue 1;2023;2023-2024;1045157;2024-04-28T13:00:00+00:00;Regular Season - 31;93;Reims;away;99;Clermont Foot;https://media.api-sports.io/football/teams/99.png;1;4;1-4;D;4
+61;Ligue 1;2023;2023-2024;1045146;2024-04-21T13:00:00+00:00;Regular Season - 30;93;Reims;home;82;Montpellier;https://media.api-sports.io/football/teams/82.png;1;2;1-2;D;5
+61;Ligue 1;2023;2023-2024;1045183;2024-05-19T19:00:00+00:00;Regular Season - 34;94;Rennes;away;93;Reims;https://media.api-sports.io/football/teams/93.png;1;2;1-2;D;1
+61;Ligue 1;2023;2023-2024;1045171;2024-05-12T19:00:00+00:00;Regular Season - 33;94;Rennes;home;116;Lens;https://media.api-sports.io/football/teams/116.png;1;1;1-1;N;2
+61;Ligue 1;2023;2023-2024;1045167;2024-05-04T17:00:00+00:00;Regular Season - 32;94;Rennes;away;112;Metz;https://media.api-sports.io/football/teams/112.png;3;2;3-2;V;3
+61;Ligue 1;2023;2023-2024;1045153;2024-04-28T15:05:00+00:00;Regular Season - 31;94;Rennes;home;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;4;5;4-5;D;4
+61;Ligue 1;2023;2023-2024;1045148;2024-04-20T15:00:00+00:00;Regular Season - 30;94;Rennes;away;83;Nantes;https://media.api-sports.io/football/teams/83.png;3;0;3-0;V;5
+61;Ligue 1;2023;2023-2024;1045182;2024-05-19T19:00:00+00:00;Regular Season - 34;95;Strasbourg;away;80;Lyon;https://media.api-sports.io/football/teams/80.png;1;2;1-2;D;1
+61;Ligue 1;2023;2023-2024;1045170;2024-05-12T19:00:00+00:00;Regular Season - 33;95;Strasbourg;home;112;Metz;https://media.api-sports.io/football/teams/112.png;2;1;2-1;V;2
+61;Ligue 1;2023;2023-2024;1045166;2024-05-04T13:00:00+00:00;Regular Season - 32;95;Strasbourg;away;111;Le Havre;https://media.api-sports.io/football/teams/111.png;1;3;1-3;D;3
+61;Ligue 1;2023;2023-2024;1045152;2024-04-28T13:00:00+00:00;Regular Season - 31;95;Strasbourg;home;84;Nice;https://media.api-sports.io/football/teams/84.png;1;3;1-3;D;4
+61;Ligue 1;2023;2023-2024;1045144;2024-04-21T13:00:00+00:00;Regular Season - 30;95;Strasbourg;away;79;Lille;https://media.api-sports.io/football/teams/79.png;0;1;0-1;D;5
+61;Ligue 1;2023;2023-2024;1045178;2024-05-19T19:00:00+00:00;Regular Season - 34;96;Toulouse;home;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;0;3;0-3;D;1
+61;Ligue 1;2023;2023-2024;1045169;2024-05-12T19:00:00+00:00;Regular Season - 33;96;Toulouse;away;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;3;1;3-1;V;2
+61;Ligue 1;2023;2023-2024;1045160;2024-05-03T17:00:00+00:00;Regular Season - 32;96;Toulouse;home;82;Montpellier;https://media.api-sports.io/football/teams/82.png;1;2;1-2;D;3
+61;Ligue 1;2023;2023-2024;1045155;2024-04-28T13:00:00+00:00;Regular Season - 31;96;Toulouse;away;97;Lorient;https://media.api-sports.io/football/teams/97.png;2;1;2-1;V;4
+61;Ligue 1;2023;2023-2024;1045143;2024-04-21T17:00:00+00:00;Regular Season - 30;96;Toulouse;home;81;Marseille;https://media.api-sports.io/football/teams/81.png;2;2;2-2;N;5
+61;Ligue 1;2023;2023-2024;1045179;2024-05-19T19:00:00+00:00;Regular Season - 34;97;Lorient;home;99;Clermont Foot;https://media.api-sports.io/football/teams/99.png;5;0;5-0;V;1
+61;Ligue 1;2023;2023-2024;1045172;2024-05-12T19:00:00+00:00;Regular Season - 33;97;Lorient;away;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;3;1-3;D;2
+61;Ligue 1;2023;2023-2024;1045165;2024-05-03T19:00:00+00:00;Regular Season - 32;97;Lorient;away;116;Lens;https://media.api-sports.io/football/teams/116.png;0;2;0-2;D;3
+61;Ligue 1;2023;2023-2024;1045155;2024-04-28T13:00:00+00:00;Regular Season - 31;97;Lorient;home;96;Toulouse;https://media.api-sports.io/football/teams/96.png;1;2;1-2;D;4
+61;Ligue 1;2023;2023-2024;1045136;2024-04-24T17:00:00+00:00;Regular Season - 29;97;Lorient;home;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;4;1-4;D;5
+61;Ligue 1;2023;2023-2024;1045179;2024-05-19T19:00:00+00:00;Regular Season - 34;99;Clermont Foot;away;97;Lorient;https://media.api-sports.io/football/teams/97.png;0;5;0-5;D;1
+61;Ligue 1;2023;2023-2024;1045174;2024-05-12T19:00:00+00:00;Regular Season - 33;99;Clermont Foot;home;80;Lyon;https://media.api-sports.io/football/teams/80.png;0;1;0-1;D;2
+61;Ligue 1;2023;2023-2024;1045161;2024-05-04T15:00:00+00:00;Regular Season - 32;99;Clermont Foot;away;91;Monaco;https://media.api-sports.io/football/teams/91.png;1;4;1-4;D;3
+61;Ligue 1;2023;2023-2024;1045157;2024-04-28T13:00:00+00:00;Regular Season - 31;99;Clermont Foot;home;93;Reims;https://media.api-sports.io/football/teams/93.png;4;1;4-1;V;4
+61;Ligue 1;2023;2023-2024;1045147;2024-04-20T19:00:00+00:00;Regular Season - 30;99;Clermont Foot;away;116;Lens;https://media.api-sports.io/football/teams/116.png;0;1;0-1;D;5
+61;Ligue 1;2023;2023-2024;1045178;2024-05-19T19:00:00+00:00;Regular Season - 34;106;Stade Brestois 29;away;96;Toulouse;https://media.api-sports.io/football/teams/96.png;3;0;3-0;V;1
+61;Ligue 1;2023;2023-2024;1045177;2024-05-10T19:00:00+00:00;Regular Season - 33;106;Stade Brestois 29;home;93;Reims;https://media.api-sports.io/football/teams/93.png;1;1;1-1;N;2
+61;Ligue 1;2023;2023-2024;1045168;2024-05-04T19:00:00+00:00;Regular Season - 32;106;Stade Brestois 29;home;83;Nantes;https://media.api-sports.io/football/teams/83.png;0;0;0-0;N;3
+61;Ligue 1;2023;2023-2024;1045153;2024-04-28T15:05:00+00:00;Regular Season - 31;106;Stade Brestois 29;away;94;Rennes;https://media.api-sports.io/football/teams/94.png;5;4;5-4;V;4
+61;Ligue 1;2023;2023-2024;1045150;2024-04-21T15:05:00+00:00;Regular Season - 30;106;Stade Brestois 29;home;91;Monaco;https://media.api-sports.io/football/teams/91.png;0;2;0-2;D;5
+61;Ligue 1;2023;2023-2024;1045185;2024-05-19T19:00:00+00:00;Regular Season - 34;111;Le Havre;home;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;2;1-2;D;1
+61;Ligue 1;2023;2023-2024;1045173;2024-05-10T19:00:00+00:00;Regular Season - 33;111;Le Havre;away;84;Nice;https://media.api-sports.io/football/teams/84.png;0;1;0-1;D;2
+61;Ligue 1;2023;2023-2024;1045166;2024-05-04T13:00:00+00:00;Regular Season - 32;111;Le Havre;home;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;3;1;3-1;V;3
+61;Ligue 1;2023;2023-2024;1045151;2024-04-27T19:00:00+00:00;Regular Season - 31;111;Le Havre;away;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;3;3;3-3;N;4
+61;Ligue 1;2023;2023-2024;1045149;2024-04-21T13:00:00+00:00;Regular Season - 30;111;Le Havre;home;112;Metz;https://media.api-sports.io/football/teams/112.png;0;1;0-1;D;5
+61;Ligue 1;2023;2023-2024;1201624;2024-05-30T18:30:00+00:00;Relegation Round;112;Metz;away;1063;Saint Etienne;https://media.api-sports.io/football/teams/1063.png;1;2;1-2;D;1
+61;Ligue 1;2023;2023-2024;1045186;2024-05-19T19:00:00+00:00;Regular Season - 34;112;Metz;home;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;0;2;0-2;D;2
+61;Ligue 1;2023;2023-2024;1045170;2024-05-12T19:00:00+00:00;Regular Season - 33;112;Metz;away;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;1;2;1-2;D;3
+61;Ligue 1;2023;2023-2024;1045167;2024-05-04T17:00:00+00:00;Regular Season - 32;112;Metz;home;94;Rennes;https://media.api-sports.io/football/teams/94.png;2;3;2-3;D;4
+61;Ligue 1;2023;2023-2024;1045158;2024-04-28T11:00:00+00:00;Regular Season - 31;112;Metz;home;79;Lille;https://media.api-sports.io/football/teams/79.png;1;2;1-2;D;5
+61;Ligue 1;2023;2023-2024;1045184;2024-05-19T19:00:00+00:00;Regular Season - 34;116;Lens;home;82;Montpellier;https://media.api-sports.io/football/teams/82.png;2;2;2-2;N;1
+61;Ligue 1;2023;2023-2024;1045171;2024-05-12T19:00:00+00:00;Regular Season - 33;116;Lens;away;94;Rennes;https://media.api-sports.io/football/teams/94.png;1;1;1-1;N;2
+61;Ligue 1;2023;2023-2024;1045165;2024-05-03T19:00:00+00:00;Regular Season - 32;116;Lens;home;97;Lorient;https://media.api-sports.io/football/teams/97.png;2;0;2-0;V;3
+61;Ligue 1;2023;2023-2024;1045154;2024-04-28T19:00:00+00:00;Regular Season - 31;116;Lens;away;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;2;1-2;D;4
+61;Ligue 1;2023;2023-2024;1045147;2024-04-20T19:00:00+00:00;Regular Season - 30;116;Lens;home;99;Clermont Foot;https://media.api-sports.io/football/teams/99.png;1;0;1-0;V;5
+61;Ligue 1;2023;2023-2024;1201624;2024-05-30T18:30:00+00:00;Relegation Round;1063;Saint Etienne;home;112;Metz;https://media.api-sports.io/football/teams/112.png;2;1;2-1;V;1
+61;Ligue 1;2024;2024-2025;1214045;2025-05-17T19:00:00+00:00;Regular Season - 34;77;Angers;away;80;Lyon;https://media.api-sports.io/football/teams/80.png;0;2;0-2;D;1
+61;Ligue 1;2024;2024-2025;1214037;2025-05-10T19:00:00+00:00;Regular Season - 33;77;Angers;home;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;2;1;2-1;V;2
+61;Ligue 1;2024;2024-2025;1214031;2025-05-04T13:00:00+00:00;Regular Season - 32;77;Angers;away;83;Nantes;https://media.api-sports.io/football/teams/83.png;1;0;1-0;V;3
+61;Ligue 1;2024;2024-2025;1214022;2025-04-27T13:00:00+00:00;Regular Season - 31;77;Angers;home;79;Lille;https://media.api-sports.io/football/teams/79.png;0;2;0-2;D;4
+61;Ligue 1;2024;2024-2025;1214009;2025-04-20T15:15:00+00:00;Regular Season - 30;77;Angers;away;84;Nice;https://media.api-sports.io/football/teams/84.png;1;2;1-2;D;5
+61;Ligue 1;2024;2024-2025;1214048;2025-05-17T19:00:00+00:00;Regular Season - 34;79;Lille;home;93;Reims;https://media.api-sports.io/football/teams/93.png;2;1;2-1;V;1
+61;Ligue 1;2024;2024-2025;1214042;2025-05-10T19:00:00+00:00;Regular Season - 33;79;Lille;away;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;0;2;0-2;D;2
+61;Ligue 1;2024;2024-2025;1214027;2025-05-04T18:45:00+00:00;Regular Season - 32;79;Lille;home;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;1;1-1;N;3
+61;Ligue 1;2024;2024-2025;1214022;2025-04-27T13:00:00+00:00;Regular Season - 31;79;Lille;away;77;Angers;https://media.api-sports.io/football/teams/77.png;2;0;2-0;V;4
+61;Ligue 1;2024;2024-2025;1214011;2025-04-20T13:00:00+00:00;Regular Season - 30;79;Lille;home;108;Auxerre;https://media.api-sports.io/football/teams/108.png;3;1;3-1;V;5
+61;Ligue 1;2024;2024-2025;1214045;2025-05-17T19:00:00+00:00;Regular Season - 34;80;Lyon;home;77;Angers;https://media.api-sports.io/football/teams/77.png;2;0;2-0;V;1
+61;Ligue 1;2024;2024-2025;1214043;2025-05-10T19:00:00+00:00;Regular Season - 33;80;Lyon;away;91;Monaco;https://media.api-sports.io/football/teams/91.png;0;2;0-2;D;2
+61;Ligue 1;2024;2024-2025;1214026;2025-05-04T15:15:00+00:00;Regular Season - 32;80;Lyon;home;116;Lens;https://media.api-sports.io/football/teams/116.png;1;2;1-2;D;3
+61;Ligue 1;2024;2024-2025;1214025;2025-04-26T19:05:00+00:00;Regular Season - 31;80;Lyon;home;94;Rennes;https://media.api-sports.io/football/teams/94.png;4;1;4-1;V;4
+61;Ligue 1;2024;2024-2025;1214008;2025-04-20T18:45:00+00:00;Regular Season - 30;80;Lyon;away;1063;Saint Etienne;https://media.api-sports.io/football/teams/1063.png;1;2;1-2;D;5
+61;Ligue 1;2024;2024-2025;1214044;2025-05-17T19:00:00+00:00;Regular Season - 34;81;Marseille;home;94;Rennes;https://media.api-sports.io/football/teams/94.png;4;2;4-2;V;1
+61;Ligue 1;2024;2024-2025;1214038;2025-05-10T19:00:00+00:00;Regular Season - 33;81;Marseille;away;111;Le Havre;https://media.api-sports.io/football/teams/111.png;3;1;3-1;V;2
+61;Ligue 1;2024;2024-2025;1214027;2025-05-04T18:45:00+00:00;Regular Season - 32;81;Marseille;away;79;Lille;https://media.api-sports.io/football/teams/79.png;1;1;1-1;N;3
+61;Ligue 1;2024;2024-2025;1214024;2025-04-27T18:45:00+00:00;Regular Season - 31;81;Marseille;home;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;4;1;4-1;V;4
+61;Ligue 1;2024;2024-2025;1214013;2025-04-19T19:05:00+00:00;Regular Season - 30;81;Marseille;home;82;Montpellier;https://media.api-sports.io/football/teams/82.png;5;1;5-1;V;5
+61;Ligue 1;2024;2024-2025;1214050;2025-05-17T19:00:00+00:00;Regular Season - 34;82;Montpellier;away;83;Nantes;https://media.api-sports.io/football/teams/83.png;0;3;0-3;D;1
+61;Ligue 1;2024;2024-2025;1214040;2025-05-10T19:00:00+00:00;Regular Season - 33;82;Montpellier;home;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;4;1-4;D;2
+61;Ligue 1;2024;2024-2025;1214029;2025-05-04T15:15:00+00:00;Regular Season - 32;82;Montpellier;away;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;0;1;0-1;D;3
+61;Ligue 1;2024;2024-2025;1214020;2025-04-27T15:15:00+00:00;Regular Season - 31;82;Montpellier;home;93;Reims;https://media.api-sports.io/football/teams/93.png;0;0;0-0;N;4
+61;Ligue 1;2024;2024-2025;1214013;2025-04-19T19:05:00+00:00;Regular Season - 30;82;Montpellier;away;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;5;1-5;D;5
+61;Ligue 1;2024;2024-2025;1214050;2025-05-17T19:00:00+00:00;Regular Season - 34;83;Nantes;home;82;Montpellier;https://media.api-sports.io/football/teams/82.png;3;0;3-0;V;1
+61;Ligue 1;2024;2024-2025;1214036;2025-05-10T19:00:00+00:00;Regular Season - 33;83;Nantes;away;108;Auxerre;https://media.api-sports.io/football/teams/108.png;1;1;1-1;N;2
+61;Ligue 1;2024;2024-2025;1214031;2025-05-04T13:00:00+00:00;Regular Season - 32;83;Nantes;home;77;Angers;https://media.api-sports.io/football/teams/77.png;0;1;0-1;D;3
+61;Ligue 1;2024;2024-2025;1214019;2025-04-27T15:15:00+00:00;Regular Season - 31;83;Nantes;home;96;Toulouse;https://media.api-sports.io/football/teams/96.png;0;0;0-0;N;4
+61;Ligue 1;2024;2024-2025;1214002;2025-04-22T18:45:00+00:00;Regular Season - 29;83;Nantes;home;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;1;1-1;N;5
+61;Ligue 1;2024;2024-2025;1214046;2025-05-17T19:00:00+00:00;Regular Season - 34;84;Nice;home;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;6;0;6-0;V;1
+61;Ligue 1;2024;2024-2025;1214039;2025-05-10T19:00:00+00:00;Regular Season - 33;84;Nice;away;94;Rennes;https://media.api-sports.io/football/teams/94.png;0;2;0-2;D;2
+61;Ligue 1;2024;2024-2025;1214028;2025-05-02T18:45:00+00:00;Regular Season - 32;84;Nice;home;93;Reims;https://media.api-sports.io/football/teams/93.png;1;0;1-0;V;3
+61;Ligue 1;2024;2024-2025;1214023;2025-04-25T18:45:00+00:00;Regular Season - 31;84;Nice;away;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;3;1;3-1;V;4
+61;Ligue 1;2024;2024-2025;1214009;2025-04-20T15:15:00+00:00;Regular Season - 30;84;Nice;home;77;Angers;https://media.api-sports.io/football/teams/77.png;2;1;2-1;V;5
+61;Ligue 1;2024;2024-2025;1214052;2025-05-17T19:00:00+00:00;Regular Season - 34;85;Paris Saint Germain;home;108;Auxerre;https://media.api-sports.io/football/teams/108.png;3;1;3-1;V;1
+61;Ligue 1;2024;2024-2025;1214040;2025-05-10T19:00:00+00:00;Regular Season - 33;85;Paris Saint Germain;away;82;Montpellier;https://media.api-sports.io/football/teams/82.png;4;1;4-1;V;2
+61;Ligue 1;2024;2024-2025;1214033;2025-05-03T15:00:00+00:00;Regular Season - 32;85;Paris Saint Germain;away;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;1;2;1-2;D;3
+61;Ligue 1;2024;2024-2025;1214023;2025-04-25T18:45:00+00:00;Regular Season - 31;85;Paris Saint Germain;home;84;Nice;https://media.api-sports.io/football/teams/84.png;1;3;1-3;D;4
+61;Ligue 1;2024;2024-2025;1214002;2025-04-22T18:45:00+00:00;Regular Season - 29;85;Paris Saint Germain;away;83;Nantes;https://media.api-sports.io/football/teams/83.png;1;1;1-1;N;5
+61;Ligue 1;2024;2024-2025;1214051;2025-05-17T19:00:00+00:00;Regular Season - 34;91;Monaco;away;116;Lens;https://media.api-sports.io/football/teams/116.png;0;4;0-4;D;1
+61;Ligue 1;2024;2024-2025;1214043;2025-05-10T19:00:00+00:00;Regular Season - 33;91;Monaco;home;80;Lyon;https://media.api-sports.io/football/teams/80.png;2;0;2-0;V;2
+61;Ligue 1;2024;2024-2025;1214030;2025-05-03T19:05:00+00:00;Regular Season - 32;91;Monaco;away;1063;Saint Etienne;https://media.api-sports.io/football/teams/1063.png;3;1;3-1;V;3
+61;Ligue 1;2024;2024-2025;1214017;2025-04-26T17:00:00+00:00;Regular Season - 31;91;Monaco;away;111;Le Havre;https://media.api-sports.io/football/teams/111.png;1;1;1-1;N;4
+61;Ligue 1;2024;2024-2025;1214015;2025-04-19T17:00:00+00:00;Regular Season - 30;91;Monaco;home;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;0;0;0-0;N;5
+61;Ligue 1;2024;2024-2025;1375858;2025-05-21T18:00:00+00:00;Relegation Round;93;Reims;away;112;Metz;https://media.api-sports.io/football/teams/112.png;1;1;1-1;N;1
+61;Ligue 1;2024;2024-2025;1214048;2025-05-17T19:00:00+00:00;Regular Season - 34;93;Reims;away;79;Lille;https://media.api-sports.io/football/teams/79.png;1;2;1-2;D;2
+61;Ligue 1;2024;2024-2025;1214035;2025-05-10T19:00:00+00:00;Regular Season - 33;93;Reims;home;1063;Saint Etienne;https://media.api-sports.io/football/teams/1063.png;0;2;0-2;D;3
+61;Ligue 1;2024;2024-2025;1214028;2025-05-02T18:45:00+00:00;Regular Season - 32;93;Reims;away;84;Nice;https://media.api-sports.io/football/teams/84.png;0;1;0-1;D;4
+61;Ligue 1;2024;2024-2025;1214020;2025-04-27T15:15:00+00:00;Regular Season - 31;93;Reims;away;82;Montpellier;https://media.api-sports.io/football/teams/82.png;0;0;0-0;N;5
+61;Ligue 1;2024;2024-2025;1214044;2025-05-17T19:00:00+00:00;Regular Season - 34;94;Rennes;away;81;Marseille;https://media.api-sports.io/football/teams/81.png;2;4;2-4;D;1
+61;Ligue 1;2024;2024-2025;1214039;2025-05-10T19:00:00+00:00;Regular Season - 33;94;Rennes;home;84;Nice;https://media.api-sports.io/football/teams/84.png;2;0;2-0;V;2
+61;Ligue 1;2024;2024-2025;1214032;2025-05-03T17:00:00+00:00;Regular Season - 32;94;Rennes;away;96;Toulouse;https://media.api-sports.io/football/teams/96.png;1;2;1-2;D;3
+61;Ligue 1;2024;2024-2025;1214025;2025-04-26T19:05:00+00:00;Regular Season - 31;94;Rennes;away;80;Lyon;https://media.api-sports.io/football/teams/80.png;1;4;1-4;D;4
+61;Ligue 1;2024;2024-2025;1214016;2025-04-18T18:45:00+00:00;Regular Season - 30;94;Rennes;home;83;Nantes;https://media.api-sports.io/football/teams/83.png;2;1;2-1;V;5
+61;Ligue 1;2024;2024-2025;1214049;2025-05-17T19:00:00+00:00;Regular Season - 34;95;Strasbourg;home;111;Le Havre;https://media.api-sports.io/football/teams/111.png;2;3;2-3;D;1
+61;Ligue 1;2024;2024-2025;1214037;2025-05-10T19:00:00+00:00;Regular Season - 33;95;Strasbourg;away;77;Angers;https://media.api-sports.io/football/teams/77.png;1;2;1-2;D;2
+61;Ligue 1;2024;2024-2025;1214033;2025-05-03T15:00:00+00:00;Regular Season - 32;95;Strasbourg;home;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;2;1;2-1;V;3
+61;Ligue 1;2024;2024-2025;1214018;2025-04-26T15:00:00+00:00;Regular Season - 31;95;Strasbourg;home;1063;Saint Etienne;https://media.api-sports.io/football/teams/1063.png;3;1;3-1;V;4
+61;Ligue 1;2024;2024-2025;1214015;2025-04-19T17:00:00+00:00;Regular Season - 30;95;Strasbourg;away;91;Monaco;https://media.api-sports.io/football/teams/91.png;0;0;0-0;N;5
+61;Ligue 1;2024;2024-2025;1214047;2025-05-17T19:00:00+00:00;Regular Season - 34;96;Toulouse;away;1063;Saint Etienne;https://media.api-sports.io/football/teams/1063.png;3;2;3-2;V;1
+61;Ligue 1;2024;2024-2025;1214041;2025-05-10T19:00:00+00:00;Regular Season - 33;96;Toulouse;home;116;Lens;https://media.api-sports.io/football/teams/116.png;1;1;1-1;N;2
+61;Ligue 1;2024;2024-2025;1214032;2025-05-03T17:00:00+00:00;Regular Season - 32;96;Toulouse;home;94;Rennes;https://media.api-sports.io/football/teams/94.png;2;1;2-1;V;3
+61;Ligue 1;2024;2024-2025;1214019;2025-04-27T15:15:00+00:00;Regular Season - 31;96;Toulouse;away;83;Nantes;https://media.api-sports.io/football/teams/83.png;0;0;0-0;N;4
+61;Ligue 1;2024;2024-2025;1214014;2025-04-20T15:15:00+00:00;Regular Season - 30;96;Toulouse;away;93;Reims;https://media.api-sports.io/football/teams/93.png;0;1;0-1;D;5
+61;Ligue 1;2024;2024-2025;1214046;2025-05-17T19:00:00+00:00;Regular Season - 34;106;Stade Brestois 29;away;84;Nice;https://media.api-sports.io/football/teams/84.png;0;6;0-6;D;1
+61;Ligue 1;2024;2024-2025;1214042;2025-05-10T19:00:00+00:00;Regular Season - 33;106;Stade Brestois 29;home;79;Lille;https://media.api-sports.io/football/teams/79.png;2;0;2-0;V;2
+61;Ligue 1;2024;2024-2025;1214029;2025-05-04T15:15:00+00:00;Regular Season - 32;106;Stade Brestois 29;home;82;Montpellier;https://media.api-sports.io/football/teams/82.png;1;0;1-0;V;3
+61;Ligue 1;2024;2024-2025;1214024;2025-04-27T18:45:00+00:00;Regular Season - 31;106;Stade Brestois 29;away;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;4;1-4;D;4
+61;Ligue 1;2024;2024-2025;1214010;2025-04-20T15:15:00+00:00;Regular Season - 30;106;Stade Brestois 29;home;116;Lens;https://media.api-sports.io/football/teams/116.png;1;3;1-3;D;5
+61;Ligue 1;2024;2024-2025;1214052;2025-05-17T19:00:00+00:00;Regular Season - 34;108;Auxerre;away;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;3;1-3;D;1
+61;Ligue 1;2024;2024-2025;1214036;2025-05-10T19:00:00+00:00;Regular Season - 33;108;Auxerre;home;83;Nantes;https://media.api-sports.io/football/teams/83.png;1;1;1-1;N;2
+61;Ligue 1;2024;2024-2025;1214034;2025-05-04T15:15:00+00:00;Regular Season - 32;108;Auxerre;home;111;Le Havre;https://media.api-sports.io/football/teams/111.png;1;2;1-2;D;3
+61;Ligue 1;2024;2024-2025;1214021;2025-04-27T15:15:00+00:00;Regular Season - 31;108;Auxerre;away;116;Lens;https://media.api-sports.io/football/teams/116.png;4;0;4-0;V;4
+61;Ligue 1;2024;2024-2025;1214011;2025-04-20T13:00:00+00:00;Regular Season - 30;108;Auxerre;away;79;Lille;https://media.api-sports.io/football/teams/79.png;1;3;1-3;D;5
+61;Ligue 1;2024;2024-2025;1214049;2025-05-17T19:00:00+00:00;Regular Season - 34;111;Le Havre;away;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;3;2;3-2;V;1
+61;Ligue 1;2024;2024-2025;1214038;2025-05-10T19:00:00+00:00;Regular Season - 33;111;Le Havre;home;81;Marseille;https://media.api-sports.io/football/teams/81.png;1;3;1-3;D;2
+61;Ligue 1;2024;2024-2025;1214034;2025-05-04T15:15:00+00:00;Regular Season - 32;111;Le Havre;away;108;Auxerre;https://media.api-sports.io/football/teams/108.png;2;1;2-1;V;3
+61;Ligue 1;2024;2024-2025;1214017;2025-04-26T17:00:00+00:00;Regular Season - 31;111;Le Havre;home;91;Monaco;https://media.api-sports.io/football/teams/91.png;1;1;1-1;N;4
+61;Ligue 1;2024;2024-2025;1214012;2025-04-19T15:00:00+00:00;Regular Season - 30;111;Le Havre;away;85;Paris Saint Germain;https://media.api-sports.io/football/teams/85.png;1;2;1-2;D;5
+61;Ligue 1;2024;2024-2025;1375858;2025-05-21T18:00:00+00:00;Relegation Round;112;Metz;home;93;Reims;https://media.api-sports.io/football/teams/93.png;1;1;1-1;N;1
+61;Ligue 1;2024;2024-2025;1214051;2025-05-17T19:00:00+00:00;Regular Season - 34;116;Lens;home;91;Monaco;https://media.api-sports.io/football/teams/91.png;4;0;4-0;V;1
+61;Ligue 1;2024;2024-2025;1214041;2025-05-10T19:00:00+00:00;Regular Season - 33;116;Lens;away;96;Toulouse;https://media.api-sports.io/football/teams/96.png;1;1;1-1;N;2
+61;Ligue 1;2024;2024-2025;1214026;2025-05-04T15:15:00+00:00;Regular Season - 32;116;Lens;away;80;Lyon;https://media.api-sports.io/football/teams/80.png;2;1;2-1;V;3
+61;Ligue 1;2024;2024-2025;1214021;2025-04-27T15:15:00+00:00;Regular Season - 31;116;Lens;home;108;Auxerre;https://media.api-sports.io/football/teams/108.png;0;4;0-4;D;4
+61;Ligue 1;2024;2024-2025;1214010;2025-04-20T15:15:00+00:00;Regular Season - 30;116;Lens;away;106;Stade Brestois 29;https://media.api-sports.io/football/teams/106.png;3;1;3-1;V;5
+61;Ligue 1;2024;2024-2025;1214047;2025-05-17T19:00:00+00:00;Regular Season - 34;1063;Saint Etienne;home;96;Toulouse;https://media.api-sports.io/football/teams/96.png;2;3;2-3;D;1
+61;Ligue 1;2024;2024-2025;1214035;2025-05-10T19:00:00+00:00;Regular Season - 33;1063;Saint Etienne;away;93;Reims;https://media.api-sports.io/football/teams/93.png;2;0;2-0;V;2
+61;Ligue 1;2024;2024-2025;1214030;2025-05-03T19:05:00+00:00;Regular Season - 32;1063;Saint Etienne;home;91;Monaco;https://media.api-sports.io/football/teams/91.png;1;3;1-3;D;3
+61;Ligue 1;2024;2024-2025;1214018;2025-04-26T15:00:00+00:00;Regular Season - 31;1063;Saint Etienne;away;95;Strasbourg;https://media.api-sports.io/football/teams/95.png;1;3;1-3;D;4
+61;Ligue 1;2024;2024-2025;1214008;2025-04-20T18:45:00+00:00;Regular Season - 30;1063;Saint Etienne;home;80;Lyon;https://media.api-sports.io/football/teams/80.png;2;1;2-1;V;5
