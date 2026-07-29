@@ -353,6 +353,71 @@ def player_tile(player: pd.Series, rank_label: str = "") -> str:
     """
 
 
+
+def player_form_tile(player: pd.Series) -> str:
+    photo = image_url(player.get("player_id")) or ""
+    logo = team_logo_url(player.get("team_id")) or ""
+
+    form_value = player.get("form")
+    overall_value = player.get("overall")
+    matches_value = player.get("matches_in_form")
+    reliability = player.get("form_reliability", "Non disponible")
+
+    form_shown = "—" if pd.isna(form_value) else f"{float(form_value):.1f}"
+    overall_shown = (
+        "—" if pd.isna(overall_value) else f"{float(overall_value):.1f}"
+    )
+    matches_shown = (
+        "—" if pd.isna(matches_value) else f"{int(matches_value)}/5 matchs"
+    )
+
+    form_colour = score_color(form_value)
+    trend_html = trend_badge(player.get("form_trend"))
+
+    return f"""
+    <div class="form-player-card">
+        <div class="form-card-label">🔥 Forme récente</div>
+
+        <div class="form-card-main">
+            <img class="form-card-photo" src="{photo}" alt="{player['player_name']}">
+
+            <div class="form-score-block">
+                <div
+                    class="form-score-circle"
+                    style="border-color:{form_colour}; box-shadow:0 0 22px {form_colour}44;"
+                >
+                    <span>{form_shown}</span>
+                </div>
+                <div class="form-score-caption">Forme sur 5 matchs</div>
+            </div>
+        </div>
+
+        <div class="form-card-name">{player['player_name']}</div>
+
+        <div class="form-card-club">
+            <img src="{logo}" alt="{player['team_name']}">
+            <span>{player['team_name']}</span>
+        </div>
+
+        <div class="form-card-details">
+            <div class="form-detail-box">
+                <span>Note générale</span>
+                <strong>{overall_shown}</strong>
+            </div>
+            <div class="form-detail-box">
+                <span>Fiabilité</span>
+                <strong>{reliability}</strong>
+            </div>
+        </div>
+
+        <div class="form-card-footer">
+            <span>{matches_shown}</span>
+            {trend_html}
+        </div>
+    </div>
+    """
+
+
 def render_home(df: pd.DataFrame) -> None:
     st.subheader("Bienvenue sur FootRate")
     st.caption(
@@ -378,6 +443,10 @@ def render_home(df: pd.DataFrame) -> None:
     form_available = df["form"].notna().sum() > 0
     if form_available:
         st.markdown("### Joueurs en forme")
+        st.caption(
+            "Le grand score correspond à la forme récente. "
+            "La note générale de saison est affichée séparément."
+        )
         in_form = (
             df[df["form"].notna() & df["matches_in_form"].ge(3)]
             .sort_values(["form", "overall"], ascending=[False, False])
@@ -388,15 +457,7 @@ def render_home(df: pd.DataFrame) -> None:
             for column, (_, player) in zip(form_columns, in_form.iterrows()):
                 with column:
                     st.markdown(
-                        player_tile(
-                            player,
-                            f"🔥 Forme {player['form']:.1f} · "
-                            f"{int(player['matches_in_form'])}/5",
-                        ),
-                        unsafe_allow_html=True,
-                    )
-                    st.markdown(
-                        trend_badge(player.get("form_trend")),
+                        player_form_tile(player),
                         unsafe_allow_html=True,
                     )
 
@@ -1525,6 +1586,124 @@ st.markdown(
             background: rgba(100, 116, 139, 0.14);
             border: 1px solid rgba(100, 116, 139, 0.32);
         }
+        .form-player-card {
+            position: relative;
+            min-height: 340px;
+            padding: 1rem;
+            border: 1px solid var(--footrate-border);
+            border-radius: 18px;
+            background:
+                linear-gradient(
+                    155deg,
+                    rgba(17, 28, 47, 0.98),
+                    rgba(10, 20, 35, 0.94)
+                );
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.22);
+        }
+        .form-card-label {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.32rem 0.58rem;
+            border-radius: 999px;
+            color: #fde68a;
+            background: rgba(245, 158, 11, 0.14);
+            border: 1px solid rgba(245, 158, 11, 0.32);
+            font-size: 0.76rem;
+            font-weight: 850;
+        }
+        .form-card-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            margin-top: 0.9rem;
+        }
+        .form-card-photo {
+            width: 122px;
+            height: 122px;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 15px;
+            background: #ffffff;
+        }
+        .form-score-block {
+            flex: 1;
+            text-align: center;
+        }
+        .form-score-circle {
+            display: grid;
+            place-items: center;
+            width: 88px;
+            height: 88px;
+            margin: 0 auto;
+            border: 6px solid;
+            border-radius: 50%;
+            background: rgba(7, 16, 31, 0.92);
+        }
+        .form-score-circle span {
+            color: #f8fafc;
+            font-size: 1.65rem;
+            font-weight: 900;
+        }
+        .form-score-caption {
+            margin-top: 0.42rem;
+            color: #94a3b8;
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+        .form-card-name {
+            margin-top: 0.8rem;
+            color: #f8fafc;
+            font-size: 1.1rem;
+            font-weight: 850;
+        }
+        .form-card-club {
+            display: flex;
+            align-items: center;
+            gap: 0.42rem;
+            margin-top: 0.42rem;
+            color: #cbd5e1;
+            font-size: 0.84rem;
+        }
+        .form-card-club img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+        .form-card-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.55rem;
+            margin-top: 0.85rem;
+        }
+        .form-detail-box {
+            padding: 0.58rem 0.62rem;
+            border-radius: 11px;
+            background: rgba(7, 16, 31, 0.62);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+        }
+        .form-detail-box span,
+        .form-detail-box strong {
+            display: block;
+        }
+        .form-detail-box span {
+            color: #94a3b8;
+            font-size: 0.68rem;
+        }
+        .form-detail-box strong {
+            margin-top: 0.18rem;
+            color: #f8fafc;
+            font-size: 0.92rem;
+        }
+        .form-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.6rem;
+            margin-top: 0.78rem;
+            color: #94a3b8;
+            font-size: 0.74rem;
+        }
         .club-form-card {
             display: flex;
             align-items: center;
@@ -1756,6 +1935,20 @@ st.markdown(
                 height: 62px;
                 flex-basis: 62px;
                 font-size: 1.15rem;
+            }
+            .form-player-card {
+                min-height: 315px;
+            }
+            .form-card-photo {
+                width: 100px;
+                height: 100px;
+            }
+            .form-score-circle {
+                width: 76px;
+                height: 76px;
+            }
+            .form-score-circle span {
+                font-size: 1.4rem;
             }
         }
     </style>
