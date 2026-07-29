@@ -258,6 +258,94 @@ def render_header(data_file: Path) -> None:
     )
 
 
+
+def player_tile(player: pd.Series, rank_label: str = "") -> str:
+    photo = image_url(player.get("player_id")) or ""
+    logo = team_logo_url(player.get("team_id")) or ""
+    score = "—" if pd.isna(player.get("overall")) else f"{player['overall']:.1f}"
+    score_colour = score_color(player.get("overall"))
+    rank_html = f'<div class="tile-rank">{rank_label}</div>' if rank_label else ""
+    return f"""
+    <div class="player-tile">
+        {rank_html}
+        <div class="tile-top">
+            <img class="tile-photo" src="{photo}" alt="{player['player_name']}">
+            <div class="tile-score" style="border-color:{score_colour}; color:{score_colour};">
+                {score}
+            </div>
+        </div>
+        <div class="tile-name">{player['player_name']}</div>
+        <div class="tile-club">
+            <img src="{logo}" alt="{player['team_name']}">
+            <span>{player['team_name']}</span>
+        </div>
+        <div class="tile-meta">{player['position_fr']} · {int(player['minutes'])} min</div>
+    </div>
+    """
+
+
+def render_home(df: pd.DataFrame) -> None:
+    st.subheader("Bienvenue sur FootRate")
+    st.caption(
+        "Découvrez les joueurs les mieux notés de Ligue 1 2024-2025 "
+        "à partir de leurs performances réelles."
+    )
+
+    best_player = df.sort_values(["overall", "minutes"], ascending=[False, False]).iloc[0]
+    metric_1, metric_2, metric_3, metric_4 = st.columns(4)
+    metric_1.metric("Joueurs évalués", f"{len(df)}")
+    metric_2.metric("Clubs représentés", f"{df['team_name'].nunique()}")
+    metric_3.metric("Meilleure note", f"{best_player['overall']:.1f}")
+    metric_4.metric("Note moyenne", f"{df['overall'].mean():.1f}")
+
+    st.markdown("### Podium général")
+    podium = df.sort_values(["overall", "minutes"], ascending=[False, False]).head(3)
+    podium_columns = st.columns(3)
+    medals = ["🥇 1er", "🥈 2e", "🥉 3e"]
+    for column, (_, player), medal in zip(podium_columns, podium.iterrows(), medals):
+        with column:
+            st.markdown(player_tile(player, medal), unsafe_allow_html=True)
+
+    st.markdown("### Meilleurs joueurs par poste")
+    position_columns = st.columns(3)
+    position_groups = [
+        ("Attaquants", "Attaquant", "Attacker"),
+        ("Milieux", "Milieu", "Midfielder"),
+        ("Défenseurs", "Défenseur", "Defender"),
+    ]
+    for column, (title, translated_position, raw_position) in zip(
+        position_columns, position_groups
+    ):
+        with column:
+            st.markdown(f"#### {title}")
+            group = (
+                df[df["position"] == raw_position]
+                .sort_values(["overall", "minutes"], ascending=[False, False])
+                .head(3)
+            )
+            for rank, (_, player) in enumerate(group.iterrows(), start=1):
+                logo = team_logo_url(player.get("team_id")) or ""
+                st.markdown(
+                    f"""
+                    <div class="mini-ranking">
+                        <div class="mini-rank">{rank}</div>
+                        <img src="{logo}" alt="{player['team_name']}">
+                        <div class="mini-identity">
+                            <strong>{player['player_name']}</strong>
+                            <span>{player['team_name']}</span>
+                        </div>
+                        <div class="mini-score">{player['overall']:.1f}</div>
+                    </div>
+                    """,
+                    unsafe_allow_html=True,
+                )
+
+    st.info(
+        "Cette version utilise les données de Ligue 1 2024-2025. "
+        "La prochaine étape sera l'actualisation vers la saison en cours."
+    )
+
+
 def render_ranking(df: pd.DataFrame) -> None:
     st.subheader("Classement des joueurs")
 
@@ -347,7 +435,15 @@ def render_player_card(player: pd.Series) -> None:
         if photo:
             st.image(photo, width=175)
         st.markdown(f"### {player['player_name']}")
-        st.write(f"**{player['team_name']}**")
+        club_logo = team_logo_url(player.get("team_id"))
+        if club_logo:
+            club_col1, club_col2 = st.columns([0.22, 1])
+            with club_col1:
+                st.image(club_logo, width=42)
+            with club_col2:
+                st.write(f"**{player['team_name']}**")
+        else:
+            st.write(f"**{player['team_name']}**")
         st.write(f"{player['position_fr']} · {int(player['minutes'])} minutes")
 
     with note_col:
@@ -657,6 +753,129 @@ st.markdown(
             font-weight: 750;
             margin-top: 0.6rem;
         }
+        .player-tile {
+            position: relative;
+            min-height: 305px;
+            padding: 1rem;
+            border: 1px solid var(--footrate-border);
+            border-radius: 18px;
+            background: linear-gradient(155deg, rgba(17, 28, 47, 0.98), rgba(10, 20, 35, 0.94));
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.22);
+            overflow: hidden;
+        }
+        .tile-rank {
+            position: absolute;
+            top: 0.75rem;
+            left: 0.75rem;
+            z-index: 2;
+            padding: 0.3rem 0.55rem;
+            border-radius: 999px;
+            background: rgba(34, 211, 167, 0.14);
+            color: #9ff3da;
+            font-size: 0.78rem;
+            font-weight: 800;
+        }
+        .tile-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 0.75rem;
+            margin-top: 1.2rem;
+        }
+        .tile-photo {
+            width: 132px;
+            height: 132px;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 16px;
+            background: #ffffff;
+        }
+        .tile-score {
+            display: grid;
+            place-items: center;
+            width: 70px;
+            height: 70px;
+            flex: 0 0 70px;
+            border: 5px solid;
+            border-radius: 50%;
+            background: rgba(7, 16, 31, 0.9);
+            font-size: 1.35rem;
+            font-weight: 900;
+        }
+        .tile-name {
+            margin-top: 0.85rem;
+            color: #f8fafc;
+            font-size: 1.2rem;
+            font-weight: 850;
+        }
+        .tile-club {
+            display: flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin-top: 0.5rem;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+        .tile-club img {
+            width: 25px;
+            height: 25px;
+            object-fit: contain;
+        }
+        .tile-meta {
+            margin-top: 0.55rem;
+            color: #94a3b8;
+            font-size: 0.82rem;
+        }
+        .mini-ranking {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            min-height: 58px;
+            margin-bottom: 0.55rem;
+            padding: 0.55rem 0.65rem;
+            border: 1px solid var(--footrate-border);
+            border-radius: 12px;
+            background: rgba(17, 28, 47, 0.82);
+        }
+        .mini-ranking img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+        .mini-rank {
+            display: grid;
+            place-items: center;
+            width: 24px;
+            height: 24px;
+            flex: 0 0 24px;
+            border-radius: 50%;
+            background: rgba(34, 211, 167, 0.13);
+            color: #9ff3da;
+            font-weight: 850;
+        }
+        .mini-identity {
+            min-width: 0;
+            flex: 1;
+        }
+        .mini-identity strong, .mini-identity span {
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .mini-identity strong {
+            color: #f8fafc;
+            font-size: 0.88rem;
+        }
+        .mini-identity span {
+            color: #94a3b8;
+            font-size: 0.74rem;
+        }
+        .mini-score {
+            color: #22d3a7;
+            font-size: 1rem;
+            font-weight: 900;
+        }
         .versus {
             height: 155px;
             display: grid;
@@ -699,6 +918,19 @@ st.markdown(
             .brand-name {
                 font-size: 1.65rem;
             }
+            .player-tile {
+                min-height: 275px;
+            }
+            .tile-photo {
+                width: 105px;
+                height: 105px;
+            }
+            .tile-score {
+                width: 62px;
+                height: 62px;
+                flex-basis: 62px;
+                font-size: 1.15rem;
+            }
         }
     </style>
     """,
@@ -718,9 +950,12 @@ except Exception as exc:
 
 render_header(data_file)
 
-tab_ranking, tab_profile, tab_compare, tab_method = st.tabs(
-    ["🏆 Classement", "👤 Fiche joueur", "⇄ Comparateur", "ℹ️ Méthodologie"]
+tab_home, tab_ranking, tab_profile, tab_compare, tab_method = st.tabs(
+    ["🏠 Accueil", "🏆 Classement", "👤 Fiche joueur", "⇄ Comparateur", "ℹ️ Méthodologie"]
 )
+
+with tab_home:
+    render_home(data)
 
 with tab_ranking:
     render_ranking(data)
