@@ -37,6 +37,7 @@ def version_key(path: Path) -> tuple[int, ...]:
 
 def find_data_file() -> Path:
     preferred = [
+        Path("output/footrate_official_v0_7.csv"),
         Path("output/footrate_official_v0_6.csv"),
         Path("output/footrate_official_v0_5.csv"),
         Path("output/footrate_ratings_v0_6.csv"),
@@ -87,7 +88,8 @@ def load_data(path_as_text: str) -> pd.DataFrame:
     numeric_columns = [
         "player_id", "team_id", "minutes", *SKILL_COLUMNS.keys(),
         "profile_score", "performance_score", "overall_precalibrated",
-        "calibration_adjustment", "overall", "form", "matches_in_form",
+        "calibration_adjustment", "overall", "form", "form_trend",
+        "matches_in_form", "club_form", "club_form_trend",
     ]
     for column in numeric_columns:
         if column not in df.columns:
@@ -131,6 +133,16 @@ def load_data(path_as_text: str) -> pd.DataFrame:
         df["clubs_in_season"] = df["team_name"]
 
     df["position_fr"] = df["position"].map(POSITION_LABELS).fillna(df["position"])
+
+    if "form_label" not in df.columns:
+        df["form_label"] = "Non disponible"
+    else:
+        df["form_label"] = df["form_label"].fillna("Non disponible").astype(str)
+
+    if "club_form_label" not in df.columns:
+        df["club_form_label"] = "Non disponible"
+    else:
+        df["club_form_label"] = df["club_form_label"].fillna("Non disponible").astype(str)
     df["display_name"] = (
         df["player_name"].astype(str)
         + " — "
@@ -141,6 +153,46 @@ def load_data(path_as_text: str) -> pd.DataFrame:
     df = df.sort_values(["overall", "minutes"], ascending=[False, False])
     df["rank"] = range(1, len(df) + 1)
     return df
+
+
+
+def trend_icon(value: float | int | None) -> str:
+    if value is None or pd.isna(value):
+        return "•"
+    value = float(value)
+    if value >= 3:
+        return "↗"
+    if value <= -3:
+        return "↘"
+    return "→"
+
+
+def trend_text(value: float | int | None) -> str:
+    if value is None or pd.isna(value):
+        return "Non disponible"
+    value = float(value)
+    if value >= 3:
+        return "En hausse"
+    if value <= -3:
+        return "En baisse"
+    return "Stable"
+
+
+def trend_badge(value: float | int | None) -> str:
+    label = trend_text(value)
+    icon = trend_icon(value)
+    if value is None or pd.isna(value):
+        css_class = "trend-neutral"
+        shown = ""
+    else:
+        numeric = float(value)
+        css_class = (
+            "trend-up" if numeric >= 3
+            else "trend-down" if numeric <= -3
+            else "trend-neutral"
+        )
+        shown = f" {numeric:+.1f}"
+    return f'<span class="trend-pill {css_class}">{icon} {label}{shown}</span>'
 
 
 def score_color(value: float | int | None) -> str:
@@ -306,6 +358,54 @@ def render_home(df: pd.DataFrame) -> None:
         with column:
             st.markdown(player_tile(player, medal), unsafe_allow_html=True)
 
+    form_available = df["form"].notna().sum() > 0
+    if form_available:
+        st.markdown("### Joueurs en forme")
+        in_form = (
+            df[df["form"].notna() & df["matches_in_form"].ge(2)]
+            .sort_values(["form", "overall"], ascending=[False, False])
+            .head(3)
+        )
+        if not in_form.empty:
+            form_columns = st.columns(3)
+            for column, (_, player) in zip(form_columns, in_form.iterrows()):
+                with column:
+                    st.markdown(
+                        player_tile(player, f"🔥 Forme {player['form']:.1f}"),
+                        unsafe_allow_html=True,
+                    )
+                    st.markdown(
+                        trend_badge(player.get("form_trend")),
+                        unsafe_allow_html=True,
+                    )
+
+        club_dynamics = (
+            df[["team_id", "team_name", "club_form", "club_form_trend"]]
+            .dropna(subset=["club_form"])
+            .drop_duplicates(subset=["team_id"])
+            .sort_values(["club_form", "club_form_trend"], ascending=[False, False])
+            .head(3)
+        )
+        if not club_dynamics.empty:
+            st.markdown("#### Clubs les plus en forme")
+            club_columns = st.columns(3)
+            for column, (_, club) in zip(club_columns, club_dynamics.iterrows()):
+                with column:
+                    logo = team_logo_url(club.get("team_id")) or ""
+                    st.markdown(
+                        f"""
+                        <div class="club-form-card">
+                            <img src="{logo}" alt="{club['team_name']}">
+                            <div>
+                                <strong>{club['team_name']}</strong>
+                                <span>Forme : {club['club_form']:.1f}</span>
+                            </div>
+                            {trend_badge(club.get("club_form_trend"))}
+                        </div>
+                        """,
+                        unsafe_allow_html=True,
+                    )
+
     st.markdown("### Meilleurs joueurs par poste")
     position_columns = st.columns(3)
     position_groups = [
@@ -412,6 +512,16 @@ def build_club_summary(df: pd.DataFrame) -> pd.DataFrame:
                 "best_player_score": float(best_player["overall"]),
                 "best_player_id": best_player["player_id"],
                 "minutes_total": float(group["minutes"].sum()),
+                "club_form": (
+                    float(group["club_form"].dropna().iloc[0])
+                    if group["club_form"].notna().any()
+                    else None
+                ),
+                "club_form_trend": (
+                    float(group["club_form_trend"].dropna().iloc[0])
+                    if group["club_form_trend"].notna().any()
+                    else None
+                ),
             }
         )
 
@@ -568,6 +678,7 @@ def render_club_comparison(summary: pd.DataFrame) -> None:
         ("Attaque", "attack_score"),
         ("Milieu", "midfield_score"),
         ("Défense", "defence_score"),
+        ("Forme récente", "club_form"),
     ]
     for label, column in criteria:
         comparison_rows.extend(
@@ -648,6 +759,8 @@ def render_clubs(df: pd.DataFrame) -> None:
                 "players_used",
                 "squad_score",
                 "coverage_status",
+                "club_form",
+                "club_form_trend",
                 "average_score",
                 "best_player",
             ]
@@ -658,6 +771,8 @@ def render_clubs(df: pd.DataFrame) -> None:
                 "players_used": "Joueurs pris en compte",
                 "squad_score": "Note d'effectif",
                 "coverage_status": "Statut",
+                "club_form": "Forme",
+                "club_form_trend": "Tendance",
                 "average_score": "Moyenne",
                 "best_player": "Meilleur joueur",
             }
@@ -665,6 +780,15 @@ def render_clubs(df: pd.DataFrame) -> None:
         display["Rang"] = display["Rang"].astype("Int64")
         display["Note d'effectif"] = display["Note d'effectif"].round(1)
         display["Moyenne"] = display["Moyenne"].round(1)
+        display["Forme"] = display["Forme"].round(1)
+        display["Tendance"] = display["Tendance"].apply(
+            lambda value: (
+                "↗ En hausse" if pd.notna(value) and value >= 3
+                else "↘ En baisse" if pd.notna(value) and value <= -3
+                else "→ Stable" if pd.notna(value)
+                else "—"
+            )
+        )
 
         st.dataframe(
             display,
@@ -681,6 +805,12 @@ def render_clubs(df: pd.DataFrame) -> None:
                     format="%.1f",
                 ),
                 "Statut": st.column_config.TextColumn(width="small"),
+                "Forme": st.column_config.ProgressColumn(
+                    min_value=0,
+                    max_value=100,
+                    format="%.1f",
+                ),
+                "Tendance": st.column_config.TextColumn(width="small"),
                 "Moyenne": st.column_config.NumberColumn(format="%.1f"),
                 "Meilleur joueur": st.column_config.TextColumn(width="medium"),
             },
@@ -688,7 +818,7 @@ def render_clubs(df: pd.DataFrame) -> None:
 
         official_count = int((ranked_clubs["coverage_status"] == "Officielle").sum())
         provisional_count = int((ranked_clubs["coverage_status"] == "Provisoire").sum())
-        metric_1, metric_2, metric_3 = st.columns(3)
+        metric_1, metric_2, metric_3, metric_4 = st.columns(4)
         metric_1.metric("Notes officielles", official_count)
         metric_2.metric("Notes provisoires", provisional_count)
         metric_3.metric("Clubs non classés", len(insufficient_clubs))
@@ -805,6 +935,15 @@ def render_clubs(df: pd.DataFrame) -> None:
             "Meilleure note individuelle",
             f"{club_row['best_player_score']:.1f}",
         )
+        metric_4.metric(
+            "Forme du club",
+            "—" if pd.isna(club_row.get("club_form"))
+            else f"{club_row['club_form']:.1f}",
+            delta=(
+                None if pd.isna(club_row.get("club_form_trend"))
+                else f"{club_row['club_form_trend']:+.1f}"
+            ),
+        )
 
         st.markdown("### Meilleurs joueurs du club")
         top_players = club_players.head(3)
@@ -866,7 +1005,9 @@ def render_clubs(df: pd.DataFrame) -> None:
 def render_ranking(df: pd.DataFrame) -> None:
     st.subheader("Classement des joueurs")
 
-    filter_col1, filter_col2, filter_col3, filter_col4 = st.columns([1.4, 1, 1, 1])
+    filter_col1, filter_col2, filter_col3, filter_col4, filter_col5 = st.columns(
+        [1.4, 1, 1, 1, 1]
+    )
     with filter_col1:
         search = st.text_input(
             "Rechercher",
@@ -889,6 +1030,11 @@ def render_ranking(df: pd.DataFrame) -> None:
             [0, 450, 900, 1350],
             index=2,
         )
+    with filter_col5:
+        sort_choice = st.selectbox(
+            "Trier par",
+            ["Note générale", "Forme récente"],
+        )
 
     filtered = df.copy()
     if search:
@@ -902,13 +1048,22 @@ def render_ranking(df: pd.DataFrame) -> None:
     if club != "Tous":
         filtered = filtered[filtered["team_name"] == club]
     filtered = filtered[filtered["minutes"].fillna(0) >= minimum_minutes]
-    filtered = filtered.sort_values(["overall", "minutes"], ascending=[False, False]).copy()
+    if sort_choice == "Forme récente" and filtered["form"].notna().any():
+        filtered = filtered.sort_values(
+            ["form", "overall", "minutes"],
+            ascending=[False, False, False],
+        ).copy()
+    else:
+        filtered = filtered.sort_values(
+            ["overall", "minutes"],
+            ascending=[False, False],
+        ).copy()
     filtered["Rang"] = range(1, len(filtered) + 1)
 
     display = filtered[
         [
             "Rang", "player_name", "team_name", "position_fr",
-            "minutes", "overall", "reliability",
+            "minutes", "overall", "form", "form_trend", "reliability",
         ]
     ].rename(
         columns={
@@ -917,11 +1072,22 @@ def render_ranking(df: pd.DataFrame) -> None:
             "position_fr": "Poste",
             "minutes": "Minutes",
             "overall": "Note",
+            "form": "Forme",
+            "form_trend": "Tendance",
             "reliability": "Fiabilité",
         }
     )
     display["Minutes"] = display["Minutes"].round(0).astype("Int64")
     display["Note"] = display["Note"].round(1)
+    display["Forme"] = display["Forme"].round(1)
+    display["Tendance"] = display["Tendance"].apply(
+        lambda value: (
+            "↗ En hausse" if pd.notna(value) and value >= 3
+            else "↘ En baisse" if pd.notna(value) and value <= -3
+            else "→ Stable" if pd.notna(value)
+            else "—"
+        )
+    )
 
     st.dataframe(
         display,
@@ -939,6 +1105,12 @@ def render_ranking(df: pd.DataFrame) -> None:
                 max_value=100,
                 format="%.1f",
             ),
+            "Forme": st.column_config.ProgressColumn(
+                min_value=0,
+                max_value=100,
+                format="%.1f",
+            ),
+            "Tendance": st.column_config.TextColumn(width="small"),
         },
     )
     st.caption(f"{len(filtered)} joueur(s) affiché(s).")
@@ -976,7 +1148,7 @@ def render_player_card(player: pd.Series) -> None:
     with details_col:
         st.altair_chart(skill_chart(skill_dataframe(player)), use_container_width=True)
 
-    metric1, metric2, metric3, metric4 = st.columns(4)
+    metric1, metric2, metric3, metric4, metric5, metric6 = st.columns(6)
     metric1.metric(
         "Profil statistique",
         "—" if pd.isna(player.get("profile_score")) else f"{player['profile_score']:.1f}",
@@ -993,6 +1165,19 @@ def render_player_card(player: pd.Series) -> None:
     metric4.metric(
         "Ajustement",
         "—" if pd.isna(calibration) else f"{calibration:+.1f}",
+    )
+    metric5.metric(
+        "Forme récente",
+        "—" if pd.isna(player.get("form")) else f"{player['form']:.1f}",
+        delta=(
+            None if pd.isna(player.get("form_trend"))
+            else f"{player['form_trend']:+.1f}"
+        ),
+    )
+    metric6.metric(
+        "Matchs analysés",
+        "—" if pd.isna(player.get("matches_in_form"))
+        else f"{int(player['matches_in_form'])}/5",
     )
 
     with st.expander("Comment lire cette fiche ?"):
@@ -1114,15 +1299,26 @@ def render_comparison(df: pd.DataFrame) -> None:
 
     table = pd.DataFrame(
         {
-            "Critère": ["Note générale", "Minutes", "Profil", "Performance"],
+            "Critère": [
+                "Note générale",
+                "Forme récente",
+                "Tendance",
+                "Minutes",
+                "Profil",
+                "Performance",
+            ],
             player_a["player_name"]: [
                 player_a["overall"],
+                player_a.get("form"),
+                trend_text(player_a.get("form_trend")),
                 player_a["minutes"],
                 player_a.get("profile_score"),
                 player_a.get("performance_score"),
             ],
             player_b["player_name"]: [
                 player_b["overall"],
+                player_b.get("form"),
+                trend_text(player_b.get("form_trend")),
                 player_b["minutes"],
                 player_b.get("profile_score"),
                 player_b.get("performance_score"),
@@ -1149,6 +1345,14 @@ def render_methodology() -> None:
         Une note est **officielle à partir de 900 minutes**. Entre 450 et 899 minutes,
         elle est considérée comme provisoire. La calibration finale est limitée afin
         que le classement relatif ne déforme pas excessivement la performance brute.
+
+        La **forme récente d'un joueur** est calculée à partir de ses notes
+        API-Football lors des cinq derniers matchs de son club, avec davantage de
+        poids pour les rencontres les plus récentes et le temps réellement joué.
+
+        La **forme d'un club** combine les résultats de ses cinq derniers matchs et
+        leur différence de buts. La tendance compare les deux matchs les plus récents
+        aux trois précédents.
 
         La **note d'effectif d'un club** correspond à la moyenne des onze joueurs
         les mieux notés du club. Elle est officielle avec au moins 11 joueurs évalués,
@@ -1255,6 +1459,61 @@ st.markdown(
             color: #fecaca;
             background: rgba(239, 68, 68, 0.14);
             border: 1px solid rgba(239, 68, 68, 0.34);
+        }
+        .trend-pill {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            padding: 0.3rem 0.55rem;
+            font-size: 0.76rem;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+        .trend-up {
+            color: #bbf7d0;
+            background: rgba(34, 197, 94, 0.14);
+            border: 1px solid rgba(34, 197, 94, 0.32);
+        }
+        .trend-down {
+            color: #fecaca;
+            background: rgba(239, 68, 68, 0.14);
+            border: 1px solid rgba(239, 68, 68, 0.32);
+        }
+        .trend-neutral {
+            color: #cbd5e1;
+            background: rgba(100, 116, 139, 0.14);
+            border: 1px solid rgba(100, 116, 139, 0.32);
+        }
+        .club-form-card {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            min-height: 72px;
+            padding: 0.7rem;
+            border: 1px solid var(--footrate-border);
+            border-radius: 14px;
+            background: rgba(17, 28, 47, 0.88);
+        }
+        .club-form-card img {
+            width: 42px;
+            height: 42px;
+            object-fit: contain;
+        }
+        .club-form-card > div {
+            min-width: 0;
+            flex: 1;
+        }
+        .club-form-card strong,
+        .club-form-card span {
+            display: block;
+        }
+        .club-form-card strong {
+            color: #f8fafc;
+        }
+        .club-form-card span {
+            color: #94a3b8;
+            font-size: 0.78rem;
         }
         .score-wrapper {
             text-align: center;
