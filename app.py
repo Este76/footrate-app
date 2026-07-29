@@ -93,8 +93,8 @@ def load_data(path_as_text: str) -> pd.DataFrame:
     ]
     for column in numeric_columns:
         if column not in df.columns:
-            df[column] = pd.NA
-        df[column] = pd.to_numeric(df[column], errors="coerce")
+            df[column] = float("nan")
+        df[column] = pd.to_numeric(df[column], errors="coerce").astype(float)
 
     if "official_rating" not in df.columns:
         df["official_rating"] = df["minutes"].ge(900)
@@ -515,12 +515,12 @@ def build_club_summary(df: pd.DataFrame) -> pd.DataFrame:
                 "club_form": (
                     float(group["club_form"].dropna().iloc[0])
                     if group["club_form"].notna().any()
-                    else None
+                    else float("nan")
                 ),
                 "club_form_trend": (
                     float(group["club_form_trend"].dropna().iloc[0])
                     if group["club_form_trend"].notna().any()
-                    else None
+                    else float("nan")
                 ),
             }
         )
@@ -780,8 +780,12 @@ def render_clubs(df: pd.DataFrame) -> None:
         display["Rang"] = display["Rang"].astype("Int64")
         display["Note d'effectif"] = display["Note d'effectif"].round(1)
         display["Moyenne"] = display["Moyenne"].round(1)
-        display["Forme"] = display["Forme"].round(1)
-        display["Tendance"] = display["Tendance"].apply(
+        display["Forme"] = pd.to_numeric(
+            display["Forme"], errors="coerce"
+        ).round(1)
+        display["Tendance"] = pd.to_numeric(
+            display["Tendance"], errors="coerce"
+        ).apply(
             lambda value: (
                 "↗ En hausse" if pd.notna(value) and value >= 3
                 else "↘ En baisse" if pd.notna(value) and value <= -3
@@ -1048,7 +1052,10 @@ def render_ranking(df: pd.DataFrame) -> None:
     if club != "Tous":
         filtered = filtered[filtered["team_name"] == club]
     filtered = filtered[filtered["minutes"].fillna(0) >= minimum_minutes]
-    if sort_choice == "Forme récente" and filtered["form"].notna().any():
+    if (
+        sort_choice == "Forme récente"
+        and pd.to_numeric(filtered["form"], errors="coerce").notna().any()
+    ):
         filtered = filtered.sort_values(
             ["form", "overall", "minutes"],
             ascending=[False, False, False],
@@ -1079,8 +1086,12 @@ def render_ranking(df: pd.DataFrame) -> None:
     )
     display["Minutes"] = display["Minutes"].round(0).astype("Int64")
     display["Note"] = display["Note"].round(1)
-    display["Forme"] = display["Forme"].round(1)
-    display["Tendance"] = display["Tendance"].apply(
+    display["Forme"] = pd.to_numeric(
+        display["Forme"], errors="coerce"
+    ).round(1)
+    display["Tendance"] = pd.to_numeric(
+        display["Tendance"], errors="coerce"
+    ).apply(
         lambda value: (
             "↗ En hausse" if pd.notna(value) and value >= 3
             else "↘ En baisse" if pd.notna(value) and value <= -3
