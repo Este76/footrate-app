@@ -57,6 +57,81 @@ def find_data_file() -> Path:
     )
 
 
+
+def find_competition_files() -> tuple[Path | None, Path | None]:
+    table_candidates = [
+        Path("output/footrate_ligue1_table_v0_9.csv"),
+    ]
+    results_candidates = [
+        Path("output/footrate_ligue1_results_v0_9.csv"),
+    ]
+
+    table_path = next((path for path in table_candidates if path.exists()), None)
+    results_path = next((path for path in results_candidates if path.exists()), None)
+    return table_path, results_path
+
+
+@st.cache_data(show_spinner=False)
+def load_competition_data(
+    table_path_text: str | None,
+    results_path_text: str | None,
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    if not table_path_text:
+        return pd.DataFrame(), pd.DataFrame()
+
+    table = pd.read_csv(
+        Path(table_path_text),
+        sep=";",
+        encoding="utf-8-sig",
+    )
+
+    table_numeric = [
+        "team_id", "rank", "points", "played", "wins", "draws", "losses",
+        "goals_for", "goals_against", "goal_diff",
+    ]
+    for column in table_numeric:
+        if column not in table.columns:
+            table[column] = float("nan")
+        table[column] = pd.to_numeric(table[column], errors="coerce")
+
+    for column in ["team_name", "standing_form", "description"]:
+        if column not in table.columns:
+            table[column] = ""
+        table[column] = table[column].fillna("").astype(str)
+
+    results = pd.DataFrame()
+    if results_path_text and Path(results_path_text).exists():
+        results = pd.read_csv(
+            Path(results_path_text),
+            sep=";",
+            encoding="utf-8-sig",
+        )
+        result_numeric = [
+            "team_id", "fixture_id", "opponent_id", "goals_for",
+            "goals_against", "recency_order",
+        ]
+        for column in result_numeric:
+            if column not in results.columns:
+                results[column] = float("nan")
+            results[column] = pd.to_numeric(results[column], errors="coerce")
+
+        for column in [
+            "team_name", "opponent_name", "opponent_logo", "date",
+            "round", "home_away", "result", "score",
+        ]:
+            if column not in results.columns:
+                results[column] = ""
+            results[column] = results[column].fillna("").astype(str)
+
+        results["date_parsed"] = pd.to_datetime(
+            results["date"],
+            errors="coerce",
+            utc=True,
+        )
+
+    return table, results
+
+
 def read_bool(series: pd.Series) -> pd.Series:
     return (
         series.astype(str)
@@ -387,7 +462,7 @@ def player_form_tile(player: pd.Series) -> str:
         f'box-shadow:0 0 22px {form_colour}44;">'
         f'<span>{form_shown}</span>'
         f'</div>'
-        f'<div class="form-score-caption">Forme sur 5 matchs</div>'
+        f'<div class="form-score-caption">Forme récente</div>'
         f'</div>'
         f'</div>'
         f'<div class="form-card-name">{player["player_name"]}</div>'
@@ -522,6 +597,368 @@ def render_home(df: pd.DataFrame) -> None:
         "La prochaine étape sera l'actualisation vers la saison en cours."
     )
 
+
+
+
+def french_standing_form(raw_form: str) -> str:
+    translation = {"W": "V", "D": "N", "L": "D"}
+    letters = [translation.get(letter.upper(), letter.upper()) for letter in raw_form]
+    return " ".join(letters) if letters else "—"
+
+
+def performance_gap_label(gap: float | int | None) -> str:
+    if gap is None or pd.isna(gap):
+        return "Non comparable"
+    gap = float(gap)
+    if gap >= 2:
+        return "Surperformance sportive"
+    if gap <= -2:
+        return "Sous-performance sportive"
+    return "Conforme à l'effectif"
+
+
+def result_css_class(result: str) -> str:
+    return {
+        "V": "match-win",
+        "N": "match-draw",
+        "D": "match-loss",
+    }.get(str(result).upper(), "match-neutral")
+
+
+def recent_result_card(result: pd.Series) -> str:
+    date_value = result.get("date_parsed")
+    if pd.notna(date_value):
+        date_text = pd.Timestamp(date_value).strftime("%d/%m/%Y")
+    else:
+        date_text = str(result.get("date", ""))[:10]
+
+    opponent_logo = result.get("opponent_logo", "") or ""
+    result_letter = str(result.get("result", "—")).upper()
+    css_class = result_css_class(result_letter)
+    location = "Domicile" if result.get("home_away") == "home" else "Extérieur"
+
+    return (
+        f'<div class="recent-match-card">'
+        f'<div class="recent-match-top">'
+        f'<span class="match-result-pill {css_class}">{result_letter}</span>'
+        f'<span>{date_text}</span>'
+        f'</div>'
+        f'<div class="recent-opponent">'
+        f'<img src="{opponent_logo}" alt="{result.get("opponent_name", "")}">'
+        f'<strong>{result.get("opponent_name", "")}</strong>'
+        f'</div>'
+        f'<div class="recent-score">{result.get("score", "—")}</div>'
+        f'<div class="recent-location">{location}</div>'
+        f'</div>'
+    )
+
+
+def render_recent_results(
+    recent_results: pd.DataFrame,
+    team_id: float | int | None,
+    heading: str = "Cinq derniers résultats",
+) -> None:
+    if (
+        recent_results.empty
+        or team_id is None
+        or pd.isna(team_id)
+    ):
+        st.caption("Résultats récents non disponibles.")
+        return
+
+    team_results = (
+        recent_results[
+            pd.to_numeric(recent_results["team_id"], errors="coerce")
+            == int(team_id)
+        ]
+        .sort_values("recency_order")
+        .head(5)
+    )
+
+    if team_results.empty:
+        st.caption("Résultats récents non disponibles.")
+        return
+
+    st.markdown(f"### {heading}")
+    columns = st.columns(len(team_results))
+    for column, (_, result) in zip(columns, team_results.iterrows()):
+        with column:
+            st.markdown(
+                recent_result_card(result),
+                unsafe_allow_html=True,
+            )
+
+
+def build_sporting_comparison(
+    player_data: pd.DataFrame,
+    competition_table: pd.DataFrame,
+) -> pd.DataFrame:
+    if competition_table.empty:
+        return pd.DataFrame()
+
+    club_summary = build_club_summary(player_data)
+    official_summary = club_summary[
+        club_summary["eligible_for_ranking"]
+    ].copy()
+
+    comparison = competition_table.merge(
+        official_summary[
+            ["team_id", "rank", "squad_score", "coverage_status"]
+        ].rename(columns={"rank": "footrate_rank"}),
+        on="team_id",
+        how="left",
+    )
+
+    comparison["rank_gap"] = (
+        pd.to_numeric(comparison["footrate_rank"], errors="coerce")
+        - pd.to_numeric(comparison["rank"], errors="coerce")
+    )
+    comparison["performance_reading"] = comparison["rank_gap"].apply(
+        performance_gap_label
+    )
+    return comparison.sort_values("rank").reset_index(drop=True)
+
+
+def render_league(
+    player_data: pd.DataFrame,
+    competition_table: pd.DataFrame,
+    recent_results: pd.DataFrame,
+) -> None:
+    st.subheader("Ligue 1 2024-2025")
+
+    if competition_table.empty:
+        st.warning(
+            "Les données du classement sportif ne sont pas encore présentes. "
+            "Exécute `footrate_competition_update.py`, puis ajoute les deux CSV "
+            "v0.9 dans le dossier `output` de GitHub."
+        )
+        return
+
+    standings = competition_table.sort_values("rank").copy()
+    leader = standings.iloc[0]
+    best_attack = standings.sort_values(
+        ["goals_for", "goal_diff"],
+        ascending=[False, False],
+    ).iloc[0]
+    best_defence = standings.sort_values(
+        ["goals_against", "goal_diff"],
+        ascending=[True, False],
+    ).iloc[0]
+
+    metric_1, metric_2, metric_3, metric_4 = st.columns(4)
+    metric_1.metric("Champion", leader["team_name"])
+    metric_2.metric("Points du champion", int(leader["points"]))
+    metric_3.metric(
+        "Meilleure attaque",
+        best_attack["team_name"],
+        delta=f"{int(best_attack['goals_for'])} buts",
+        delta_color="off",
+    )
+    metric_4.metric(
+        "Meilleure défense",
+        best_defence["team_name"],
+        delta=f"{int(best_defence['goals_against'])} buts encaissés",
+        delta_color="off",
+    )
+
+    standings_tab, analysis_tab, results_tab = st.tabs(
+        [
+            "Classement sportif",
+            "Sportif vs FootRate",
+            "Résultats récents",
+        ]
+    )
+
+    with standings_tab:
+        display = standings[
+            [
+                "rank", "team_name", "played", "wins", "draws", "losses",
+                "goals_for", "goals_against", "goal_diff", "points",
+                "standing_form",
+            ]
+        ].rename(
+            columns={
+                "rank": "Rang",
+                "team_name": "Club",
+                "played": "J",
+                "wins": "V",
+                "draws": "N",
+                "losses": "D",
+                "goals_for": "BP",
+                "goals_against": "BC",
+                "goal_diff": "Diff.",
+                "points": "Pts",
+                "standing_form": "5 derniers",
+            }
+        )
+        for column in ["Rang", "J", "V", "N", "D", "BP", "BC", "Diff.", "Pts"]:
+            display[column] = pd.to_numeric(
+                display[column],
+                errors="coerce",
+            ).astype("Int64")
+        display["5 derniers"] = display["5 derniers"].apply(
+            french_standing_form
+        )
+
+        st.dataframe(
+            display,
+            use_container_width=True,
+            hide_index=True,
+            height=650,
+            column_config={
+                "Rang": st.column_config.NumberColumn(width="small"),
+                "Club": st.column_config.TextColumn(width="medium"),
+                "J": st.column_config.NumberColumn(width="small"),
+                "V": st.column_config.NumberColumn(width="small"),
+                "N": st.column_config.NumberColumn(width="small"),
+                "D": st.column_config.NumberColumn(width="small"),
+                "BP": st.column_config.NumberColumn(width="small"),
+                "BC": st.column_config.NumberColumn(width="small"),
+                "Diff.": st.column_config.NumberColumn(width="small"),
+                "Pts": st.column_config.NumberColumn(width="small"),
+                "5 derniers": st.column_config.TextColumn(width="medium"),
+            },
+        )
+
+    with analysis_tab:
+        comparison = build_sporting_comparison(
+            player_data,
+            competition_table,
+        )
+
+        if comparison.empty:
+            st.caption("Comparaison indisponible.")
+        else:
+            display = comparison[
+                [
+                    "rank", "team_name", "points", "footrate_rank",
+                    "squad_score", "rank_gap", "performance_reading",
+                ]
+            ].rename(
+                columns={
+                    "rank": "Rang sportif",
+                    "team_name": "Club",
+                    "points": "Points",
+                    "footrate_rank": "Rang FootRate",
+                    "squad_score": "Note d'effectif",
+                    "rank_gap": "Écart de rang",
+                    "performance_reading": "Lecture",
+                }
+            )
+            for column in [
+                "Rang sportif", "Points", "Rang FootRate", "Écart de rang",
+            ]:
+                display[column] = pd.to_numeric(
+                    display[column],
+                    errors="coerce",
+                ).astype("Int64")
+            display["Note d'effectif"] = pd.to_numeric(
+                display["Note d'effectif"],
+                errors="coerce",
+            ).round(1)
+
+            st.dataframe(
+                display,
+                use_container_width=True,
+                hide_index=True,
+                height=610,
+                column_config={
+                    "Rang sportif": st.column_config.NumberColumn(width="small"),
+                    "Club": st.column_config.TextColumn(width="medium"),
+                    "Points": st.column_config.NumberColumn(width="small"),
+                    "Rang FootRate": st.column_config.NumberColumn(width="small"),
+                    "Note d'effectif": st.column_config.ProgressColumn(
+                        min_value=0,
+                        max_value=100,
+                        format="%.1f",
+                    ),
+                    "Écart de rang": st.column_config.NumberColumn(width="small"),
+                    "Lecture": st.column_config.TextColumn(width="medium"),
+                },
+            )
+
+            chart_data = comparison.dropna(
+                subset=["squad_score", "points"]
+            ).copy()
+
+            scatter = (
+                alt.Chart(chart_data)
+                .mark_circle(size=125, opacity=0.84)
+                .encode(
+                    x=alt.X(
+                        "squad_score:Q",
+                        title="Note d'effectif FootRate",
+                        scale=alt.Scale(zero=False),
+                    ),
+                    y=alt.Y(
+                        "points:Q",
+                        title="Points au classement",
+                        scale=alt.Scale(zero=False),
+                    ),
+                    color=alt.Color(
+                        "performance_reading:N",
+                        title=None,
+                        legend=alt.Legend(orient="bottom"),
+                    ),
+                    tooltip=[
+                        alt.Tooltip("team_name:N", title="Club"),
+                        alt.Tooltip(
+                            "squad_score:Q",
+                            title="Note d'effectif",
+                            format=".1f",
+                        ),
+                        alt.Tooltip("points:Q", title="Points"),
+                        alt.Tooltip("rank:Q", title="Rang sportif"),
+                        alt.Tooltip(
+                            "footrate_rank:Q",
+                            title="Rang FootRate",
+                        ),
+                        alt.Tooltip(
+                            "performance_reading:N",
+                            title="Lecture",
+                        ),
+                    ],
+                )
+                .properties(height=440)
+            )
+            labels = (
+                alt.Chart(chart_data)
+                .mark_text(
+                    align="left",
+                    dx=7,
+                    dy=-6,
+                    color="#F8FAFC",
+                    fontSize=11,
+                )
+                .encode(
+                    x=alt.X("squad_score:Q"),
+                    y=alt.Y("points:Q"),
+                    text="team_name:N",
+                )
+            )
+            st.altair_chart(
+                scatter + labels,
+                use_container_width=True,
+            )
+
+            st.caption(
+                "Un écart positif signifie que le club termine mieux classé "
+                "sportivement que dans le classement des effectifs FootRate."
+            )
+
+    with results_tab:
+        selected_team = st.selectbox(
+            "Choisir un club",
+            standings["team_name"].tolist(),
+            key="league_results_team",
+        )
+        selected_row = standings[
+            standings["team_name"] == selected_team
+        ].iloc[0]
+        render_recent_results(
+            recent_results,
+            selected_row["team_id"],
+        )
 
 
 @st.cache_data(show_spinner=False)
@@ -682,7 +1119,10 @@ def club_score_chart(club_row: pd.Series) -> alt.Chart:
     return bars + labels
 
 
-def render_club_comparison(summary: pd.DataFrame) -> None:
+def render_club_comparison(
+    summary: pd.DataFrame,
+    competition_table: pd.DataFrame,
+) -> None:
     st.markdown("### Comparer deux clubs")
     options = summary["team_name"].tolist()
 
@@ -812,8 +1252,44 @@ def render_club_comparison(summary: pd.DataFrame) -> None:
     )
     st.altair_chart(bars + labels, use_container_width=True)
 
+    if not competition_table.empty:
+        sports = competition_table[
+            competition_table["team_name"].isin(
+                [club_a["team_name"], club_b["team_name"]]
+            )
+        ].copy()
 
-def render_clubs(df: pd.DataFrame) -> None:
+        if len(sports) == 2:
+            sports_display = sports[
+                [
+                    "team_name", "rank", "points", "played",
+                    "wins", "draws", "losses", "goal_diff",
+                ]
+            ].rename(
+                columns={
+                    "team_name": "Club",
+                    "rank": "Rang",
+                    "points": "Points",
+                    "played": "J",
+                    "wins": "V",
+                    "draws": "N",
+                    "losses": "D",
+                    "goal_diff": "Diff.",
+                }
+            )
+            st.markdown("### Bilan sportif")
+            st.dataframe(
+                sports_display,
+                use_container_width=True,
+                hide_index=True,
+            )
+
+
+def render_clubs(
+    df: pd.DataFrame,
+    competition_table: pd.DataFrame,
+    recent_results: pd.DataFrame,
+) -> None:
     st.subheader("Clubs")
     st.caption(
         "La note d'effectif correspond à la moyenne des onze joueurs les mieux "
@@ -1026,6 +1502,45 @@ def render_clubs(df: pd.DataFrame) -> None:
             ),
         )
 
+        if not competition_table.empty:
+            sporting_rows = competition_table[
+                pd.to_numeric(
+                    competition_table["team_id"],
+                    errors="coerce",
+                )
+                == int(club_row["team_id"])
+            ]
+            if not sporting_rows.empty:
+                sporting = sporting_rows.iloc[0]
+                st.markdown("### Bilan sportif 2024-2025")
+                sport_1, sport_2, sport_3, sport_4 = st.columns(4)
+                sport_1.metric(
+                    "Classement",
+                    f"{int(sporting['rank'])}e",
+                )
+                sport_2.metric(
+                    "Points",
+                    int(sporting["points"]),
+                )
+                sport_3.metric(
+                    "Victoires / Nuls / Défaites",
+                    (
+                        f"{int(sporting['wins'])} / "
+                        f"{int(sporting['draws'])} / "
+                        f"{int(sporting['losses'])}"
+                    ),
+                )
+                sport_4.metric(
+                    "Différence de buts",
+                    f"{int(sporting['goal_diff']):+d}",
+                )
+
+                render_recent_results(
+                    recent_results,
+                    club_row["team_id"],
+                    heading="Cinq derniers matchs du club",
+                )
+
         st.markdown("### Meilleurs joueurs du club")
         top_players = club_players.head(3)
         top_columns = st.columns(3)
@@ -1080,7 +1595,7 @@ def render_clubs(df: pd.DataFrame) -> None:
         )
 
     with comparison_tab:
-        render_club_comparison(summary)
+        render_club_comparison(summary, competition_table)
 
 
 def render_ranking(df: pd.DataFrame) -> None:
@@ -1450,6 +1965,10 @@ def render_methodology() -> None:
         compare les deux matchs les plus récents aux trois précédents et reste limitée
         à ±15 points.
 
+        Le **classement sportif réel** et les résultats sont récupérés séparément
+        depuis API-Football. Ils ne modifient pas la note d'effectif : ils servent à
+        comparer la qualité statistique estimée d'un groupe à ses résultats réels.
+
         La **note d'effectif d'un club** correspond à la moyenne des onze joueurs
         les mieux notés du club. Elle est officielle avec au moins 11 joueurs évalués,
         provisoire avec 7 à 10 joueurs et non classée sous 7 joueurs. Elle mesure la
@@ -1698,6 +2217,76 @@ st.markdown(
             margin-top: 0.78rem;
             color: #94a3b8;
             font-size: 0.74rem;
+        }
+        .recent-match-card {
+            min-height: 170px;
+            padding: 0.78rem;
+            border: 1px solid var(--footrate-border);
+            border-radius: 14px;
+            background: rgba(17, 28, 47, 0.88);
+            text-align: center;
+        }
+        .recent-match-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.4rem;
+            color: #94a3b8;
+            font-size: 0.69rem;
+        }
+        .match-result-pill {
+            display: grid;
+            place-items: center;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            font-weight: 900;
+        }
+        .match-win {
+            color: #bbf7d0;
+            background: rgba(34, 197, 94, 0.18);
+            border: 1px solid rgba(34, 197, 94, 0.35);
+        }
+        .match-draw {
+            color: #fde68a;
+            background: rgba(245, 158, 11, 0.18);
+            border: 1px solid rgba(245, 158, 11, 0.35);
+        }
+        .match-loss {
+            color: #fecaca;
+            background: rgba(239, 68, 68, 0.18);
+            border: 1px solid rgba(239, 68, 68, 0.35);
+        }
+        .match-neutral {
+            color: #cbd5e1;
+            background: rgba(100, 116, 139, 0.18);
+            border: 1px solid rgba(100, 116, 139, 0.35);
+        }
+        .recent-opponent {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.45rem;
+            margin-top: 0.8rem;
+            min-height: 43px;
+            color: #f8fafc;
+            font-size: 0.82rem;
+        }
+        .recent-opponent img {
+            width: 35px;
+            height: 35px;
+            object-fit: contain;
+        }
+        .recent-score {
+            margin-top: 0.55rem;
+            color: #22d3a7;
+            font-size: 1.35rem;
+            font-weight: 900;
+        }
+        .recent-location {
+            margin-top: 0.35rem;
+            color: #94a3b8;
+            font-size: 0.7rem;
         }
         .club-form-card {
             display: flex;
@@ -1954,6 +2543,19 @@ st.markdown(
 try:
     data_file = find_data_file()
     data = load_data(str(data_file))
+    competition_table_path, competition_results_path = find_competition_files()
+    competition_table, recent_results = load_competition_data(
+        (
+            str(competition_table_path)
+            if competition_table_path is not None
+            else None
+        ),
+        (
+            str(competition_results_path)
+            if competition_results_path is not None
+            else None
+        ),
+    )
 except Exception as exc:
     st.error("Impossible de charger les données FootRate.")
     st.code(str(exc))
@@ -1964,11 +2566,20 @@ except Exception as exc:
 
 render_header(data_file)
 
-tab_home, tab_ranking, tab_clubs, tab_profile, tab_compare, tab_method = st.tabs(
+(
+    tab_home,
+    tab_ranking,
+    tab_clubs,
+    tab_league,
+    tab_profile,
+    tab_compare,
+    tab_method,
+) = st.tabs(
     [
         "🏠 Accueil",
         "🏆 Joueurs",
         "⚽ Clubs",
+        "📊 Ligue 1",
         "👤 Fiche joueur",
         "⇄ Comparateur",
         "ℹ️ Méthodologie",
@@ -1982,7 +2593,18 @@ with tab_ranking:
     render_ranking(data)
 
 with tab_clubs:
-    render_clubs(data)
+    render_clubs(
+        data,
+        competition_table,
+        recent_results,
+    )
+
+with tab_league:
+    render_league(
+        data,
+        competition_table,
+        recent_results,
+    )
 
 with tab_profile:
     render_player_profile(data)
