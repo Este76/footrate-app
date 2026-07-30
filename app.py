@@ -37,7 +37,6 @@ def version_key(path: Path) -> tuple[int, ...]:
 
 def find_data_file() -> Path:
     preferred = [
-        Path("output/footrate_players_multileague_v1_2.csv"),
         Path("output/footrate_official_v0_8.csv"),
         Path("output/footrate_official_v0_7.csv"),
         Path("output/footrate_official_v0_6.csv"),
@@ -161,6 +160,58 @@ def load_competition_data(
     return table, results
 
 
+
+def find_team_match_stats_file() -> Path | None:
+    candidates = [
+        Path("output/sportsrate_team_match_stats_v1_2.csv"),
+        Path("output/footrate_team_match_stats_v1_2.csv"),
+    ]
+    return next((path for path in candidates if path.exists()), None)
+
+
+@st.cache_data(show_spinner=False)
+def load_team_match_stats(path_text: str | None) -> pd.DataFrame:
+    if not path_text:
+        return pd.DataFrame()
+
+    path = Path(path_text)
+    if not path.exists():
+        return pd.DataFrame()
+
+    stats = pd.read_csv(path, sep=";", encoding="utf-8-sig")
+
+    numeric_columns = [
+        "competition_id", "season", "fixture_id", "matchday",
+        "team_id", "opponent_id", "goals_for", "goals_against",
+        "possession", "shots_total", "shots_on_target",
+        "shots_off_target", "blocked_shots", "shots_inside_box",
+        "shots_outside_box", "fouls", "corners", "offsides",
+        "yellow_cards", "red_cards", "goalkeeper_saves",
+        "passes_total", "passes_accurate", "pass_accuracy",
+    ]
+    for column in numeric_columns:
+        if column not in stats.columns:
+            stats[column] = float("nan")
+        stats[column] = pd.to_numeric(stats[column], errors="coerce")
+
+    text_columns = [
+        "competition_name", "season_label", "round", "date",
+        "team_name", "team_logo", "opponent_name", "opponent_logo",
+        "home_away", "result", "score",
+    ]
+    for column in text_columns:
+        if column not in stats.columns:
+            stats[column] = ""
+        stats[column] = stats[column].fillna("").astype(str)
+
+    stats["date_parsed"] = pd.to_datetime(
+        stats["date"],
+        errors="coerce",
+        utc=True,
+    )
+    return stats
+
+
 def read_bool(series: pd.Series) -> pd.Series:
     return (
         series.astype(str)
@@ -189,28 +240,6 @@ def load_data(path_as_text: str) -> pd.DataFrame:
         if column not in df.columns:
             df[column] = "Non renseigné"
         df[column] = df[column].fillna("Non renseigné").astype(str)
-
-    if "competition_id" not in df.columns:
-        df["competition_id"] = 61
-    if "competition_name" not in df.columns:
-        df["competition_name"] = "Ligue 1"
-    if "season" not in df.columns:
-        df["season"] = 2024
-    if "season_label" not in df.columns:
-        df["season_label"] = "2024-2025"
-
-    df["competition_id"] = pd.to_numeric(
-        df["competition_id"], errors="coerce"
-    ).fillna(61).astype(int)
-    df["season"] = pd.to_numeric(
-        df["season"], errors="coerce"
-    ).fillna(2024).astype(int)
-    df["competition_name"] = (
-        df["competition_name"].fillna("Ligue 1").astype(str)
-    )
-    df["season_label"] = (
-        df["season_label"].fillna("2024-2025").astype(str)
-    )
 
     numeric_columns = [
         "player_id", "team_id", "minutes", *SKILL_COLUMNS.keys(),
@@ -297,43 +326,6 @@ def load_data(path_as_text: str) -> pd.DataFrame:
     df["rank"] = range(1, len(df) + 1)
     return df
 
-
-
-
-def rating_competition_options(df: pd.DataFrame) -> pd.DataFrame:
-    options = (
-        df[["competition_id", "competition_name", "season", "season_label"]]
-        .drop_duplicates()
-        .sort_values(["competition_name", "season"], ascending=[True, False])
-        .reset_index(drop=True)
-    )
-    options["display_name"] = (
-        options["competition_name"] + " — " + options["season_label"]
-    )
-    return options
-
-
-def filter_rating_data(
-    df: pd.DataFrame,
-    competition_id: int,
-    season: int,
-) -> pd.DataFrame:
-    filtered = df[
-        df["competition_id"].eq(int(competition_id))
-        & df["season"].eq(int(season))
-    ].copy()
-    filtered = filtered.sort_values(
-        ["overall", "minutes"], ascending=[False, False]
-    )
-    filtered["rank"] = range(1, len(filtered) + 1)
-    return filtered
-
-
-def rating_scope_text(df: pd.DataFrame) -> str:
-    if df.empty:
-        return "Compétition non renseignée"
-    row = df.iloc[0]
-    return f"{row['competition_name']} {row['season_label']}"
 
 
 def trend_icon(value: float | int | None) -> str:
@@ -578,9 +570,8 @@ def player_form_tile(player: pd.Series) -> str:
 
 def render_home(df: pd.DataFrame) -> None:
     st.subheader("Bienvenue sur FootRate")
-    scope = rating_scope_text(df)
     st.caption(
-        f"Découvrez les joueurs les mieux notés de {scope} "
+        "Découvrez les joueurs les mieux notés de Ligue 1 2024-2025 "
         "à partir de leurs performances réelles."
     )
 
@@ -682,9 +673,8 @@ def render_home(df: pd.DataFrame) -> None:
                 )
 
     st.info(
-        f"Les notes affichées sont calculées à l'intérieur de {scope}. "
-        "Les comparaisons directes entre championnats restent désactivées "
-        "tant qu'une calibration européenne commune n'est pas disponible."
+        "Cette version utilise les données de Ligue 1 2024-2025. "
+        "La prochaine étape sera l'actualisation vers la saison en cours."
     )
 
 
@@ -1070,20 +1060,19 @@ def render_league(
         )
 
     with analysis_tab:
-        selected_rating_data = filter_rating_data(
-            player_data,
-            selected_competition_id,
-            selected_season,
-        )
-        if selected_rating_data.empty:
+        if not (
+            selected_competition_id == 61
+            and selected_season == 2024
+        ):
             st.info(
-                "Aucune note FootRate n'est encore disponible pour cette "
-                "compétition et cette saison. Les classements et résultats "
-                "restent consultables normalement."
+                "La comparaison avec les notes d'effectif FootRate est "
+                "actuellement disponible uniquement pour la Ligue 1 "
+                "2024-2025. Les notes de joueurs des autres championnats "
+                "seront ajoutées progressivement."
             )
         else:
             comparison = build_sporting_comparison(
-                selected_rating_data,
+                player_data,
                 standings,
             )
 
@@ -1413,6 +1402,543 @@ def render_league(
                 rank_chart,
                 use_container_width=True,
             )
+
+
+
+TEAM_STAT_OPTIONS = {
+    "Possession (%)": {
+        "column": "possession",
+        "unit": "%",
+        "kind": "average",
+    },
+    "Tirs": {
+        "column": "shots_total",
+        "unit": "",
+        "kind": "average",
+    },
+    "Tirs cadrés": {
+        "column": "shots_on_target",
+        "unit": "",
+        "kind": "average",
+    },
+    "Tirs non cadrés": {
+        "column": "shots_off_target",
+        "unit": "",
+        "kind": "average",
+    },
+    "Tirs bloqués": {
+        "column": "blocked_shots",
+        "unit": "",
+        "kind": "average",
+    },
+    "Tirs dans la surface": {
+        "column": "shots_inside_box",
+        "unit": "",
+        "kind": "average",
+    },
+    "Corners": {
+        "column": "corners",
+        "unit": "",
+        "kind": "average",
+    },
+    "Fautes": {
+        "column": "fouls",
+        "unit": "",
+        "kind": "average",
+    },
+    "Hors-jeu": {
+        "column": "offsides",
+        "unit": "",
+        "kind": "average",
+    },
+    "Cartons jaunes": {
+        "column": "yellow_cards",
+        "unit": "",
+        "kind": "average",
+    },
+    "Cartons rouges": {
+        "column": "red_cards",
+        "unit": "",
+        "kind": "average",
+    },
+    "Arrêts du gardien": {
+        "column": "goalkeeper_saves",
+        "unit": "",
+        "kind": "average",
+    },
+    "Passes tentées": {
+        "column": "passes_total",
+        "unit": "",
+        "kind": "average",
+    },
+    "Passes réussies": {
+        "column": "passes_accurate",
+        "unit": "",
+        "kind": "average",
+    },
+    "Précision des passes (%)": {
+        "column": "pass_accuracy",
+        "unit": "%",
+        "kind": "average",
+    },
+}
+
+
+def result_label(result: str) -> str:
+    return {
+        "V": "Victoire",
+        "N": "Nul",
+        "D": "Défaite",
+    }.get(str(result).upper(), "Non renseigné")
+
+
+def home_away_label(value: str) -> str:
+    return {
+        "home": "Domicile",
+        "away": "Extérieur",
+    }.get(str(value).lower(), "Non renseigné")
+
+
+def prepare_team_analysis(
+    all_stats: pd.DataFrame,
+    competition_id: int,
+    season: int,
+    team_id: int,
+    matchday_range: tuple[int, int],
+    venue_filter: str,
+    opponent_filter: str,
+) -> pd.DataFrame:
+    selected = all_stats[
+        all_stats["competition_id"].eq(competition_id)
+        & all_stats["season"].eq(season)
+        & all_stats["team_id"].eq(team_id)
+        & all_stats["matchday"].between(
+            matchday_range[0],
+            matchday_range[1],
+            inclusive="both",
+        )
+    ].copy()
+
+    if venue_filter == "Domicile":
+        selected = selected[selected["home_away"].eq("home")]
+    elif venue_filter == "Extérieur":
+        selected = selected[selected["home_away"].eq("away")]
+
+    if opponent_filter != "Tous":
+        selected = selected[selected["opponent_name"].eq(opponent_filter)]
+
+    return selected.sort_values(["matchday", "date_parsed"])
+
+
+def merge_opponent_stat(
+    selected: pd.DataFrame,
+    all_stats: pd.DataFrame,
+    stat_column: str,
+) -> pd.DataFrame:
+    if selected.empty:
+        return selected.copy()
+
+    opponent_values = all_stats[
+        ["fixture_id", "team_id", stat_column]
+    ].rename(
+        columns={
+            "team_id": "opponent_row_team_id",
+            stat_column: "opponent_value",
+        }
+    )
+
+    merged = selected.merge(
+        opponent_values,
+        left_on=["fixture_id", "opponent_id"],
+        right_on=["fixture_id", "opponent_row_team_id"],
+        how="left",
+    )
+    merged["team_value"] = pd.to_numeric(
+        merged[stat_column],
+        errors="coerce",
+    )
+    merged["opponent_value"] = pd.to_numeric(
+        merged["opponent_value"],
+        errors="coerce",
+    )
+    merged["difference"] = (
+        merged["team_value"] - merged["opponent_value"]
+    )
+    return merged
+
+
+def render_advanced_analysis(team_match_stats: pd.DataFrame) -> None:
+    st.subheader("Analyse avancée des clubs")
+    st.caption(
+        "Filtre les données match par match par championnat, saison, équipe "
+        "et plage de journées."
+    )
+
+    if team_match_stats.empty:
+        st.warning(
+            "Aucune statistique détaillée n'est encore disponible. "
+            "Exécute `sportsrate_team_stats_update.py`, puis ajoute "
+            "`output/sportsrate_team_match_stats_v1_2.csv` sur GitHub."
+        )
+        st.info(
+            "Exemple : récupère toute la saison du PSG, puis analyse sa "
+            "possession entre la J3 et la J14."
+        )
+        return
+
+    competitions = (
+        team_match_stats[["competition_id", "competition_name"]]
+        .drop_duplicates()
+        .sort_values("competition_name")
+    )
+    competition_names = competitions["competition_name"].tolist()
+
+    filter_1, filter_2, filter_3 = st.columns(3)
+    with filter_1:
+        selected_competition_name = st.selectbox(
+            "Compétition",
+            competition_names,
+            key="advanced_competition",
+        )
+
+    selected_competition_id = int(
+        competitions.loc[
+            competitions["competition_name"].eq(
+                selected_competition_name
+            ),
+            "competition_id",
+        ].iloc[0]
+    )
+
+    seasons = (
+        team_match_stats[
+            team_match_stats["competition_id"].eq(
+                selected_competition_id
+            )
+        ][["season", "season_label"]]
+        .drop_duplicates()
+        .sort_values("season", ascending=False)
+    )
+    with filter_2:
+        selected_season_label = st.selectbox(
+            "Saison",
+            seasons["season_label"].tolist(),
+            key="advanced_season",
+        )
+    selected_season = int(
+        seasons.loc[
+            seasons["season_label"].eq(selected_season_label),
+            "season",
+        ].iloc[0]
+    )
+
+    team_options = (
+        team_match_stats[
+            team_match_stats["competition_id"].eq(
+                selected_competition_id
+            )
+            & team_match_stats["season"].eq(selected_season)
+        ][["team_id", "team_name"]]
+        .drop_duplicates()
+        .sort_values("team_name")
+    )
+    with filter_3:
+        selected_team_name = st.selectbox(
+            "Équipe",
+            team_options["team_name"].tolist(),
+            key="advanced_team",
+        )
+    selected_team_id = int(
+        team_options.loc[
+            team_options["team_name"].eq(selected_team_name),
+            "team_id",
+        ].iloc[0]
+    )
+
+    team_season = team_match_stats[
+        team_match_stats["competition_id"].eq(selected_competition_id)
+        & team_match_stats["season"].eq(selected_season)
+        & team_match_stats["team_id"].eq(selected_team_id)
+    ].copy()
+
+    valid_matchdays = sorted(
+        int(value)
+        for value in team_season["matchday"].dropna().unique()
+    )
+    if not valid_matchdays:
+        st.error("Aucune journée exploitable n'a été trouvée pour cette équipe.")
+        return
+
+    available_stats = [
+        label
+        for label, config in TEAM_STAT_OPTIONS.items()
+        if config["column"] in team_season.columns
+        and team_season[config["column"]].notna().any()
+    ]
+    if not available_stats:
+        st.error("Les statistiques de cette équipe sont vides.")
+        return
+
+    advanced_1, advanced_2, advanced_3, advanced_4 = st.columns(
+        [1.3, 1.5, 1, 1.2]
+    )
+    with advanced_1:
+        stat_label = st.selectbox(
+            "Statistique étudiée",
+            available_stats,
+            index=(
+                available_stats.index("Possession (%)")
+                if "Possession (%)" in available_stats
+                else 0
+            ),
+            key="advanced_stat",
+        )
+
+    min_day = min(valid_matchdays)
+    max_day = max(valid_matchdays)
+    default_start = 3 if min_day <= 3 <= max_day else min_day
+    default_end = 14 if min_day <= 14 <= max_day else max_day
+    if default_start > default_end:
+        default_start, default_end = min_day, max_day
+
+    with advanced_2:
+        matchday_range = st.slider(
+            "Plage de journées",
+            min_value=min_day,
+            max_value=max_day,
+            value=(default_start, default_end),
+            key="advanced_matchdays",
+        )
+
+    with advanced_3:
+        venue_filter = st.selectbox(
+            "Lieu",
+            ["Tous", "Domicile", "Extérieur"],
+            key="advanced_venue",
+        )
+
+    opponents = ["Tous"] + sorted(
+        team_season["opponent_name"].dropna().unique().tolist()
+    )
+    with advanced_4:
+        opponent_filter = st.selectbox(
+            "Adversaire",
+            opponents,
+            key="advanced_opponent",
+        )
+
+    selected = prepare_team_analysis(
+        team_match_stats,
+        selected_competition_id,
+        selected_season,
+        selected_team_id,
+        matchday_range,
+        venue_filter,
+        opponent_filter,
+    )
+
+    stat_config = TEAM_STAT_OPTIONS[stat_label]
+    stat_column = stat_config["column"]
+    unit = stat_config["unit"]
+
+    selected = merge_opponent_stat(
+        selected,
+        team_match_stats,
+        stat_column,
+    )
+    selected = selected[selected["team_value"].notna()].copy()
+
+    if selected.empty:
+        st.warning(
+            "Aucun match ne correspond aux filtres choisis ou la statistique "
+            "n'est pas renseignée sur cette période."
+        )
+        return
+
+    average_value = float(selected["team_value"].mean())
+    minimum_value = float(selected["team_value"].min())
+    maximum_value = float(selected["team_value"].max())
+    opponent_average = (
+        float(selected["opponent_value"].mean())
+        if selected["opponent_value"].notna().any()
+        else float("nan")
+    )
+    average_difference = (
+        float(selected["difference"].mean())
+        if selected["difference"].notna().any()
+        else float("nan")
+    )
+
+    metric_1, metric_2, metric_3, metric_4, metric_5 = st.columns(5)
+    metric_1.metric(
+        "Moyenne sur la période",
+        f"{average_value:.1f}{unit}",
+    )
+    metric_2.metric(
+        "Minimum",
+        f"{minimum_value:.1f}{unit}",
+    )
+    metric_3.metric(
+        "Maximum",
+        f"{maximum_value:.1f}{unit}",
+    )
+    metric_4.metric(
+        "Moyenne adverse",
+        "—" if pd.isna(opponent_average)
+        else f"{opponent_average:.1f}{unit}",
+        delta=(
+            None if pd.isna(average_difference)
+            else f"{average_difference:+.1f}{unit} d'écart"
+        ),
+    )
+    metric_5.metric(
+        "Matchs analysés",
+        len(selected),
+        delta=(
+            f"J{matchday_range[0]} à J{matchday_range[1]}"
+        ),
+        delta_color="off",
+    )
+
+    chart_data = selected[
+        [
+            "matchday", "date", "opponent_name", "result",
+            "home_away", "team_value", "opponent_value",
+        ]
+    ].copy()
+    chart_data["Équipe"] = selected_team_name
+    chart_data["Adversaire"] = chart_data["opponent_name"]
+
+    team_line = (
+        alt.Chart(chart_data)
+        .mark_line(point=True, strokeWidth=3, color="#22D3A7")
+        .encode(
+            x=alt.X(
+                "matchday:Q",
+                title="Journée",
+                axis=alt.Axis(tickMinStep=1),
+            ),
+            y=alt.Y(
+                "team_value:Q",
+                title=stat_label,
+                scale=alt.Scale(zero=False),
+            ),
+            tooltip=[
+                alt.Tooltip("matchday:Q", title="Journée"),
+                alt.Tooltip("date:N", title="Date"),
+                alt.Tooltip("opponent_name:N", title="Adversaire"),
+                alt.Tooltip("team_value:Q", title=selected_team_name, format=".1f"),
+                alt.Tooltip("opponent_value:Q", title="Adversaire", format=".1f"),
+                alt.Tooltip("result:N", title="Résultat"),
+            ],
+        )
+    )
+    opponent_line = (
+        alt.Chart(chart_data[chart_data["opponent_value"].notna()])
+        .mark_line(
+            point=True,
+            strokeWidth=2,
+            strokeDash=[6, 4],
+            color="#7DD3FC",
+        )
+        .encode(
+            x=alt.X("matchday:Q"),
+            y=alt.Y("opponent_value:Q"),
+        )
+    )
+    average_rule = (
+        alt.Chart(pd.DataFrame({"average": [average_value]}))
+        .mark_rule(color="#F59E0B", strokeDash=[4, 4])
+        .encode(y="average:Q")
+    )
+
+    st.markdown(f"### Évolution de {stat_label.lower()}")
+    st.altair_chart(
+        (team_line + opponent_line + average_rule).properties(height=430),
+        use_container_width=True,
+    )
+    st.caption(
+        f"Ligne verte : {selected_team_name}. Ligne bleue pointillée : "
+        "adversaire. Ligne orange : moyenne de la période."
+    )
+
+    result_summary = (
+        selected.assign(
+            Résultat=selected["result"].apply(result_label),
+            Lieu=selected["home_away"].apply(home_away_label),
+        )
+        .groupby("Résultat", as_index=False)
+        .agg(
+            Matchs=("fixture_id", "count"),
+            Moyenne=("team_value", "mean"),
+            Moyenne_adverse=("opponent_value", "mean"),
+        )
+    )
+
+    place_summary = (
+        selected.assign(
+            Lieu=selected["home_away"].apply(home_away_label),
+        )
+        .groupby("Lieu", as_index=False)
+        .agg(
+            Matchs=("fixture_id", "count"),
+            Moyenne=("team_value", "mean"),
+            Moyenne_adverse=("opponent_value", "mean"),
+        )
+    )
+
+    result_col, place_col = st.columns(2)
+    with result_col:
+        st.markdown("### Selon le résultat")
+        if not result_summary.empty:
+            result_summary["Moyenne"] = result_summary["Moyenne"].round(1)
+            result_summary["Moyenne adverse"] = result_summary.pop(
+                "Moyenne_adverse"
+            ).round(1)
+            st.dataframe(
+                result_summary,
+                use_container_width=True,
+                hide_index=True,
+            )
+
+    with place_col:
+        st.markdown("### Domicile / extérieur")
+        if not place_summary.empty:
+            place_summary["Moyenne"] = place_summary["Moyenne"].round(1)
+            place_summary["Moyenne adverse"] = place_summary.pop(
+                "Moyenne_adverse"
+            ).round(1)
+            st.dataframe(
+                place_summary,
+                use_container_width=True,
+                hide_index=True,
+            )
+
+    detailed = selected[
+        [
+            "matchday", "date_parsed", "opponent_name", "home_away",
+            "score", "result", "team_value", "opponent_value", "difference",
+        ]
+    ].copy()
+    detailed["Journée"] = detailed.pop("matchday").astype("Int64")
+    detailed["Date"] = detailed.pop("date_parsed").dt.strftime("%d/%m/%Y")
+    detailed["Adversaire"] = detailed.pop("opponent_name")
+    detailed["Lieu"] = detailed.pop("home_away").apply(home_away_label)
+    detailed["Score"] = detailed.pop("score")
+    detailed["Résultat"] = detailed.pop("result").apply(result_label)
+    detailed[selected_team_name] = detailed.pop("team_value").round(1)
+    detailed["Adversaire - statistique"] = detailed.pop(
+        "opponent_value"
+    ).round(1)
+    detailed["Écart"] = detailed.pop("difference").round(1)
+
+    st.markdown("### Matchs utilisés dans le calcul")
+    st.dataframe(
+        detailed,
+        use_container_width=True,
+        hide_index=True,
+        height=min(650, 90 + len(detailed) * 36),
+    )
 
 
 @st.cache_data(show_spinner=False)
@@ -2419,11 +2945,9 @@ def render_methodology() -> None:
         compare les deux matchs les plus récents aux trois précédents et reste limitée
         à ±15 points.
 
-        Les notes de joueurs sont actuellement **normalisées à l'intérieur de
-        chaque championnat**. Une note de 85 en Premier League et une note de 85
-        en Ligue 1 représentent donc un niveau relatif élevé dans leur propre
-        compétition, mais ne constituent pas encore une comparaison européenne
-        absolue. Le sélecteur empêche volontairement de mélanger les populations.
+        Les **analyses avancées** utilisent une ligne par équipe et par match.
+        Cette structure permet de filtrer une statistique par journée, lieu,
+        adversaire et période, puis de la comparer à la valeur de l'adversaire.
 
         Le **classement sportif réel** et les résultats sont récupérés séparément
         depuis API-Football. Ils ne modifient pas la note d'effectif : ils servent à
@@ -3033,6 +3557,10 @@ try:
     data_file = find_data_file()
     data = load_data(str(data_file))
     competition_table_path, competition_results_path = find_competition_files()
+    team_match_stats_path = find_team_match_stats_file()
+    team_match_stats = load_team_match_stats(
+        str(team_match_stats_path) if team_match_stats_path is not None else None
+    )
     competition_table, recent_results = load_competition_data(
         (
             str(competition_table_path)
@@ -3046,6 +3574,22 @@ try:
         ),
     )
 
+    footrate_competition_table = (
+        competition_table[
+            competition_table["competition_id"].eq(61)
+            & competition_table["season"].eq(2024)
+        ].copy()
+        if not competition_table.empty
+        else pd.DataFrame()
+    )
+    footrate_recent_results = (
+        recent_results[
+            recent_results["competition_id"].eq(61)
+            & recent_results["season"].eq(2024)
+        ].copy()
+        if not recent_results.empty
+        else pd.DataFrame()
+    )
 except Exception as exc:
     st.error("Impossible de charger les données FootRate.")
     st.code(str(exc))
@@ -3056,54 +3600,12 @@ except Exception as exc:
 
 render_header(data_file)
 
-rating_options = rating_competition_options(data)
-if rating_options.empty:
-    st.error("Aucune compétition FootRate n'est disponible.")
-    st.stop()
-
-selected_rating_label = st.selectbox(
-    "Notes FootRate affichées",
-    rating_options["display_name"].tolist(),
-    index=0,
-    key="rating_competition_selector",
-)
-selected_rating_row = rating_options.loc[
-    rating_options["display_name"].eq(selected_rating_label)
-].iloc[0]
-selected_rating_competition_id = int(selected_rating_row["competition_id"])
-selected_rating_season = int(selected_rating_row["season"])
-rating_data = filter_rating_data(
-    data,
-    selected_rating_competition_id,
-    selected_rating_season,
-)
-
-selected_competition_table = (
-    competition_table[
-        competition_table["competition_id"].eq(
-            selected_rating_competition_id
-        )
-        & competition_table["season"].eq(selected_rating_season)
-    ].copy()
-    if not competition_table.empty
-    else pd.DataFrame()
-)
-selected_recent_results = (
-    recent_results[
-        recent_results["competition_id"].eq(
-            selected_rating_competition_id
-        )
-        & recent_results["season"].eq(selected_rating_season)
-    ].copy()
-    if not recent_results.empty
-    else pd.DataFrame()
-)
-
 (
     tab_home,
     tab_ranking,
     tab_clubs,
     tab_league,
+    tab_analysis,
     tab_profile,
     tab_compare,
     tab_method,
@@ -3113,6 +3615,7 @@ selected_recent_results = (
         "🏆 Joueurs",
         "⚽ Clubs",
         "🌍 Championnats",
+        "🔎 Analyse avancée",
         "👤 Fiche joueur",
         "⇄ Comparateur",
         "ℹ️ Méthodologie",
@@ -3120,16 +3623,16 @@ selected_recent_results = (
 )
 
 with tab_home:
-    render_home(rating_data)
+    render_home(data)
 
 with tab_ranking:
-    render_ranking(rating_data)
+    render_ranking(data)
 
 with tab_clubs:
     render_clubs(
-        rating_data,
-        selected_competition_table,
-        selected_recent_results,
+        data,
+        footrate_competition_table,
+        footrate_recent_results,
     )
 
 with tab_league:
@@ -3139,11 +3642,14 @@ with tab_league:
         recent_results,
     )
 
+with tab_analysis:
+    render_advanced_analysis(team_match_stats)
+
 with tab_profile:
-    render_player_profile(rating_data)
+    render_player_profile(data)
 
 with tab_compare:
-    render_comparison(rating_data)
+    render_comparison(data)
 
 with tab_method:
     render_methodology()
