@@ -60,10 +60,12 @@ def find_data_file() -> Path:
 
 def find_competition_files() -> tuple[Path | None, Path | None]:
     table_candidates = [
+        Path("output/footrate_competitions_table_history_v1_1.csv"),
         Path("output/footrate_ligue1_table_history_v1_0.csv"),
         Path("output/footrate_ligue1_table_v0_9.csv"),
     ]
     results_candidates = [
+        Path("output/footrate_competitions_results_history_v1_1.csv"),
         Path("output/footrate_ligue1_results_history_v1_0.csv"),
         Path("output/footrate_ligue1_results_v0_9.csv"),
     ]
@@ -750,56 +752,138 @@ def render_league(
     competition_table: pd.DataFrame,
     recent_results: pd.DataFrame,
 ) -> None:
-    st.subheader("Historique de la Ligue 1")
+    st.subheader("Championnats européens")
 
     if competition_table.empty:
         st.warning(
-            "Les données historiques ne sont pas encore présentes. "
-            "Exécute `footrate_history_update.py`, puis ajoute les deux CSV "
-            "v1.0 dans le dossier `output` de GitHub."
+            "Les données multi-compétitions ne sont pas encore présentes. "
+            "Exécute `footrate_multileague_update.py`, puis ajoute les deux CSV "
+            "v1.1 dans le dossier `output` de GitHub."
         )
         return
 
-    season_options = (
+    competition_labels = {
+        "Ligue 1": "🇫🇷 Ligue 1",
+        "Premier League": "🏴 Premier League",
+        "La Liga": "🇪🇸 Liga",
+        "Serie A": "🇮🇹 Serie A",
+        "Bundesliga": "🇩🇪 Bundesliga",
+    }
+    competition_order = {
+        "Ligue 1": 1,
+        "Premier League": 2,
+        "La Liga": 3,
+        "Serie A": 4,
+        "Bundesliga": 5,
+    }
+
+    competition_options = (
         competition_table[
-            ["season", "season_label"]
+            ["competition_id", "competition_name"]
         ]
+        .drop_duplicates()
+        .copy()
+    )
+    competition_options["display_name"] = competition_options[
+        "competition_name"
+    ].map(competition_labels).fillna(
+        competition_options["competition_name"]
+    )
+    competition_options["display_order"] = competition_options[
+        "competition_name"
+    ].map(competition_order).fillna(99)
+    competition_options = competition_options.sort_values(
+        ["display_order", "competition_name"]
+    )
+
+    default_index = 0
+    ligue_1_matches = competition_options.index[
+        competition_options["competition_name"].eq("Ligue 1")
+    ].tolist()
+    if ligue_1_matches:
+        default_index = competition_options.index.tolist().index(
+            ligue_1_matches[0]
+        )
+
+    selector_col1, selector_col2 = st.columns(2)
+    with selector_col1:
+        selected_competition_display = st.selectbox(
+            "Compétition",
+            competition_options["display_name"].tolist(),
+            index=default_index,
+            key="multi_competition_selector",
+        )
+
+    selected_competition_row = competition_options.loc[
+        competition_options["display_name"].eq(
+            selected_competition_display
+        )
+    ].iloc[0]
+    selected_competition_id = int(
+        selected_competition_row["competition_id"]
+    )
+    selected_competition_name = str(
+        selected_competition_row["competition_name"]
+    )
+
+    competition_seasons = (
+        competition_table[
+            competition_table["competition_id"].eq(
+                selected_competition_id
+            )
+        ][["season", "season_label"]]
         .drop_duplicates()
         .sort_values("season", ascending=False)
     )
-    season_labels = season_options["season_label"].tolist()
+    season_labels = competition_seasons["season_label"].tolist()
 
-    selected_label = st.selectbox(
-        "Saison",
-        season_labels,
-        index=0,
-        key="league_history_season",
-    )
+    with selector_col2:
+        selected_label = st.selectbox(
+            "Saison",
+            season_labels,
+            index=0,
+            key=f"multi_season_{selected_competition_id}",
+        )
+
     selected_season = int(
-        season_options.loc[
-            season_options["season_label"] == selected_label,
+        competition_seasons.loc[
+            competition_seasons["season_label"].eq(selected_label),
             "season",
         ].iloc[0]
     )
 
     standings = (
         competition_table[
-            competition_table["season"].eq(selected_season)
+            competition_table["competition_id"].eq(
+                selected_competition_id
+            )
+            & competition_table["season"].eq(selected_season)
         ]
         .sort_values("rank")
         .copy()
     )
-    selected_results = recent_results[
-        recent_results["season"].eq(selected_season)
-    ].copy() if not recent_results.empty else pd.DataFrame()
+
+    selected_results = (
+        recent_results[
+            recent_results["competition_id"].eq(
+                selected_competition_id
+            )
+            & recent_results["season"].eq(selected_season)
+        ].copy()
+        if not recent_results.empty
+        else pd.DataFrame()
+    )
 
     if standings.empty:
-        st.error(f"Aucune donnée trouvée pour la saison {selected_label}.")
+        st.error(
+            f"Aucune donnée trouvée pour {selected_competition_name} "
+            f"{selected_label}."
+        )
         return
 
     st.caption(
-        f"Classement final, résultats récents et statistiques de la saison "
-        f"{selected_label}."
+        f"Classement final, résultats récents et historique de "
+        f"{selected_competition_name} pour la saison {selected_label}."
     )
 
     leader = standings.iloc[0]
@@ -829,14 +913,17 @@ def render_league(
             f"{int(best_defence['goals_against'])} buts encaissés",
         ),
         (
-            "Écart du champion",
-            f"+{int(leader['goal_diff'])}",
-            "Différence de buts",
+            "Différence de buts du champion",
+            f"{int(leader['goal_diff']):+d}",
+            selected_label,
         ),
     ]
 
     card_columns = st.columns(4)
-    for column, (label, value, detail) in zip(card_columns, summary_cards):
+    for column, (label, value, detail) in zip(
+        card_columns,
+        summary_cards,
+    ):
         with column:
             st.markdown(
                 f"""
@@ -866,9 +953,9 @@ def render_league(
     with standings_tab:
         display = standings[
             [
-                "rank", "team_name", "played", "wins", "draws", "losses",
-                "goals_for", "goals_against", "goal_diff", "points",
-                "standing_form",
+                "rank", "team_name", "played", "wins", "draws",
+                "losses", "goals_for", "goals_against",
+                "goal_diff", "points", "standing_form",
             ]
         ].rename(
             columns={
@@ -914,17 +1001,22 @@ def render_league(
                 "BC": st.column_config.NumberColumn(width="small"),
                 "Diff.": st.column_config.NumberColumn(width="small"),
                 "Pts": st.column_config.NumberColumn(width="small"),
-                "5 derniers": st.column_config.TextColumn(width="medium"),
+                "5 derniers": st.column_config.TextColumn(
+                    width="medium"
+                ),
             },
         )
 
     with analysis_tab:
-        if selected_season != 2024:
+        if not (
+            selected_competition_id == 61
+            and selected_season == 2024
+        ):
             st.info(
-                "La comparaison avec les notes d'effectif FootRate est pour le "
-                "moment disponible uniquement pour la saison 2024-2025. "
-                "Les notes historiques des joueurs seront ajoutées dans une "
-                "prochaine version."
+                "La comparaison avec les notes d'effectif FootRate est "
+                "actuellement disponible uniquement pour la Ligue 1 "
+                "2024-2025. Les notes de joueurs des autres championnats "
+                "seront ajoutées progressivement."
             )
         else:
             comparison = build_sporting_comparison(
@@ -937,8 +1029,9 @@ def render_league(
             else:
                 display = comparison[
                     [
-                        "rank", "team_name", "points", "footrate_rank",
-                        "squad_score", "rank_gap", "performance_reading",
+                        "rank", "team_name", "points",
+                        "footrate_rank", "squad_score",
+                        "rank_gap", "performance_reading",
                     ]
                 ].rename(
                     columns={
@@ -953,8 +1046,8 @@ def render_league(
                 )
 
                 for column in [
-                    "Rang sportif", "Points", "Rang FootRate",
-                    "Écart de rang",
+                    "Rang sportif", "Points",
+                    "Rang FootRate", "Écart de rang",
                 ]:
                     display[column] = pd.to_numeric(
                         display[column],
@@ -972,23 +1065,36 @@ def render_league(
                     hide_index=True,
                     height=610,
                     column_config={
-                        "Rang sportif": st.column_config.NumberColumn(
-                            width="small"
-                        ),
-                        "Club": st.column_config.TextColumn(width="medium"),
-                        "Points": st.column_config.NumberColumn(width="small"),
-                        "Rang FootRate": st.column_config.NumberColumn(
-                            width="small"
-                        ),
-                        "Note d'effectif": st.column_config.ProgressColumn(
-                            min_value=0,
-                            max_value=100,
-                            format="%.1f",
-                        ),
-                        "Écart de rang": st.column_config.NumberColumn(
-                            width="small"
-                        ),
-                        "Lecture": st.column_config.TextColumn(width="medium"),
+                        "Rang sportif":
+                            st.column_config.NumberColumn(
+                                width="small"
+                            ),
+                        "Club":
+                            st.column_config.TextColumn(
+                                width="medium"
+                            ),
+                        "Points":
+                            st.column_config.NumberColumn(
+                                width="small"
+                            ),
+                        "Rang FootRate":
+                            st.column_config.NumberColumn(
+                                width="small"
+                            ),
+                        "Note d'effectif":
+                            st.column_config.ProgressColumn(
+                                min_value=0,
+                                max_value=100,
+                                format="%.1f",
+                            ),
+                        "Écart de rang":
+                            st.column_config.NumberColumn(
+                                width="small"
+                            ),
+                        "Lecture":
+                            st.column_config.TextColumn(
+                                width="medium"
+                            ),
                     },
                 )
 
@@ -1016,14 +1122,23 @@ def render_league(
                             legend=alt.Legend(orient="bottom"),
                         ),
                         tooltip=[
-                            alt.Tooltip("team_name:N", title="Club"),
+                            alt.Tooltip(
+                                "team_name:N",
+                                title="Club",
+                            ),
                             alt.Tooltip(
                                 "squad_score:Q",
                                 title="Note d'effectif",
                                 format=".1f",
                             ),
-                            alt.Tooltip("points:Q", title="Points"),
-                            alt.Tooltip("rank:Q", title="Rang sportif"),
+                            alt.Tooltip(
+                                "points:Q",
+                                title="Points",
+                            ),
+                            alt.Tooltip(
+                                "rank:Q",
+                                title="Rang sportif",
+                            ),
                             alt.Tooltip(
                                 "footrate_rank:Q",
                                 title="Rang FootRate",
@@ -1058,21 +1173,18 @@ def render_league(
                     use_container_width=True,
                 )
 
-                st.caption(
-                    "Un écart positif signifie que le club termine mieux "
-                    "classé sportivement que dans le classement des effectifs "
-                    "FootRate."
-                )
-
     with results_tab:
         selected_team = st.selectbox(
             "Choisir un club",
             standings["team_name"].tolist(),
-            key=f"league_results_team_{selected_season}",
+            key=(
+                f"competition_results_team_"
+                f"{selected_competition_id}_{selected_season}"
+            ),
         )
 
         selected_row = standings[
-            standings["team_name"] == selected_team
+            standings["team_name"].eq(selected_team)
         ].iloc[0]
 
         render_recent_results(
@@ -1081,8 +1193,14 @@ def render_league(
         )
 
     with history_tab:
+        competition_history = competition_table[
+            competition_table["competition_id"].eq(
+                selected_competition_id
+            )
+        ].copy()
+
         available_clubs = sorted(
-            competition_table["team_name"]
+            competition_history["team_name"]
             .dropna()
             .astype(str)
             .unique()
@@ -1092,12 +1210,14 @@ def render_league(
         selected_history_club = st.selectbox(
             "Club à suivre",
             available_clubs,
-            key="league_history_club",
+            key=f"competition_history_club_{selected_competition_id}",
         )
 
         club_history = (
-            competition_table[
-                competition_table["team_name"].eq(selected_history_club)
+            competition_history[
+                competition_history["team_name"].eq(
+                    selected_history_club
+                )
             ]
             .sort_values("season")
             .copy()
@@ -1108,8 +1228,9 @@ def render_league(
         else:
             history_display = club_history[
                 [
-                    "season_label", "rank", "points", "wins", "draws",
-                    "losses", "goals_for", "goals_against", "goal_diff",
+                    "season_label", "rank", "points",
+                    "wins", "draws", "losses",
+                    "goals_for", "goals_against", "goal_diff",
                 ]
             ].rename(
                 columns={
@@ -1139,14 +1260,20 @@ def render_league(
                 hide_index=True,
             )
 
+            season_sort = club_history["season_label"].tolist()
+
             points_chart = (
                 alt.Chart(club_history)
-                .mark_line(point=True, strokeWidth=3, color="#22D3A7")
+                .mark_line(
+                    point=True,
+                    strokeWidth=3,
+                    color="#22D3A7",
+                )
                 .encode(
                     x=alt.X(
                         "season_label:N",
                         title="Saison",
-                        sort=club_history["season_label"].tolist(),
+                        sort=season_sort,
                     ),
                     y=alt.Y(
                         "points:Q",
@@ -1154,43 +1281,75 @@ def render_league(
                         scale=alt.Scale(zero=False),
                     ),
                     tooltip=[
-                        alt.Tooltip("season_label:N", title="Saison"),
-                        alt.Tooltip("points:Q", title="Points"),
-                        alt.Tooltip("rank:Q", title="Rang"),
+                        alt.Tooltip(
+                            "season_label:N",
+                            title="Saison",
+                        ),
+                        alt.Tooltip(
+                            "points:Q",
+                            title="Points",
+                        ),
+                        alt.Tooltip(
+                            "rank:Q",
+                            title="Rang",
+                        ),
                     ],
                 )
                 .properties(height=310)
             )
-            st.altair_chart(points_chart, use_container_width=True)
+            st.altair_chart(
+                points_chart,
+                use_container_width=True,
+            )
 
             rank_chart = (
                 alt.Chart(club_history)
-                .mark_line(point=True, strokeWidth=3, color="#7DD3FC")
+                .mark_line(
+                    point=True,
+                    strokeWidth=3,
+                    color="#7DD3FC",
+                )
                 .encode(
                     x=alt.X(
                         "season_label:N",
                         title="Saison",
-                        sort=club_history["season_label"].tolist(),
+                        sort=season_sort,
                     ),
                     y=alt.Y(
                         "rank:Q",
                         title="Classement",
                         scale=alt.Scale(
                             domain=[
-                                int(competition_table["rank"].max()),
+                                int(
+                                    competition_history[
+                                        "rank"
+                                    ].max()
+                                ),
                                 1,
                             ]
                         ),
                     ),
                     tooltip=[
-                        alt.Tooltip("season_label:N", title="Saison"),
-                        alt.Tooltip("rank:Q", title="Rang"),
-                        alt.Tooltip("points:Q", title="Points"),
+                        alt.Tooltip(
+                            "season_label:N",
+                            title="Saison",
+                        ),
+                        alt.Tooltip(
+                            "rank:Q",
+                            title="Rang",
+                        ),
+                        alt.Tooltip(
+                            "points:Q",
+                            title="Points",
+                        ),
                     ],
                 )
                 .properties(height=310)
             )
-            st.altair_chart(rank_chart, use_container_width=True)
+            st.altair_chart(
+                rank_chart,
+                use_container_width=True,
+            )
 
 
 @st.cache_data(show_spinner=False)
@@ -2820,14 +2979,16 @@ try:
 
     footrate_competition_table = (
         competition_table[
-            competition_table["season"].eq(2024)
+            competition_table["competition_id"].eq(61)
+            & competition_table["season"].eq(2024)
         ].copy()
         if not competition_table.empty
         else pd.DataFrame()
     )
     footrate_recent_results = (
         recent_results[
-            recent_results["season"].eq(2024)
+            recent_results["competition_id"].eq(61)
+            & recent_results["season"].eq(2024)
         ].copy()
         if not recent_results.empty
         else pd.DataFrame()
@@ -2855,7 +3016,7 @@ render_header(data_file)
         "🏠 Accueil",
         "🏆 Joueurs",
         "⚽ Clubs",
-        "📊 Historique Ligue 1",
+        "🌍 Championnats",
         "👤 Fiche joueur",
         "⇄ Comparateur",
         "ℹ️ Méthodologie",
