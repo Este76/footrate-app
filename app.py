@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import math
 import re
 from typing import Iterable
 
@@ -1632,27 +1633,66 @@ def render_advanced_analysis(team_match_stats: pd.DataFrame) -> None:
         ].iloc[0]
     )
 
+    competition_season_rows = team_match_stats[
+        team_match_stats["competition_id"].eq(
+            selected_competition_id
+        )
+        & team_match_stats["season"].eq(selected_season)
+    ].copy()
+
     team_options = (
-        team_match_stats[
-            team_match_stats["competition_id"].eq(
-                selected_competition_id
-            )
-            & team_match_stats["season"].eq(selected_season)
-        ][["team_id", "team_name"]]
-        .drop_duplicates()
-        .sort_values("team_name")
+        competition_season_rows
+        .groupby(
+            ["team_id", "team_name"],
+            as_index=False,
+        )["fixture_id"]
+        .nunique()
+        .rename(columns={"fixture_id": "matches_available"})
+        .sort_values(
+            ["matches_available", "team_name"],
+            ascending=[False, True],
+        )
     )
+
+    # Le fichier peut contenir les deux équipes de chaque rencontre.
+    # Lorsqu'une seule équipe a été réellement téléchargée sur toute la
+    # saison, ses adversaires n'ont souvent qu'un ou deux matchs disponibles.
+    # On masque ces échantillons incomplets dans le sélecteur principal.
+    maximum_coverage = int(team_options["matches_available"].max())
+    minimum_coverage = (
+        max(3, math.ceil(maximum_coverage * 0.50))
+        if maximum_coverage >= 3
+        else 1
+    )
+    sufficiently_covered = team_options[
+        team_options["matches_available"].ge(minimum_coverage)
+    ].copy()
+    if not sufficiently_covered.empty:
+        team_options = sufficiently_covered
+
     with filter_3:
         selected_team_name = st.selectbox(
             "Équipe",
             team_options["team_name"].tolist(),
-            key="advanced_team",
+            index=0,
+            key=(
+                f"advanced_team_"
+                f"{selected_competition_id}_{selected_season}"
+            ),
         )
-    selected_team_id = int(
-        team_options.loc[
-            team_options["team_name"].eq(selected_team_name),
-            "team_id",
-        ].iloc[0]
+    selected_team_row = team_options.loc[
+        team_options["team_name"].eq(selected_team_name)
+    ].iloc[0]
+    selected_team_id = int(selected_team_row["team_id"])
+    selected_team_match_count = int(
+        selected_team_row["matches_available"]
+    )
+    st.caption(
+        f"{selected_team_match_count} match"
+        f"{'s' if selected_team_match_count > 1 else ''} "
+        "disponible"
+        f"{'s' if selected_team_match_count > 1 else ''} "
+        "pour cette équipe dans le fichier actuel."
     )
 
     team_season = team_match_stats[
@@ -1702,13 +1742,30 @@ def render_advanced_analysis(team_match_stats: pd.DataFrame) -> None:
         default_start, default_end = min_day, max_day
 
     with advanced_2:
-        matchday_range = st.slider(
-            "Plage de journées",
-            min_value=min_day,
-            max_value=max_day,
-            value=(default_start, default_end),
-            key="advanced_matchdays",
-        )
+        if len(valid_matchdays) == 1:
+            only_day = valid_matchdays[0]
+            st.text_input(
+                "Plage de journées",
+                value=f"Journée {only_day}",
+                disabled=True,
+                key=(
+                    f"advanced_single_matchday_"
+                    f"{selected_competition_id}_"
+                    f"{selected_season}_{selected_team_id}"
+                ),
+            )
+            matchday_range = (only_day, only_day)
+        else:
+            matchday_range = st.select_slider(
+                "Plage de journées",
+                options=valid_matchdays,
+                value=(default_start, default_end),
+                key=(
+                    f"advanced_matchdays_"
+                    f"{selected_competition_id}_"
+                    f"{selected_season}_{selected_team_id}"
+                ),
+            )
 
     with advanced_3:
         venue_filter = st.selectbox(
