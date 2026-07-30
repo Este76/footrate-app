@@ -37,6 +37,7 @@ def version_key(path: Path) -> tuple[int, ...]:
 
 def find_data_file() -> Path:
     preferred = [
+        Path("output/footrate_players_multileague_v1_2.csv"),
         Path("output/footrate_official_v0_8.csv"),
         Path("output/footrate_official_v0_7.csv"),
         Path("output/footrate_official_v0_6.csv"),
@@ -189,6 +190,28 @@ def load_data(path_as_text: str) -> pd.DataFrame:
             df[column] = "Non renseigné"
         df[column] = df[column].fillna("Non renseigné").astype(str)
 
+    if "competition_id" not in df.columns:
+        df["competition_id"] = 61
+    if "competition_name" not in df.columns:
+        df["competition_name"] = "Ligue 1"
+    if "season" not in df.columns:
+        df["season"] = 2024
+    if "season_label" not in df.columns:
+        df["season_label"] = "2024-2025"
+
+    df["competition_id"] = pd.to_numeric(
+        df["competition_id"], errors="coerce"
+    ).fillna(61).astype(int)
+    df["season"] = pd.to_numeric(
+        df["season"], errors="coerce"
+    ).fillna(2024).astype(int)
+    df["competition_name"] = (
+        df["competition_name"].fillna("Ligue 1").astype(str)
+    )
+    df["season_label"] = (
+        df["season_label"].fillna("2024-2025").astype(str)
+    )
+
     numeric_columns = [
         "player_id", "team_id", "minutes", *SKILL_COLUMNS.keys(),
         "profile_score", "performance_score", "overall_precalibrated",
@@ -274,6 +297,43 @@ def load_data(path_as_text: str) -> pd.DataFrame:
     df["rank"] = range(1, len(df) + 1)
     return df
 
+
+
+
+def rating_competition_options(df: pd.DataFrame) -> pd.DataFrame:
+    options = (
+        df[["competition_id", "competition_name", "season", "season_label"]]
+        .drop_duplicates()
+        .sort_values(["competition_name", "season"], ascending=[True, False])
+        .reset_index(drop=True)
+    )
+    options["display_name"] = (
+        options["competition_name"] + " — " + options["season_label"]
+    )
+    return options
+
+
+def filter_rating_data(
+    df: pd.DataFrame,
+    competition_id: int,
+    season: int,
+) -> pd.DataFrame:
+    filtered = df[
+        df["competition_id"].eq(int(competition_id))
+        & df["season"].eq(int(season))
+    ].copy()
+    filtered = filtered.sort_values(
+        ["overall", "minutes"], ascending=[False, False]
+    )
+    filtered["rank"] = range(1, len(filtered) + 1)
+    return filtered
+
+
+def rating_scope_text(df: pd.DataFrame) -> str:
+    if df.empty:
+        return "Compétition non renseignée"
+    row = df.iloc[0]
+    return f"{row['competition_name']} {row['season_label']}"
 
 
 def trend_icon(value: float | int | None) -> str:
@@ -518,8 +578,9 @@ def player_form_tile(player: pd.Series) -> str:
 
 def render_home(df: pd.DataFrame) -> None:
     st.subheader("Bienvenue sur FootRate")
+    scope = rating_scope_text(df)
     st.caption(
-        "Découvrez les joueurs les mieux notés de Ligue 1 2024-2025 "
+        f"Découvrez les joueurs les mieux notés de {scope} "
         "à partir de leurs performances réelles."
     )
 
@@ -621,8 +682,9 @@ def render_home(df: pd.DataFrame) -> None:
                 )
 
     st.info(
-        "Cette version utilise les données de Ligue 1 2024-2025. "
-        "La prochaine étape sera l'actualisation vers la saison en cours."
+        f"Les notes affichées sont calculées à l'intérieur de {scope}. "
+        "Les comparaisons directes entre championnats restent désactivées "
+        "tant qu'une calibration européenne commune n'est pas disponible."
     )
 
 
@@ -1008,19 +1070,20 @@ def render_league(
         )
 
     with analysis_tab:
-        if not (
-            selected_competition_id == 61
-            and selected_season == 2024
-        ):
+        selected_rating_data = filter_rating_data(
+            player_data,
+            selected_competition_id,
+            selected_season,
+        )
+        if selected_rating_data.empty:
             st.info(
-                "La comparaison avec les notes d'effectif FootRate est "
-                "actuellement disponible uniquement pour la Ligue 1 "
-                "2024-2025. Les notes de joueurs des autres championnats "
-                "seront ajoutées progressivement."
+                "Aucune note FootRate n'est encore disponible pour cette "
+                "compétition et cette saison. Les classements et résultats "
+                "restent consultables normalement."
             )
         else:
             comparison = build_sporting_comparison(
-                player_data,
+                selected_rating_data,
                 standings,
             )
 
@@ -2356,6 +2419,12 @@ def render_methodology() -> None:
         compare les deux matchs les plus récents aux trois précédents et reste limitée
         à ±15 points.
 
+        Les notes de joueurs sont actuellement **normalisées à l'intérieur de
+        chaque championnat**. Une note de 85 en Premier League et une note de 85
+        en Ligue 1 représentent donc un niveau relatif élevé dans leur propre
+        compétition, mais ne constituent pas encore une comparaison européenne
+        absolue. Le sélecteur empêche volontairement de mélanger les populations.
+
         Le **classement sportif réel** et les résultats sont récupérés séparément
         depuis API-Football. Ils ne modifient pas la note d'effectif : ils servent à
         comparer la qualité statistique estimée d'un groupe à ses résultats réels.
@@ -2977,22 +3046,6 @@ try:
         ),
     )
 
-    footrate_competition_table = (
-        competition_table[
-            competition_table["competition_id"].eq(61)
-            & competition_table["season"].eq(2024)
-        ].copy()
-        if not competition_table.empty
-        else pd.DataFrame()
-    )
-    footrate_recent_results = (
-        recent_results[
-            recent_results["competition_id"].eq(61)
-            & recent_results["season"].eq(2024)
-        ].copy()
-        if not recent_results.empty
-        else pd.DataFrame()
-    )
 except Exception as exc:
     st.error("Impossible de charger les données FootRate.")
     st.code(str(exc))
@@ -3002,6 +3055,49 @@ except Exception as exc:
     st.stop()
 
 render_header(data_file)
+
+rating_options = rating_competition_options(data)
+if rating_options.empty:
+    st.error("Aucune compétition FootRate n'est disponible.")
+    st.stop()
+
+selected_rating_label = st.selectbox(
+    "Notes FootRate affichées",
+    rating_options["display_name"].tolist(),
+    index=0,
+    key="rating_competition_selector",
+)
+selected_rating_row = rating_options.loc[
+    rating_options["display_name"].eq(selected_rating_label)
+].iloc[0]
+selected_rating_competition_id = int(selected_rating_row["competition_id"])
+selected_rating_season = int(selected_rating_row["season"])
+rating_data = filter_rating_data(
+    data,
+    selected_rating_competition_id,
+    selected_rating_season,
+)
+
+selected_competition_table = (
+    competition_table[
+        competition_table["competition_id"].eq(
+            selected_rating_competition_id
+        )
+        & competition_table["season"].eq(selected_rating_season)
+    ].copy()
+    if not competition_table.empty
+    else pd.DataFrame()
+)
+selected_recent_results = (
+    recent_results[
+        recent_results["competition_id"].eq(
+            selected_rating_competition_id
+        )
+        & recent_results["season"].eq(selected_rating_season)
+    ].copy()
+    if not recent_results.empty
+    else pd.DataFrame()
+)
 
 (
     tab_home,
@@ -3024,16 +3120,16 @@ render_header(data_file)
 )
 
 with tab_home:
-    render_home(data)
+    render_home(rating_data)
 
 with tab_ranking:
-    render_ranking(data)
+    render_ranking(rating_data)
 
 with tab_clubs:
     render_clubs(
-        data,
-        footrate_competition_table,
-        footrate_recent_results,
+        rating_data,
+        selected_competition_table,
+        selected_recent_results,
     )
 
 with tab_league:
@@ -3044,10 +3140,10 @@ with tab_league:
     )
 
 with tab_profile:
-    render_player_profile(data)
+    render_player_profile(rating_data)
 
 with tab_compare:
-    render_comparison(data)
+    render_comparison(rating_data)
 
 with tab_method:
     render_methodology()
