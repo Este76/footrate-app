@@ -1568,6 +1568,810 @@ def merge_opponent_stat(
     return merged
 
 
+
+def covered_team_options(
+    team_match_stats: pd.DataFrame,
+    competition_id: int,
+    season: int,
+) -> pd.DataFrame:
+    competition_season_rows = team_match_stats[
+        team_match_stats["competition_id"].eq(competition_id)
+        & team_match_stats["season"].eq(season)
+    ].copy()
+
+    if competition_season_rows.empty:
+        return pd.DataFrame(
+            columns=[
+                "team_id",
+                "team_name",
+                "matches_available",
+            ]
+        )
+
+    options = (
+        competition_season_rows
+        .groupby(
+            ["team_id", "team_name"],
+            as_index=False,
+        )["fixture_id"]
+        .nunique()
+        .rename(columns={"fixture_id": "matches_available"})
+        .sort_values(
+            ["matches_available", "team_name"],
+            ascending=[False, True],
+        )
+    )
+
+    maximum_coverage = int(options["matches_available"].max())
+    minimum_coverage = (
+        max(3, math.ceil(maximum_coverage * 0.50))
+        if maximum_coverage >= 3
+        else 1
+    )
+    sufficiently_covered = options[
+        options["matches_available"].ge(minimum_coverage)
+    ].copy()
+    return (
+        sufficiently_covered
+        if not sufficiently_covered.empty
+        else options
+    )
+
+
+def filter_team_period(
+    team_rows: pd.DataFrame,
+    period_mode: str,
+    last_matches: int | None,
+    matchday_range: tuple[int, int] | None,
+    venue_filter: str,
+) -> pd.DataFrame:
+    selected = team_rows.copy()
+
+    if venue_filter == "Domicile":
+        selected = selected[selected["home_away"].eq("home")]
+    elif venue_filter == "Extérieur":
+        selected = selected[selected["home_away"].eq("away")]
+
+    if period_mode == "X derniers matchs":
+        selected = (
+            selected.sort_values(
+                ["date_parsed", "matchday"],
+                ascending=[False, False],
+            )
+            .head(int(last_matches or 1))
+            .sort_values(
+                ["date_parsed", "matchday"],
+                ascending=[True, True],
+            )
+        )
+    elif matchday_range is not None:
+        selected = selected[
+            selected["matchday"].between(
+                matchday_range[0],
+                matchday_range[1],
+                inclusive="both",
+            )
+        ].sort_values(["matchday", "date_parsed"])
+
+    return selected.reset_index(drop=True)
+
+
+def comparison_stat_summary(
+    selected: pd.DataFrame,
+    all_stats: pd.DataFrame,
+    stat_column: str,
+) -> dict[str, float | int]:
+    merged = merge_opponent_stat(
+        selected,
+        all_stats,
+        stat_column,
+    )
+    merged = merged[merged["team_value"].notna()].copy()
+
+    if merged.empty:
+        return {
+            "matches": 0,
+            "average": float("nan"),
+            "median": float("nan"),
+            "minimum": float("nan"),
+            "maximum": float("nan"),
+            "opponent_average": float("nan"),
+            "difference": float("nan"),
+        }
+
+    opponent_average = (
+        float(merged["opponent_value"].mean())
+        if merged["opponent_value"].notna().any()
+        else float("nan")
+    )
+    average_difference = (
+        float(merged["difference"].mean())
+        if merged["difference"].notna().any()
+        else float("nan")
+    )
+
+    return {
+        "matches": int(len(merged)),
+        "average": float(merged["team_value"].mean()),
+        "median": float(merged["team_value"].median()),
+        "minimum": float(merged["team_value"].min()),
+        "maximum": float(merged["team_value"].max()),
+        "opponent_average": opponent_average,
+        "difference": average_difference,
+    }
+
+
+def team_comparison_detail(
+    selected: pd.DataFrame,
+    all_stats: pd.DataFrame,
+    stat_column: str,
+    team_name: str,
+) -> pd.DataFrame:
+    detailed = merge_opponent_stat(
+        selected,
+        all_stats,
+        stat_column,
+    )
+    detailed = detailed[detailed["team_value"].notna()].copy()
+
+    if detailed.empty:
+        return detailed
+
+    detailed = detailed[
+        [
+            "matchday",
+            "date_parsed",
+            "opponent_name",
+            "home_away",
+            "score",
+            "result",
+            "team_value",
+            "opponent_value",
+        ]
+    ].copy()
+    detailed["Journée"] = detailed.pop("matchday").astype("Int64")
+    detailed["Date"] = detailed.pop("date_parsed").dt.strftime("%d/%m/%Y")
+    detailed["Adversaire"] = detailed.pop("opponent_name")
+    detailed["Lieu"] = detailed.pop("home_away").apply(home_away_label)
+    detailed["Score"] = detailed.pop("score")
+    detailed["Résultat"] = detailed.pop("result").apply(result_label)
+    detailed[team_name] = detailed.pop("team_value").round(1)
+    detailed["Moyenne adverse"] = detailed.pop(
+        "opponent_value"
+    ).round(1)
+    return detailed
+
+
+def render_advanced_club_comparison(
+    team_match_stats: pd.DataFrame,
+) -> None:
+    st.markdown("### Comparer deux clubs")
+    st.caption(
+        "Compare une ou plusieurs statistiques sur les X derniers matchs "
+        "ou sur une plage de journées identique."
+    )
+
+    competitions = (
+        team_match_stats[
+            ["competition_id", "competition_name"]
+        ]
+        .drop_duplicates()
+        .sort_values("competition_name")
+    )
+    if competitions.empty:
+        st.warning("Aucune compétition exploitable n'a été trouvée.")
+        return
+
+    top_1, top_2 = st.columns(2)
+    with top_1:
+        competition_name = st.selectbox(
+            "Compétition",
+            competitions["competition_name"].tolist(),
+            key="comparison_competition",
+        )
+    competition_id = int(
+        competitions.loc[
+            competitions["competition_name"].eq(
+                competition_name
+            ),
+            "competition_id",
+        ].iloc[0]
+    )
+
+    seasons = (
+        team_match_stats[
+            team_match_stats["competition_id"].eq(
+                competition_id
+            )
+        ][["season", "season_label"]]
+        .drop_duplicates()
+        .sort_values("season", ascending=False)
+    )
+    with top_2:
+        season_label = st.selectbox(
+            "Saison",
+            seasons["season_label"].tolist(),
+            key=f"comparison_season_{competition_id}",
+        )
+    season = int(
+        seasons.loc[
+            seasons["season_label"].eq(season_label),
+            "season",
+        ].iloc[0]
+    )
+
+    team_options = covered_team_options(
+        team_match_stats,
+        competition_id,
+        season,
+    )
+    if len(team_options) < 2:
+        available_name = (
+            team_options.iloc[0]["team_name"]
+            if len(team_options) == 1
+            else "aucune équipe"
+        )
+        st.info(
+            "La comparaison nécessite au moins deux équipes avec une "
+            "couverture suffisante. Le fichier actuel contient surtout "
+            f"{available_name}. Récupère une deuxième équipe avec le script "
+            "`sportsrate_team_stats_update.py`, puis republie le même CSV."
+        )
+        st.code(
+            'python sportsrate_team_stats_update.py --team "Marseille"',
+            language="bat",
+        )
+        return
+
+    team_names = team_options["team_name"].tolist()
+    team_1_col, team_2_col = st.columns(2)
+    with team_1_col:
+        team_1_name = st.selectbox(
+            "Club 1",
+            team_names,
+            index=0,
+            key=(
+                f"comparison_team_1_"
+                f"{competition_id}_{season}"
+            ),
+        )
+    remaining_names = [
+        name for name in team_names
+        if name != team_1_name
+    ]
+    with team_2_col:
+        team_2_name = st.selectbox(
+            "Club 2",
+            remaining_names,
+            index=0,
+            key=(
+                f"comparison_team_2_"
+                f"{competition_id}_{season}_{team_1_name}"
+            ),
+        )
+
+    team_1_id = int(
+        team_options.loc[
+            team_options["team_name"].eq(team_1_name),
+            "team_id",
+        ].iloc[0]
+    )
+    team_2_id = int(
+        team_options.loc[
+            team_options["team_name"].eq(team_2_name),
+            "team_id",
+        ].iloc[0]
+    )
+
+    base_rows = team_match_stats[
+        team_match_stats["competition_id"].eq(
+            competition_id
+        )
+        & team_match_stats["season"].eq(season)
+    ].copy()
+    team_1_rows = base_rows[
+        base_rows["team_id"].eq(team_1_id)
+    ].copy()
+    team_2_rows = base_rows[
+        base_rows["team_id"].eq(team_2_id)
+    ].copy()
+
+    available_stats = [
+        label
+        for label, config in TEAM_STAT_OPTIONS.items()
+        if config["column"] in base_rows.columns
+        and team_1_rows[config["column"]].notna().any()
+        and team_2_rows[config["column"]].notna().any()
+    ]
+    if not available_stats:
+        st.warning(
+            "Aucune statistique commune n'est disponible pour ces deux clubs."
+        )
+        return
+
+    period_col, venue_col = st.columns([1.5, 1])
+    with period_col:
+        period_mode = st.radio(
+            "Période comparée",
+            ["X derniers matchs", "Plage de journées"],
+            horizontal=True,
+            key=(
+                f"comparison_period_mode_"
+                f"{competition_id}_{season}"
+            ),
+        )
+    with venue_col:
+        venue_filter = st.selectbox(
+            "Lieu",
+            ["Tous", "Domicile", "Extérieur"],
+            key=(
+                f"comparison_venue_"
+                f"{competition_id}_{season}"
+            ),
+        )
+
+    last_matches: int | None = None
+    matchday_range: tuple[int, int] | None = None
+
+    if period_mode == "X derniers matchs":
+        eligible_1 = filter_team_period(
+            team_1_rows,
+            "Plage de journées",
+            None,
+            (
+                int(team_1_rows["matchday"].min()),
+                int(team_1_rows["matchday"].max()),
+            ),
+            venue_filter,
+        )
+        eligible_2 = filter_team_period(
+            team_2_rows,
+            "Plage de journées",
+            None,
+            (
+                int(team_2_rows["matchday"].min()),
+                int(team_2_rows["matchday"].max()),
+            ),
+            venue_filter,
+        )
+        max_last_matches = max(
+            1,
+            min(
+                15,
+                len(eligible_1),
+                len(eligible_2),
+            ),
+        )
+        last_matches = st.slider(
+            "Nombre de matchs récents",
+            min_value=1,
+            max_value=max_last_matches,
+            value=min(5, max_last_matches),
+            key=(
+                f"comparison_last_matches_"
+                f"{competition_id}_{season}_"
+                f"{team_1_id}_{team_2_id}_{venue_filter}"
+            ),
+        )
+    else:
+        all_matchdays = sorted(
+            {
+                int(value)
+                for value in pd.concat(
+                    [
+                        team_1_rows["matchday"],
+                        team_2_rows["matchday"],
+                    ]
+                ).dropna().tolist()
+            }
+        )
+        if not all_matchdays:
+            st.warning("Aucune journée exploitable n'a été trouvée.")
+            return
+        if len(all_matchdays) == 1:
+            only_day = all_matchdays[0]
+            st.text_input(
+                "Plage de journées",
+                value=f"Journée {only_day}",
+                disabled=True,
+                key=(
+                    f"comparison_single_day_"
+                    f"{competition_id}_{season}"
+                ),
+            )
+            matchday_range = (only_day, only_day)
+        else:
+            matchday_range = st.select_slider(
+                "Plage de journées",
+                options=all_matchdays,
+                value=(all_matchdays[0], all_matchdays[-1]),
+                key=(
+                    f"comparison_matchday_range_"
+                    f"{competition_id}_{season}"
+                ),
+            )
+
+    selected_1 = filter_team_period(
+        team_1_rows,
+        period_mode,
+        last_matches,
+        matchday_range,
+        venue_filter,
+    )
+    selected_2 = filter_team_period(
+        team_2_rows,
+        period_mode,
+        last_matches,
+        matchday_range,
+        venue_filter,
+    )
+
+    if selected_1.empty or selected_2.empty:
+        st.warning(
+            "L'un des deux clubs n'a aucun match correspondant aux filtres."
+        )
+        return
+
+    main_stat_col, multi_stat_col = st.columns([1, 1.5])
+    with main_stat_col:
+        primary_stat = st.selectbox(
+            "Statistique principale",
+            available_stats,
+            index=(
+                available_stats.index("Possession (%)")
+                if "Possession (%)" in available_stats
+                else 0
+            ),
+            key=(
+                f"comparison_primary_stat_"
+                f"{competition_id}_{season}"
+            ),
+        )
+
+    default_multi = [
+        label
+        for label in [
+            "Possession (%)",
+            "Tirs",
+            "Tirs cadrés",
+            "Corners",
+            "Précision des passes (%)",
+        ]
+        if label in available_stats
+    ]
+    with multi_stat_col:
+        summary_stats = st.multiselect(
+            "Vue synthétique",
+            available_stats,
+            default=default_multi,
+            max_selections=7,
+            key=(
+                f"comparison_summary_stats_"
+                f"{competition_id}_{season}"
+            ),
+        )
+
+    stat_config = TEAM_STAT_OPTIONS[primary_stat]
+    stat_column = stat_config["column"]
+    unit = stat_config["unit"]
+
+    summary_1 = comparison_stat_summary(
+        selected_1,
+        team_match_stats,
+        stat_column,
+    )
+    summary_2 = comparison_stat_summary(
+        selected_2,
+        team_match_stats,
+        stat_column,
+    )
+
+    difference = (
+        summary_1["average"] - summary_2["average"]
+        if not pd.isna(summary_1["average"])
+        and not pd.isna(summary_2["average"])
+        else float("nan")
+    )
+
+    st.markdown(f"### {primary_stat}")
+    metric_1, metric_2, metric_3, metric_4 = st.columns(4)
+    metric_1.metric(
+        team_1_name,
+        (
+            "—"
+            if pd.isna(summary_1["average"])
+            else f"{summary_1['average']:.1f}{unit}"
+        ),
+        delta=(
+            None
+            if pd.isna(summary_1["difference"])
+            else (
+                f"{summary_1['difference']:+.1f}{unit} "
+                "vs adversaires"
+            )
+        ),
+    )
+    metric_2.metric(
+        team_2_name,
+        (
+            "—"
+            if pd.isna(summary_2["average"])
+            else f"{summary_2['average']:.1f}{unit}"
+        ),
+        delta=(
+            None
+            if pd.isna(summary_2["difference"])
+            else (
+                f"{summary_2['difference']:+.1f}{unit} "
+                "vs adversaires"
+            )
+        ),
+    )
+    metric_3.metric(
+        "Écart entre les clubs",
+        (
+            "—"
+            if pd.isna(difference)
+            else f"{difference:+.1f}{unit}"
+        ),
+        delta=(
+            f"Moyenne plus élevée : {team_1_name}"
+            if not pd.isna(difference) and difference > 0
+            else (
+                f"Moyenne plus élevée : {team_2_name}"
+                if not pd.isna(difference) and difference < 0
+                else "Même moyenne"
+            )
+        ),
+        delta_color="off",
+    )
+    metric_4.metric(
+        "Matchs analysés",
+        (
+            f"{summary_1['matches']} / "
+            f"{summary_2['matches']}"
+        ),
+        delta=(
+            f"{team_1_name} / {team_2_name}"
+        ),
+        delta_color="off",
+    )
+
+    average_chart_data = pd.DataFrame(
+        {
+            "Club": [team_1_name, team_2_name],
+            "Moyenne": [
+                summary_1["average"],
+                summary_2["average"],
+            ],
+        }
+    ).dropna()
+    average_bars = (
+        alt.Chart(average_chart_data)
+        .mark_bar(cornerRadiusEnd=8)
+        .encode(
+            x=alt.X(
+                "Moyenne:Q",
+                title=primary_stat,
+                scale=alt.Scale(zero=False),
+            ),
+            y=alt.Y(
+                "Club:N",
+                sort=[team_1_name, team_2_name],
+                title=None,
+            ),
+            color=alt.Color(
+                "Club:N",
+                legend=None,
+                scale=alt.Scale(
+                    domain=[team_1_name, team_2_name],
+                    range=["#22D3A7", "#7DD3FC"],
+                ),
+            ),
+            tooltip=[
+                alt.Tooltip("Club:N"),
+                alt.Tooltip(
+                    "Moyenne:Q",
+                    format=".1f",
+                    title=primary_stat,
+                ),
+            ],
+        )
+        .properties(height=150)
+    )
+    average_labels = (
+        alt.Chart(average_chart_data)
+        .mark_text(
+            align="left",
+            dx=7,
+            color="#F8FAFC",
+            fontWeight="bold",
+        )
+        .encode(
+            x=alt.X("Moyenne:Q"),
+            y=alt.Y(
+                "Club:N",
+                sort=[team_1_name, team_2_name],
+            ),
+            text=alt.Text("Moyenne:Q", format=".1f"),
+        )
+    )
+    st.altair_chart(
+        average_bars + average_labels,
+        use_container_width=True,
+    )
+
+    evolution_frames: list[pd.DataFrame] = []
+    for club_name, selected_rows in [
+        (team_1_name, selected_1),
+        (team_2_name, selected_2),
+    ]:
+        values = selected_rows.copy()
+        values["Valeur"] = pd.to_numeric(
+            values[stat_column],
+            errors="coerce",
+        )
+        values = values[values["Valeur"].notna()].copy()
+        if period_mode == "X derniers matchs":
+            values["Période"] = range(1, len(values) + 1)
+            values["Libellé"] = values["Période"].apply(
+                lambda number: f"Match {number}"
+            )
+        else:
+            values["Période"] = values["matchday"].astype(int)
+            values["Libellé"] = values["Période"].apply(
+                lambda number: f"J{number}"
+            )
+        values["Club"] = club_name
+        evolution_frames.append(values)
+
+    evolution_data = pd.concat(
+        evolution_frames,
+        ignore_index=True,
+    )
+    if not evolution_data.empty:
+        line_chart = (
+            alt.Chart(evolution_data)
+            .mark_line(point=True, strokeWidth=3)
+            .encode(
+                x=alt.X(
+                    "Période:Q",
+                    title=(
+                        "Ordre des matchs"
+                        if period_mode == "X derniers matchs"
+                        else "Journée"
+                    ),
+                    axis=alt.Axis(tickMinStep=1),
+                ),
+                y=alt.Y(
+                    "Valeur:Q",
+                    title=primary_stat,
+                    scale=alt.Scale(zero=False),
+                ),
+                color=alt.Color(
+                    "Club:N",
+                    title=None,
+                    scale=alt.Scale(
+                        domain=[team_1_name, team_2_name],
+                        range=["#22D3A7", "#7DD3FC"],
+                    ),
+                ),
+                tooltip=[
+                    alt.Tooltip("Club:N"),
+                    alt.Tooltip("Libellé:N", title="Période"),
+                    alt.Tooltip(
+                        "opponent_name:N",
+                        title="Adversaire",
+                    ),
+                    alt.Tooltip(
+                        "Valeur:Q",
+                        title=primary_stat,
+                        format=".1f",
+                    ),
+                    alt.Tooltip("score:N", title="Score"),
+                    alt.Tooltip("result:N", title="Résultat"),
+                ],
+            )
+            .properties(height=410)
+        )
+        st.markdown("### Évolution comparée")
+        st.altair_chart(
+            line_chart,
+            use_container_width=True,
+        )
+        if period_mode == "X derniers matchs":
+            st.caption(
+                "Les courbes sont alignées du match le plus ancien au plus "
+                "récent dans l'échantillon sélectionné."
+            )
+
+    if summary_stats:
+        synthesis_rows: list[dict[str, object]] = []
+        for label in summary_stats:
+            config = TEAM_STAT_OPTIONS[label]
+            column = config["column"]
+            unit_for_stat = config["unit"]
+            stat_1 = comparison_stat_summary(
+                selected_1,
+                team_match_stats,
+                column,
+            )
+            stat_2 = comparison_stat_summary(
+                selected_2,
+                team_match_stats,
+                column,
+            )
+            gap = (
+                stat_1["average"] - stat_2["average"]
+                if not pd.isna(stat_1["average"])
+                and not pd.isna(stat_2["average"])
+                else float("nan")
+            )
+            synthesis_rows.append(
+                {
+                    "Statistique": label,
+                    team_1_name: (
+                        None
+                        if pd.isna(stat_1["average"])
+                        else round(stat_1["average"], 1)
+                    ),
+                    team_2_name: (
+                        None
+                        if pd.isna(stat_2["average"])
+                        else round(stat_2["average"], 1)
+                    ),
+                    "Écart": (
+                        None
+                        if pd.isna(gap)
+                        else round(gap, 1)
+                    ),
+                    "Unité": unit_for_stat,
+                }
+            )
+        synthesis = pd.DataFrame(synthesis_rows)
+        st.markdown("### Vue multi-statistiques")
+        st.dataframe(
+            synthesis,
+            use_container_width=True,
+            hide_index=True,
+        )
+        st.caption(
+            "Un écart positif indique une moyenne supérieure pour "
+            f"{team_1_name}."
+        )
+
+    detail_1 = team_comparison_detail(
+        selected_1,
+        team_match_stats,
+        stat_column,
+        team_1_name,
+    )
+    detail_2 = team_comparison_detail(
+        selected_2,
+        team_match_stats,
+        stat_column,
+        team_2_name,
+    )
+
+    detail_col_1, detail_col_2 = st.columns(2)
+    with detail_col_1:
+        st.markdown(f"### Matchs de {team_1_name}")
+        st.dataframe(
+            detail_1,
+            use_container_width=True,
+            hide_index=True,
+            height=min(560, 90 + len(detail_1) * 36),
+        )
+    with detail_col_2:
+        st.markdown(f"### Matchs de {team_2_name}")
+        st.dataframe(
+            detail_2,
+            use_container_width=True,
+            hide_index=True,
+            height=min(560, 90 + len(detail_2) * 36),
+        )
+
+
 def render_advanced_analysis(team_match_stats: pd.DataFrame) -> None:
     st.subheader("Analyse avancée des clubs")
     st.caption(
@@ -1585,6 +2389,16 @@ def render_advanced_analysis(team_match_stats: pd.DataFrame) -> None:
             "Exemple : récupère toute la saison du PSG, puis analyse sa "
             "possession entre la J3 et la J14."
         )
+        return
+
+    analysis_mode = st.radio(
+        "Mode d'analyse",
+        ["Une équipe", "Comparer deux clubs"],
+        horizontal=True,
+        key="advanced_analysis_mode",
+    )
+    if analysis_mode == "Comparer deux clubs":
+        render_advanced_club_comparison(team_match_stats)
         return
 
     competitions = (
