@@ -170,8 +170,8 @@ def find_team_match_stats_file() -> Path | None:
     return next((path for path in candidates if path.exists()), None)
 
 
-@st.cache_data(show_spinner=False)
 def load_team_match_stats(path_text: str | None) -> pd.DataFrame:
+    """Recharge toujours le CSV d'analyse afin de voir les mises à jour GitHub."""
     if not path_text:
         return pd.DataFrame()
 
@@ -1805,6 +1805,13 @@ def render_advanced_club_comparison(
         competition_id,
         season,
     )
+
+    if not team_options.empty:
+        coverage_text = " · ".join(
+            f"{row.team_name} : {int(row.matches_available)} matchs"
+            for row in team_options.itertuples(index=False)
+        )
+        st.caption(f"Couverture disponible — {coverage_text}")
     if len(team_options) < 2:
         available_name = (
             team_options.iloc[0]["team_name"]
